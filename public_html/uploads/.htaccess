@@ -1,0 +1,39 @@
+# Uploads directory — CRITICAL security hardening
+# Deny ALL script execution. Only static images served here.
+# This prevents uploaded-file RCE (Remote Code Execution).
+
+# ── Deny all PHP/server-side script execution ─────────────────────────────────
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|phar|pl|py|rb|sh|cgi|shtml|htaccess|htpasswd)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# ── Only allow serving image files ───────────────────────────────────────────
+<FilesMatch "\.(jpg|jpeg|png|webp|gif)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Deny everything else
+<FilesMatch "^(?!\.(jpg|jpeg|png|webp|gif)$)">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# ── Disable CGI and SSI ───────────────────────────────────────────────────────
+Options -ExecCGI -Indexes -Includes
+RemoveHandler .php .php3 .php4 .php5 .php7 .php8 .phtml .phar
+RemoveType    .php .php3 .php4 .php5 .php7 .php8 .phtml .phar
+
+# ── Correct content types ─────────────────────────────────────────────────────
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png  .png
+    AddType image/webp .webp
+</IfModule>
+
+# ── Security headers for served images ───────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Content-Security-Policy "default-src 'none'; img-src 'self'"
+</IfModule>

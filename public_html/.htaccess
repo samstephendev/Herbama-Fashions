@@ -1,0 +1,121 @@
+# Herbama Fashions — Root public_html .htaccess
+# =================================================
+# Security hardening for Hostinger shared hosting (Apache + mod_rewrite)
+
+# ── Force HTTPS ──────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ── Optional: Subfolder RewriteBase (for XAMPP subfolder installs) ────────
+    # If running in a subfolder such as http://localhost/herbama/public_html/
+    # uncomment and set: RewriteBase /herbama/public_html/
+    # On root domains or Hostinger public_html, leave commented:
+    # RewriteBase /
+
+    # Redirect HTTP → HTTPS (skipped for local development on localhost/127.0.0.1)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Remove www on production domains
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1) [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+    # ── Clean SEO URLs (relative substitutions work in root and subfolders) ───
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+    RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [L,QSA]
+    RewriteRule ^girls-wear/?$ collection.php?cat=girls [L,QSA]
+    RewriteRule ^boys-wear/?$ collection.php?cat=boys [L,QSA]
+    RewriteRule ^infant-wear/?$ collection.php?cat=infant [L,QSA]
+    RewriteRule ^festive-wear/?$ collection.php?cat=festive [L,QSA]
+</IfModule>
+
+# ── Directory listing — DISABLED ──────────────────────────────────────────────
+Options -Indexes
+Options -ExecCGI
+
+# ── Deny access to sensitive files & directories ─────────────────────────────
+<FilesMatch "(\.env|config\.php|\.git|composer\.lock|\.htpasswd)">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Block access to the app/ directory entirely from web
+<IfModule mod_rewrite.c>
+    RewriteRule ^app/   - [F,L]
+    RewriteRule ^logs/  - [F,L]
+    RewriteRule ^sql/   - [F,L]
+</IfModule>
+
+# ── Security headers (belt-and-suspenders; also set in PHP) ──────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options    "nosniff"
+    Header always set X-Frame-Options           "DENY"
+    Header always set X-XSS-Protection          "1; mode=block"
+    Header always set Referrer-Policy           "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+
+    # HSTS — 1 year. Enable only after confirming HTTPS works perfectly.
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Remove server signature headers
+    Header unset X-Powered-By
+    Header unset Server
+
+    # Cache static assets
+    <FilesMatch "\.(css|js|woff2?|ttf|otf|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(jpg|jpeg|png|webp|gif)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
+
+# ── Prevent hotlinking of images ─────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
+    RewriteRule \.(jpg|jpeg|png|webp|gif|svg)$ - [F,NC,L]
+</IfModule>
+
+# ── PHP settings ─────────────────────────────────────────────────────────────
+<IfModule mod_php.c>
+    php_flag  display_errors       Off
+    php_flag  display_startup_errors Off
+    php_flag  log_errors           On
+    php_value error_log            "../logs/php_errors.log"
+    php_value session.cookie_httponly  1
+    php_value session.cookie_secure    1
+    php_value session.cookie_samesite  Lax
+    php_value session.use_strict_mode  1
+    php_value session.gc_maxlifetime   1800
+    php_flag  session.use_only_cookies 1
+    php_value upload_max_filesize  3M
+    php_value post_max_size        5M
+    php_value max_execution_time   30
+    php_value expose_php           Off
+</IfModule>
+
+# ── Block common attack patterns ──────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    # Block SQL injection patterns in query strings
+    RewriteCond %{QUERY_STRING} (union|select|insert|drop|update|delete)\s [NC]
+    RewriteRule .* - [F,L]
+
+    # Block XSS patterns
+    RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ── Compression ───────────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml font/woff2
+</IfModule>
+
+# ── Custom error pages ────────────────────────────────────────────────────────
+ErrorDocument 403 /public/pages/error.php?code=403
+ErrorDocument 404 /public/pages/error.php?code=404
+ErrorDocument 500 /public/pages/error.php?code=500

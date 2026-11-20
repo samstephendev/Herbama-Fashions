@@ -1,0 +1,3 @@
+# Block ALL web access to config files and SQL directory
+Order deny,allow
+Deny from all

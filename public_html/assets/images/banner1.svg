@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <defs>
+    <linearGradient id="b1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF9F5"/>
+      <stop offset="60%" stop-color="#FDF1EC"/>
+      <stop offset="100%" stop-color="#F7E2DB"/>
+    </linearGradient>
+    <linearGradient id="maroon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A1F3D"/>
+      <stop offset="100%" stop-color="#5B1229"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C77A"/>
+      <stop offset="50%" stop-color="#C9A24B"/>
+      <stop offset="100%" stop-color="#9B7828"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="url(#b1Grad)"/>
+  
+  <!-- Decorative Circles -->
+  <circle cx="950" cy="250" r="210" fill="#FFFFFF" opacity="0.7"/>
+  <circle cx="950" cy="250" r="195" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-dasharray="6,6"/>
+  <circle cx="1080" cy="110" r="70" fill="#7A1F3D" opacity="0.04"/>
+  <circle cx="800" cy="400" r="50" fill="#C9A24B" opacity="0.07"/>
+
+  <!-- Left Content Illustration Backdrop -->
+  <path d="M 0,0 L 520,0 L 400,500 L 0,500 Z" fill="#7A1F3D" opacity="0.03"/>
+
+  <!-- Right Side Kidswear Illustration (Girls Frock Motif) -->
+  <g transform="translate(850, 100)">
+    <!-- Hanger & Ribbon -->
+    <path d="M 100,50 Q 100,20 120,30 Q 130,45 100,65" fill="none" stroke="url(#gold)" stroke-width="4"/>
+    <path d="M 40,110 L 100,65 L 160,110 Z" fill="none" stroke="url(#gold)" stroke-width="4"/>
+    <!-- Elegant Frock Silhouette -->
+    <path d="M 75,110 L 60,180 L 140,180 L 125,110 Z" fill="url(#maroon)"/>
+    <path d="M 60,180 Q 20,240 10,320 Q 100,345 190,320 Q 180,240 140,180 Z" fill="url(#maroon)" opacity="0.95"/>
+    <!-- Gold embroidery lace lines -->
+    <path d="M 25,290 Q 100,310 175,290" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M 15,310 Q 100,335 185,310" fill="none" stroke="url(#gold)" stroke-width="2"/>
+    <!-- Sparkles -->
+    <polygon points="40,90 44,102 56,102 46,110 50,122 40,114 30,122 34,110 24,102 36,102" fill="url(#gold)"/>
+    <polygon points="170,170 173,180 183,180 175,186 178,196 170,190 162,196 165,186 157,180 167,180" fill="url(#gold)"/>
+  </g>
+
+  <!-- Left Banner Text -->
+  <g transform="translate(100, 110)">
+    <rect x="0" y="0" width="165" height="30" rx="15" fill="#7A1F3D"/>
+    <text x="82.5" y="20" font-family="'Poppins', sans-serif" font-size="12" font-weight="600" fill="#FFF9F3" text-anchor="middle" letter-spacing="2">NEW ARRIVALS 2024</text>
+    
+    <text x="0" y="85" font-family="'Playfair Display', Georgia, serif" font-size="44" font-weight="700" fill="#7A1F3D" line-height="1.2">
+      <tspan x="0" dy="0">Adorable Styles for</tspan>
+      <tspan x="0" dy="55" fill="#C9A24B" font-style="italic">Little Princesses</tspan>
+    </text>
+
+    <text x="0" y="210" font-family="'Poppins', sans-serif" font-size="16" fill="#5C3D4E" width="450">
+      <tspan x="0" dy="0">Handcrafted party frocks, festive lehengas &amp; everyday dresses</tspan>
+      <tspan x="0" dy="26">crafted with soft, 100% breathable fabrics.</tspan>
+    </text>
+
+    <!-- Trust highlight chips -->
+    <g transform="translate(0, 280)">
+      <circle cx="10" cy="10" r="5" fill="#25D366"/>
+      <text x="25" y="15" font-family="'Poppins', sans-serif" font-size="13" font-weight="500" fill="#2B2B2B">Pan-India &amp; UAE Dispatch</text>
+      
+      <circle cx="230" cy="10" r="5" fill="#C9A24B"/>
+      <text x="245" y="15" font-family="'Poppins', sans-serif" font-size="13" font-weight="500" fill="#2B2B2B">0-3Y Ready to Ship</text>
+    </g>
+  </g>
+</svg>

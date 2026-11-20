@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <defs>
+    <linearGradient id="b3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="60%" stop-color="#FAF1E3"/>
+      <stop offset="100%" stop-color="#F2DFBE"/>
+    </linearGradient>
+    <linearGradient id="maroon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7A1F3D"/>
+      <stop offset="100%" stop-color="#5B1229"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C77A"/>
+      <stop offset="50%" stop-color="#C9A24B"/>
+      <stop offset="100%" stop-color="#9B7828"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="url(#b3Grad)"/>
+  
+  <circle cx="950" cy="250" r="210" fill="#FFFFFF" opacity="0.8"/>
+  <circle cx="950" cy="250" r="195" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-dasharray="6,6"/>
+
+  <!-- Right Side Kidswear Illustration (Festive Motif) -->
+  <g transform="translate(850, 95)">
+    <!-- Crown icon -->
+    <path d="M 80,45 L 90,55 L 100,40 L 110,55 L 120,45 L 115,65 L 85,65 Z" fill="url(#gold)"/>
+    <!-- Kurta / Sherwani silhouette -->
+    <path d="M 70,75 L 130,75 L 145,150 L 125,155 L 125,250 L 75,250 L 75,155 L 55,150 Z" fill="url(#maroon)"/>
+    <!-- Gold buttons & embroidery border -->
+    <path d="M 100,75 L 100,200" stroke="url(#gold)" stroke-width="3"/>
+    <circle cx="100" cy="95" r="3" fill="url(#gold)"/>
+    <circle cx="100" cy="115" r="3" fill="url(#gold)"/>
+    <circle cx="100" cy="135" r="3" fill="url(#gold)"/>
+    <circle cx="100" cy="155" r="3" fill="url(#gold)"/>
+    <!-- Pyjama bottoms -->
+    <path d="M 75,250 L 125,250 L 120,340 L 103,340 L 100,280 L 97,340 L 80,340 Z" fill="#FDF8F0" stroke="url(#gold)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Left Content -->
+  <g transform="translate(100, 110)">
+    <rect x="0" y="0" width="175" height="30" rx="15" fill="#7A1F3D"/>
+    <text x="87.5" y="20" font-family="'Poppins', sans-serif" font-size="12" font-weight="600" fill="#FFF9F3" text-anchor="middle" letter-spacing="2">FESTIVE EDIT 2024</text>
+    
+    <text x="0" y="85" font-family="'Playfair Display', Georgia, serif" font-size="44" font-weight="700" fill="#7A1F3D">
+      <tspan x="0" dy="0">Royal Festive Wear for</tspan>
+      <tspan x="0" dy="55" fill="#C9A24B" font-style="italic">Every Celebration</tspan>
+    </text>
+
+    <text x="0" y="210" font-family="'Poppins', sans-serif" font-size="16" fill="#5C3D4E">
+      <tspan x="0" dy="0">Pure raw silk, brocade, zari work &amp; comfortable cotton linings</tspan>
+      <tspan x="0" dy="26">to make festive family moments truly unforgettable.</tspan>
+    </text>
+
+    <g transform="translate(0, 280)">
+      <circle cx="10" cy="10" r="5" fill="#25D366"/>
+      <text x="25" y="15" font-family="'Poppins', sans-serif" font-size="13" font-weight="500" fill="#2B2B2B">Worldwide Shipping</text>
+      
+      <circle cx="195" cy="10" r="5" fill="#C9A24B"/>
+      <text x="210" y="15" font-family="'Poppins', sans-serif" font-size="13" font-weight="500" fill="#2B2B2B">WhatsApp Assisted Orders</text>
+    </g>
+  </g>
+</svg>

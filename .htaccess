@@ -1,0 +1,24 @@
+# Root .htaccess — Protects repository root if DocumentRoot is not public_html
+Options -Indexes -ExecCGI
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Prevent direct access to sensitive folders
+    RewriteRule ^(app|sql|logs|scripts|\.git)/ - [F,L]
+    RewriteRule ^(\.env|config\.php|Dockerfile|docker-entrypoint\.sh|README\.md)$ - [F,L]
+
+    # If accessed directly, route requests into public_html
+    RewriteCond %{REQUEST_URI} !^/public_html/
+    RewriteRule ^(.*)$ public_html/$1 [L]
+</IfModule>
+
+<FilesMatch "(\.env|config\.php|\.git|composer\.lock|\.sql|\.log)$">
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>

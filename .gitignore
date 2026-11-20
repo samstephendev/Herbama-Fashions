@@ -1,0 +1,38 @@
+# Herbama Fashions — .gitignore
+# ================================
+
+# ── NEVER commit credentials ──────────────────────────────────────────────────
+app/config/config.php
+.env
+*.env
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── Uploaded files (server-side only) ────────────────────────────────────────
+public_html/uploads/*
+!public_html/uploads/.htaccess
+!public_html/uploads/.gitkeep
+
+# ── SQL dumps (may contain data) ─────────────────────────────────────────────
+sql/*.dump.sql
+sql/data_*.sql
+
+# ── OS & IDE ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# ── Composer (if added later) ─────────────────────────────────────────────────
+vendor/
+composer.lock
+
+# ── Node (if added later) ────────────────────────────────────────────────────
+node_modules/
+package-lock.json

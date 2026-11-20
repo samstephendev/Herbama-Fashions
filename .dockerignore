@@ -1,0 +1,13 @@
+.git
+.gitignore
+.gitattributes
+.env
+*.env
+app/config/config.php
+logs/*.log
+scratch/
+.vscode/
+.idea/
+*.md
+Dockerfile
+.dockerignore

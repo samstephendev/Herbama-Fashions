@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C77A"/>
+      <stop offset="50%" stop-color="#C9A24B"/>
+      <stop offset="100%" stop-color="#9B7828"/>
+    </linearGradient>
+    <linearGradient id="maroonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#91274A"/>
+      <stop offset="50%" stop-color="#7A1F3D"/>
+      <stop offset="100%" stop-color="#5B1229"/>
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Ring (Gold) -->
+  <circle cx="60" cy="60" r="56" fill="url(#maroonGrad)" stroke="url(#goldGrad)" stroke-width="3.5" filter="url(#subtleShadow)"/>
+  <!-- Inner Decorative Ring -->
+  <circle cx="60" cy="60" r="51" fill="none" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2, 3" opacity="0.8"/>
+
+  <!-- Ornate Crown Motif atop monogram -->
+  <path d="M52 35 L56 39 L60 33 L64 39 L68 35 L66 43 L54 43 Z" fill="url(#goldGrad)"/>
+  <circle cx="52" cy="34" r="1.5" fill="url(#goldGrad)"/>
+  <circle cx="60" cy="32" r="1.8" fill="url(#goldGrad)"/>
+  <circle cx="68" cy="34" r="1.5" fill="url(#goldGrad)"/>
+
+  <!-- Ornate Monogram HF -->
+  <g font-family="'Playfair Display', 'Cormorant Garamond', serif" font-weight="700" font-size="44" fill="url(#goldGrad)" text-anchor="middle">
+    <!-- Stylized H and F intertwined -->
+    <text x="46" y="81" font-style="italic">H</text>
+    <text x="73" y="81" font-style="normal" font-size="40">F</text>
+  </g>
+
+  <!-- Base ribbon arc / flourishing line -->
+  <path d="M40 88 Q60 94 80 88" fill="none" stroke="url(#goldGrad)" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="60" cy="91" r="1.8" fill="url(#goldGrad)"/>
+</svg>

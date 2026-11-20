@@ -1,0 +1,75 @@
+/*
+ * Herbama Fashions — Design Tokens
+ * ==================================
+ * Master design token variables adhering to the brand design system:
+ * Maroon #7A1F3D + Gold #C9A24B on Cream #FFF9F3.
+ */
+
+:root {
+    /* ── Color Palette ─────────────────────────────────────────────────── */
+    --color-maroon:              #7A1F3D;
+    --color-maroon-dark:         #581229;
+    --color-maroon-hover:        #8E2347;
+    --color-maroon-light:        #A3345A;
+    --color-maroon-subtle:       rgba(122, 31, 61, 0.08);
+
+    --color-gold:                #C9A24B;
+    --color-gold-dark:           #A38031;
+    --color-gold-light:          #E5C77A;
+    --color-gold-subtle:         rgba(201, 162, 75, 0.12);
+
+    --color-cream:               #FFF9F3;
+    --color-cream-dark:          #F7EFE7;
+    --color-blush-card:          #FFF4F2;
+    --color-white:               #FFFFFF;
+    --color-dark:                #2B2B2B;
+    --color-dark-muted:          #666666;
+    --color-dark-light:          #888888;
+    --color-border:              #EADFD6;
+    --color-border-subtle:       #F2EAE3;
+
+    --color-whatsapp:            #25D366;
+    --color-whatsapp-dark:       #1EAA52;
+
+    --color-success:             #2D7A4F;
+    --color-warning:             #D97706;
+    --color-danger:              #DC2626;
+
+    /* ── Typography ────────────────────────────────────────────────────── */
+    --font-serif:                'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-sans:                 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+
+    --text-xs:                   0.75rem;     /* 12px */
+    --text-sm:                   0.875rem;    /* 14px */
+    --text-base:                 1rem;        /* 16px */
+    --text-lg:                   1.125rem;    /* 18px */
+    --text-xl:                   1.25rem;     /* 20px */
+    --text-2xl:                  1.5rem;      /* 24px */
+    --text-3xl:                  1.875rem;    /* 30px */
+    --text-4xl:                  2.25rem;     /* 36px */
+    --text-5xl:                  3rem;        /* 48px */
+
+    /* ── Radii & Elevation ─────────────────────────────────────────────── */
+    --radius-sm:                 6px;
+    --radius-md:                 12px;
+    --radius-lg:                 16px;
+    --radius-xl:                 24px;
+    --radius-pill:               9999px;
+
+    --shadow-sm:                 0 2px 6px rgba(122, 31, 61, 0.05);
+    --shadow-md:                 0 4px 16px rgba(122, 31, 61, 0.08);
+    --shadow-lg:                 0 10px 30px rgba(122, 31, 61, 0.12);
+    --shadow-card:               0 6px 20px rgba(0, 0, 0, 0.04);
+    --shadow-hover:              0 12px 28px rgba(122, 31, 61, 0.14);
+
+    /* ── Layout & Heights ──────────────────────────────────────────────── */
+    --container-max:             1240px;
+    --container-pad:             clamp(1rem, 4vw, 2rem);
+    --announcement-height:       38px;
+    --nav-height:                76px;
+
+    /* ── Transitions ───────────────────────────────────────────────────── */
+    --transition-fast:           150ms ease;
+    --transition-base:           250ms ease;
+    --transition-smooth:         350ms cubic-bezier(0.16, 1, 0.3, 1);
+}
