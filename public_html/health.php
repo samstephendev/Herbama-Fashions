@@ -81,6 +81,7 @@ if ($wantsJson) {
 
     $databasePayload = [
         'connected' => (bool)$dbStatus['connected'],
+        'ssl_mode'  => DB_SSL_MODE,
         'ssl_ca'    => !empty(DB_SSL_CA) ? 'configured' : 'disabled',
         'error'     => $isProduction ? ($dbStatus['connected'] ? null : 'Connection failed') : $dbStatus['error'],
     ];

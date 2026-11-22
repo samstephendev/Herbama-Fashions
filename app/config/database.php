@@ -35,20 +35,19 @@ class Database
                 $options[@PDO::MYSQL_ATTR_FOUND_ROWS] = true;
             }
 
-            // Enable SSL if CA path is provided (required for Aiven / Cloud MySQL)
-            if (!empty(DB_SSL_CA)) {
-                $caPath = DB_SSL_CA;
-                // Support relative path from project root
-                if (!file_exists($caPath) && file_exists(BASE_ROOT . '/' . ltrim($caPath, '/'))) {
-                    $caPath = BASE_ROOT . '/' . ltrim($caPath, '/');
-                }
-                
-                if (file_exists($caPath)) {
-                    if (defined('PDO::MYSQL_ATTR_SSL_CA')) {
-                        $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
-                    }
+            // Resolve SSL options based on DB_SSL_MODE and DB_SSL_CA
+            try {
+                $sslOptions = self::resolveSslOptions();
+                $options += $sslOptions;
+            } catch (PDOException $sslEx) {
+                // SSL configuration error (e.g. missing CA in verify mode)
+                error_log('[DB] SSL Configuration Error: ' . $sslEx->getMessage());
+                http_response_code(503);
+                if (defined('APP_DEBUG') && APP_DEBUG) {
+                    die('<h3>Database Connection Failed</h3>' .
+                        '<p><strong>SSL Configuration Error:</strong> ' . htmlspecialchars($sslEx->getMessage()) . '</p>');
                 } else {
-                    error_log('[DB WARNING] DB_SSL_CA file not found at: ' . DB_SSL_CA);
+                    die('Service temporarily unavailable. Please try again later.');
                 }
             }
 
@@ -95,6 +94,82 @@ class Database
         }
     }
 
+    /**
+     * Resolve absolute path to a CA file (supports absolute and relative to project root).
+     */
+    public static function resolveCaPath(string $caPath): ?string
+    {
+        $trimmed = trim($caPath);
+        if ($trimmed === '') {
+            return null;
+        }
+        if (file_exists($trimmed)) {
+            return $trimmed;
+        }
+        if (defined('BASE_ROOT')) {
+            $relative = BASE_ROOT . '/' . ltrim($trimmed, '/\\');
+            if (file_exists($relative)) {
+                return $relative;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Resolve PDO MySQL SSL configuration options based on DB_SSL_MODE and DB_SSL_CA.
+     *
+     * @param string|null $sslMode 'require' | 'verify' | 'disable' (defaults to DB_SSL_MODE)
+     * @param string|null $sslCa   Path to CA file (defaults to DB_SSL_CA)
+     * @return array PDO connection options array
+     * @throws PDOException When 'verify' mode is active but CA file is missing
+     */
+    public static function resolveSslOptions(?string $sslMode = null, ?string $sslCa = null): array
+    {
+        $mode = strtolower(trim($sslMode ?? (defined('DB_SSL_MODE') ? DB_SSL_MODE : 'disable')));
+        $ca   = trim($sslCa ?? (defined('DB_SSL_CA') ? DB_SSL_CA : ''));
+        $options = [];
+
+        if ($mode === 'require') {
+            // Connect with SSL enabled but without verifying server certificate (no CA needed).
+            $caResolved = self::resolveCaPath($ca);
+            if (defined('Pdo\Mysql::ATTR_SSL_CA')) {
+                $options[\Pdo\Mysql::ATTR_SSL_CA] = $caResolved ?? '';
+                $options[\Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            } elseif (defined('PDO::MYSQL_ATTR_SSL_CA')) {
+                $options[PDO::MYSQL_ATTR_SSL_CA] = $caResolved ?? '';
+                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            }
+            return $options;
+        }
+
+        if ($mode === 'verify') {
+            $caResolved = self::resolveCaPath($ca);
+            if ($caResolved === null) {
+                $errorMsg = '[DB ERROR] SSL CA file is missing or not found in "verify" mode: ' . ($ca !== '' ? $ca : '(DB_SSL_CA is empty)');
+                // Log clear error to stderr instead of silently connecting without SSL
+                if (defined('STDERR') && is_resource(STDERR)) {
+                    fwrite(STDERR, $errorMsg . "\n");
+                } else {
+                    @file_put_contents('php://stderr', $errorMsg . "\n");
+                }
+                error_log($errorMsg);
+                throw new PDOException($errorMsg);
+            }
+
+            if (defined('Pdo\Mysql::ATTR_SSL_CA')) {
+                $options[\Pdo\Mysql::ATTR_SSL_CA] = $caResolved;
+                $options[\Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT] = true;
+            } elseif (defined('PDO::MYSQL_ATTR_SSL_CA')) {
+                $options[PDO::MYSQL_ATTR_SSL_CA] = $caResolved;
+                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+            }
+            return $options;
+        }
+
+        // 'disable' or unconfigured: connect without SSL options
+        return [];
+    }
+
     /** Prevent cloning / serialization of the singleton. */
     private function __construct() {}
     private function __clone() {}
@@ -104,11 +179,13 @@ class Database
     }
 }
 
-/**
- * Convenience wrapper — returns the shared PDO instance.
- * Usage: $pdo = db();  then  $pdo->prepare(...)->execute([...]);
- */
-function db(): PDO
-{
-    return Database::getInstance();
+if (!function_exists('db')) {
+    /**
+     * Convenience wrapper — returns the shared PDO instance.
+     * Usage: $pdo = db();  then  $pdo->prepare(...)->execute([...]);
+     */
+    function db(): PDO
+    {
+        return Database::getInstance();
+    }
 }

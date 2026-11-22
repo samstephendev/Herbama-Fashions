@@ -39,9 +39,15 @@ return [
     'DB_USER' => 'root',
     'DB_PASS' => '',
 
-    // ── SSL Certificate for Database (Needed for Aiven MySQL) ────────────────
-    // Path to CA certificate file, e.g. '/etc/ssl/certs/aiven-ca.pem'
-    // Leave empty ('') for XAMPP and Hostinger standard MySQL connections.
+    // ── SSL Mode for Database ────────────────────────────────────────────────
+    // 'require' : Connect with SSL enabled without verifying server certificate (no CA needed)
+    // 'verify'  : Connect with SSL and verify against DB_SSL_CA (default in production)
+    // 'disable' : Plain connection without SSL (default in local development)
+    'DB_SSL_MODE' => 'disable',
+
+    // ── SSL Certificate for Database (Needed for Aiven / Cloud MySQL) ────────
+    // Path to CA certificate file, e.g. 'app/config/ca.pem' or '/etc/ssl/certs/aiven-ca.pem'
+    // In 'verify' mode, this file MUST exist or connection is aborted with error.
     'DB_SSL_CA' => '',
 
     // ── Business Settings ────────────────────────────────────────────────────

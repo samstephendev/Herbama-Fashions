@@ -94,6 +94,7 @@ Configuration settings are loaded using a three-tier precedence mechanism:
 | `DB_NAME` | MySQL database name | `herbama_db` |
 | `DB_USER` | MySQL database username | `herbama_user` (never root in prod) |
 | `DB_PASS` | MySQL database password | `secret_password` |
+| `DB_SSL_MODE` | MySQL SSL mode (`require`, `verify`, `disable`) | `verify` (in prod) / `disable` (in local) |
 | `DB_SSL_CA` | Path to MySQL SSL Certificate Authority file | `app/config/ca.pem` (for Aiven) |
 | `WHATSAPP_NUMBER` | Business WhatsApp number (country code + number) | `91XXXXXXXXXX` |
 | `UPI_ID` | Business UPI ID for WhatsApp order payments | `yourname@upi` |
@@ -377,7 +378,7 @@ The application implements a defense-in-depth security model:
 - `app/config/loader.php` — Multi-environment loader (.env, env vars, config.php, `url()`, `asset()` helpers).
 - `app/config/config.sample.php` — Documented environment template with placeholders.
 - `app/config/config.php` — Local configuration file.
-- `app/config/database.php` — PDO MySQL connection supporting `DB_PORT`, `DB_SSL_CA`, and connection testing.
+- `app/config/database.php` — PDO MySQL connection supporting `DB_PORT`, `DB_SSL_MODE` (`require`/`verify`/`disable`), `DB_SSL_CA`, and connection testing.
 - `app/config/bootstrap.php` — Environment-aware bootstrap enforcing HTTPS, HSTS, CSP, and security headers.
 - `app/helpers/mail.php` — Mail helper redirecting outgoing emails to `logs/mail.log` in local mode.
 - `app/helpers/session.php` — Dynamic `secure` cookie attribute based on HTTPS/environment.

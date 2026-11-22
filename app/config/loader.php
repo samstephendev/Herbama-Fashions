@@ -228,6 +228,14 @@ if (!defined('DB_PASS'))    define('DB_PASS',    (string)env_setting('DB_PASS', 
 if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8mb4');
 if (!defined('DB_SSL_CA'))  define('DB_SSL_CA',  (string)env_setting('DB_SSL_CA', '', $fileConfig));
 
+// Database SSL Mode: 'require' | 'verify' | 'disable' (Default: 'verify' in production)
+$defaultSslMode = (APP_ENV === 'production') ? 'verify' : (!empty(env_setting('DB_SSL_CA', '', $fileConfig)) ? 'verify' : 'disable');
+$sslModeSetting = strtolower(trim((string)env_setting('DB_SSL_MODE', $defaultSslMode, $fileConfig)));
+if (!in_array($sslModeSetting, ['require', 'verify', 'disable'], true)) {
+    $sslModeSetting = $defaultSslMode;
+}
+if (!defined('DB_SSL_MODE')) define('DB_SSL_MODE', $sslModeSetting);
+
 // Business Settings
 if (!defined('WHATSAPP_NUMBER')) define('WHATSAPP_NUMBER', (string)env_setting('WHATSAPP_NUMBER', '91XXXXXXXXXX', $fileConfig));
 if (!defined('UPI_ID'))          define('UPI_ID',          (string)env_setting('UPI_ID', 'yourname@upi', $fileConfig));
