@@ -20,6 +20,7 @@
  *  11. Initial Admin Setup: setup-admin logic and refusal to run once an admin exists
  *  12. Health Check: returns HTTP 200 on healthy setup and protects production details
  *  13. Last-Item Mark-as-Paid: fails cleanly with readable message when stock is insufficient
+ *  14. HTTPS Proxy & Redirect Loop Defense: isHttps helper, Render proxy headers, HTTPS redirect & exemptions
  */
 
 declare(strict_types=1);
@@ -578,6 +579,120 @@ report("Mark-as-Paid fails cleanly with readable message when stock is insuffici
     $payCust2['ok'] === false && str_contains(strtolower($payCust2['error'] ?? ''), 'insufficient stock'),
     "Error: " . ($payCust2['error'] ?? '')
 );
+
+// ── 13. HTTPS Proxy & Redirect Loop Defense (Render) ─────────────────────────
+echo "\n--- 13. Testing HTTPS Proxy & Redirect Loop Defense (Render) ---\n";
+
+// Helper to isolate $_SERVER mutations during testing
+function testIsHttpsWith(array $serverEnv): bool {
+    $orig = $_SERVER;
+    // Clear HTTPS indicator keys
+    unset($_SERVER['HTTPS'], $_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['HTTP_X_FORWARDED_SSL']);
+    $_SERVER['SERVER_PORT'] = '80';
+    foreach ($serverEnv as $k => $v) {
+        $_SERVER[$k] = $v;
+    }
+    $res = isHttps();
+    $_SERVER = $orig;
+    return $res;
+}
+
+// 13.1 Helper isHttps() condition testing
+report("isHttps() returns true when \$_SERVER['HTTPS'] is 'on'", testIsHttpsWith(['HTTPS' => 'on']));
+report("isHttps() returns true when \$_SERVER['HTTPS'] is '1'", testIsHttpsWith(['HTTPS' => '1']));
+report("isHttps() returns true when \$_SERVER['HTTPS'] is 'ON' (case-insensitive)", testIsHttpsWith(['HTTPS' => 'ON']));
+report("isHttps() returns false when \$_SERVER['HTTPS'] is 'off'", testIsHttpsWith(['HTTPS' => 'off']) === false);
+report("isHttps() returns true when \$_SERVER['HTTP_X_FORWARDED_PROTO'] is 'https'", testIsHttpsWith(['HTTP_X_FORWARDED_PROTO' => 'https']));
+report("isHttps() returns true when \$_SERVER['HTTP_X_FORWARDED_PROTO'] is comma-separated ('https, http')", testIsHttpsWith(['HTTP_X_FORWARDED_PROTO' => 'https, http']));
+report("isHttps() returns false when \$_SERVER['HTTP_X_FORWARDED_PROTO'] first value is 'http' ('http, https')", testIsHttpsWith(['HTTP_X_FORWARDED_PROTO' => 'http, https']) === false);
+report("isHttps() returns true when \$_SERVER['HTTP_X_FORWARDED_SSL'] is 'on'", testIsHttpsWith(['HTTP_X_FORWARDED_SSL' => 'on']));
+report("isHttps() returns true when \$_SERVER['SERVER_PORT'] is 443", testIsHttpsWith(['SERVER_PORT' => 443]));
+report("isHttps() returns true when \$_SERVER['SERVER_PORT'] is '443'", testIsHttpsWith(['SERVER_PORT' => '443']));
+report("isHttps() returns false for standard plain HTTP (port 80, no proxy headers)", testIsHttpsWith(['SERVER_PORT' => 80]) === false);
+
+// 13.2 Simulated request behind Render HTTPS proxy (HTTP_X_FORWARDED_PROTO=https)
+$renderProxyReq = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/collection.php',
+    'HTTP_X_FORWARDED_PROTO' => 'https',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+];
+$renderRedirects = shouldRedirectToHttps($renderProxyReq, 'production');
+report("Render proxy request (HTTP_X_FORWARDED_PROTO=https) DOES NOT redirect in production", $renderRedirects === false);
+
+// Comma-separated proxy header (e.g., multi-tier proxy: client -> CDN -> Render)
+$multiProxyReq = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/cart.php',
+    'HTTP_X_FORWARDED_PROTO' => 'https, http',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Mozilla/5.0',
+];
+$multiProxyRedirects = shouldRedirectToHttps($multiProxyReq, 'production');
+report("Multi-proxy request (HTTP_X_FORWARDED_PROTO='https, http') DOES NOT redirect in production", $multiProxyRedirects === false);
+
+// 13.3 Plain HTTP request in production STILL REDIRECTS
+$plainHttpProdReq = [
+    'HTTP_HOST'              => 'herbamafashions.com',
+    'REQUEST_URI'            => '/collection.php',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Mozilla/5.0',
+];
+$plainHttpRedirects = shouldRedirectToHttps($plainHttpProdReq, 'production');
+report("Plain HTTP request in production STILL REDIRECTS to https", $plainHttpRedirects === true);
+
+// 13.4 Plain HTTP request in local environment DOES NOT redirect (XAMPP behaviour preserved)
+$localHttpReq = [
+    'HTTP_HOST'              => 'localhost',
+    'REQUEST_URI'            => '/Herbama-Fashions/public_html/index.php',
+    'SERVER_PORT'            => '80',
+];
+$localRedirects = shouldRedirectToHttps($localHttpReq, 'local');
+report("Plain HTTP request in local environment (XAMPP) DOES NOT redirect", $localRedirects === false);
+
+// 13.5 Health check exemptions from HTTPS redirect
+$healthCheckReq = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/health.php',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Mozilla/5.0',
+];
+report("Health check path (/health.php) is exempt from HTTPS redirect in production", shouldRedirectToHttps($healthCheckReq, 'production') === false);
+
+$cleanHealthReq = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/health',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Mozilla/5.0',
+];
+report("Clean health check path (/health) is exempt from HTTPS redirect in production", shouldRedirectToHttps($cleanHealthReq, 'production') === false);
+
+// 13.6 Render health checker user agent exemptions
+$renderUaReq1 = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Render/1.0',
+];
+report("Request with user agent 'Render/1.0' is exempt from HTTPS redirect", shouldRedirectToHttps($renderUaReq1, 'production') === false);
+
+$renderUaReq2 = [
+    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'REQUEST_URI'            => '/',
+    'SERVER_PORT'            => '80',
+    'HTTP_USER_AGENT'        => 'Go-http-client/1.1 (Render Health Check)',
+];
+report("Request with user agent 'Go-http-client' is exempt from HTTPS redirect", shouldRedirectToHttps($renderUaReq2, 'production') === false);
+
+// 13.7 .htaccess Rewrite rules verification
+$pubHtaccess = file_get_contents(BASE_ROOT . '/public_html/.htaccess');
+$hasXForwardedProtoHtaccess = str_contains($pubHtaccess, 'RewriteCond %{HTTP:X-Forwarded-Proto} !https');
+$hasHealthExemptionHtaccess = str_contains($pubHtaccess, 'health');
+$hasUaExemptionHtaccess     = str_contains($pubHtaccess, 'Render/1\.0') && str_contains($pubHtaccess, 'Go-http-client');
+report("public_html/.htaccess checks %{HTTP:X-Forwarded-Proto} !https to prevent proxy redirect loop", $hasXForwardedProtoHtaccess);
+report("public_html/.htaccess exempts health check path from HTTPS redirect", $hasHealthExemptionHtaccess);
+report("public_html/.htaccess exempts Render health checker user agents from HTTPS redirect", $hasUaExemptionHtaccess);
 
 echo "\n========================================================\n";
 $total = count($results);

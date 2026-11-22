@@ -82,6 +82,105 @@ if (!function_exists('env_setting')) {
     }
 }
 
+// ── Helper: Determine if request is over HTTPS ────────────────────────────────
+if (!function_exists('isHttps')) {
+    /**
+     * Determine if the current request is over HTTPS.
+     * Returns true when ANY of the following is true:
+     *   - $_SERVER['HTTPS'] is "on" or "1"
+     *   - $_SERVER['HTTP_X_FORWARDED_PROTO'] equals "https" (first value if comma-separated)
+     *   - $_SERVER['HTTP_X_FORWARDED_SSL'] is "on"
+     *   - $_SERVER['SERVER_PORT'] is 443
+     */
+    function isHttps(): bool
+    {
+        // 1. $_SERVER['HTTPS'] is "on" or "1"
+        if (!empty($_SERVER['HTTPS'])) {
+            $val = strtolower((string)$_SERVER['HTTPS']);
+            if ($val === 'on' || $val === '1') {
+                return true;
+            }
+        }
+
+        // 2. $_SERVER['HTTP_X_FORWARDED_PROTO'] equals "https" (first value if comma-separated)
+        if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            $parts = explode(',', (string)$_SERVER['HTTP_X_FORWARDED_PROTO']);
+            $first = strtolower(trim($parts[0]));
+            if ($first === 'https') {
+                return true;
+            }
+        }
+
+        // 3. $_SERVER['HTTP_X_FORWARDED_SSL'] is "on"
+        if (!empty($_SERVER['HTTP_X_FORWARDED_SSL'])) {
+            $val = strtolower((string)$_SERVER['HTTP_X_FORWARDED_SSL']);
+            if ($val === 'on') {
+                return true;
+            }
+        }
+
+        // 4. $_SERVER['SERVER_PORT'] is 443
+        if (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if (!function_exists('shouldRedirectToHttps')) {
+    /**
+     * Determine whether an incoming request should be redirected to HTTPS.
+     * Returns false when:
+     *   - Environment is not production
+     *   - Request is already HTTPS (via isHttps())
+     *   - Request is a health check path (/health.php, /health)
+     *   - Request is from Render's health checker (user agent "Render/1.0" or "Go-http-client")
+     */
+    function shouldRedirectToHttps(array $server = [], string $env = APP_ENV): bool
+    {
+        if ($env !== 'production') {
+            return false;
+        }
+
+        $s = !empty($server) ? array_merge($_SERVER, $server) : $_SERVER;
+
+        // Check HTTPS status using the server context
+        $backup = $_SERVER;
+        $_SERVER = $s;
+        $isSecure = isHttps();
+        $_SERVER = $backup;
+
+        if ($isSecure) {
+            return false;
+        }
+
+        $requestUri  = $s['REQUEST_URI'] ?? '/';
+        $requestPath = (string)(parse_url($requestUri, PHP_URL_PATH) ?? '');
+        $scriptName  = $s['SCRIPT_NAME'] ?? '';
+        $userAgent   = $s['HTTP_USER_AGENT'] ?? '';
+
+        $isHealthCheck = (
+            $requestPath === '/health' ||
+            $requestPath === '/health.php' ||
+            str_ends_with($requestPath, '/health') ||
+            str_ends_with($requestPath, '/health.php') ||
+            str_ends_with($scriptName, 'health.php')
+        );
+
+        $isRenderChecker = (
+            stripos($userAgent, 'Render/1.0') !== false ||
+            stripos($userAgent, 'Go-http-client') !== false
+        );
+
+        if ($isHealthCheck || $isRenderChecker) {
+            return false;
+        }
+
+        return true;
+    }
+}
+
 // ── 3. Resolve Settings ───────────────────────────────────────────────────────
 
 // Environment: 'local' or 'production'
@@ -102,12 +201,7 @@ $siteUrl    = (string)env_setting('SITE_URL', '', $fileConfig);
 
 // Auto-detect SITE_URL if not explicitly set (e.g., http://localhost/herbama)
 if (empty($siteUrl)) {
-    $isHttps = (
-        (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
-        (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
-        (!empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
-    );
-    $protocol = $isHttps ? 'https' : 'http';
+    $scheme = isHttps() ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     
     // Auto-detect subfolder path
@@ -116,7 +210,7 @@ if (empty($siteUrl)) {
         $dir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
         $scriptDir = ($dir === '/' || $dir === '.') ? '' : rtrim($dir, '/');
     }
-    $siteUrl = rtrim($protocol . '://' . $host . $scriptDir, '/');
+    $siteUrl = rtrim($scheme . '://' . $host . $scriptDir, '/');
 } else {
     $siteUrl = rtrim($siteUrl, '/');
 }

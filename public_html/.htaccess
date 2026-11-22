@@ -12,9 +12,12 @@
     # On root domains or Hostinger public_html, leave commented:
     # RewriteBase /
 
-    # Redirect HTTP → HTTPS (skipped for local development on localhost/127.0.0.1)
+    # Redirect HTTP → HTTPS (skipped for local development, proxies with HTTPS, and health checks)
     RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
     RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
+    RewriteCond %{REQUEST_URI} !/(health|health\.php)$ [NC]
+    RewriteCond %{HTTP_USER_AGENT} !(Render/1\.0|Go-http-client) [NC]
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Remove www on production domains
@@ -23,6 +26,7 @@
     RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
     # ── Clean SEO URLs (relative substitutions work in root and subfolders) ───
+    RewriteRule ^health/?$ health.php [L,QSA]
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
     RewriteRule ^product/([a-zA-Z0-9_-]+)/?$ product.php?slug=$1 [L,QSA]
     RewriteRule ^girls-wear/?$ collection.php?cat=girls [L,QSA]

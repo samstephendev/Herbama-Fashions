@@ -12,11 +12,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/loader.php';
 
 // ── 2. Determine HTTPS status ─────────────────────────────────────────────────
-$isHttps = (
-    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
-    (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
-    (!empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443)
-);
+$isHttps = isHttps();
 
 // ── 3. Security headers (set before ANY output) ───────────────────────────────
 header('X-Content-Type-Options: nosniff');
@@ -42,12 +38,12 @@ header(
 // ── 4. Production vs Local Mode Rules ─────────────────────────────────────────
 if (APP_ENV === 'production') {
     // Enable HSTS in production when over HTTPS
-    if ($isHttps) {
+    if (isHttps()) {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
     }
 
-    // Force HTTPS redirect on live host
-    if (!$isHttps && PHP_SAPI !== 'cli') {
+    // Force HTTPS redirect on live host (exempt health check and Render's health checker)
+    if (shouldRedirectToHttps() && PHP_SAPI !== 'cli') {
         $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $uri  = $_SERVER['REQUEST_URI'] ?? '/';
         header('Location: https://' . $host . $uri, true, 301);

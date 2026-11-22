@@ -18,8 +18,10 @@ require_once dirname(__DIR__) . '/app/config/bootstrap.php';
 $isProduction = (APP_ENV === 'production');
 $token = $_GET['token'] ?? '';
 $isAuthenticated = !empty($token) && hash_equals(HEALTH_CHECK_TOKEN, (string)$token);
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$isRenderCheck = stripos($userAgent, 'Render/1.0') !== false || stripos($userAgent, 'Go-http-client') !== false;
 
-if ($isProduction && !$isAuthenticated) {
+if ($isProduction && !$isAuthenticated && !$isRenderCheck) {
     http_response_code(403);
     if (($_GET['format'] ?? '') === 'json' || str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json')) {
         header('Content-Type: application/json; charset=utf-8');
