@@ -53,6 +53,17 @@ class Database
 
             try {
                 self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
+
+                // In non-production environments (and in CLI test runs), enable ONLY_FULL_GROUP_BY
+                // so that GROUP BY violations are caught locally before reaching a strict server.
+                $appEnv = defined('APP_ENV') ? APP_ENV : 'local';
+                if ($appEnv !== 'production' || (defined('TEST_SUITE_RUNNING') && TEST_SUITE_RUNNING)) {
+                    try {
+                        self::$instance->exec("SET SESSION sql_mode = CONCAT(@@sql_mode, ',ONLY_FULL_GROUP_BY')");
+                    } catch (\Throwable $ignore) {
+                        // Silently ignore if the driver does not support SET SESSION (e.g. SQLite in unit tests)
+                    }
+                }
             } catch (PDOException $e) {
                 // Log the real error privately
                 error_log('[DB] Connection failed: ' . $e->getMessage());

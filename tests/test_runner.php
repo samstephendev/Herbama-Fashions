@@ -799,6 +799,135 @@ if ($sTest) {
 }
 report("Live MySQL SSL handshake test: both 'require' and 'verify' connect over TLS", $socketTestOk, $socketTestDetails);
 
+// ── 15. ONLY_FULL_GROUP_BY Compliance ────────────────────────────────────────
+echo "\n--- 15. Testing ONLY_FULL_GROUP_BY Compliance ---\n";
+
+// 15.1 ProductModel::list() — no longer uses GROUP BY; primary_image now comes from a correlated subquery
+$productModelSrc = file_get_contents(BASE_ROOT . '/app/models/ProductModel.php');
+
+// Confirm the correlated subquery for primary_image is present
+$hasPrimaryImageSubquery = str_contains($productModelSrc, 'SELECT image_path FROM product_images')
+    && str_contains($productModelSrc, 'WHERE product_id = p.id AND is_primary = 1');
+report(
+    "ProductModel::list() uses a correlated subquery for primary_image (not a GROUP BY JOIN)",
+    $hasPrimaryImageSubquery
+);
+
+// Confirm the old violating pattern (LEFT JOIN product_images + GROUP BY p.id in list()) is removed
+// We check the list() method body — the join should no longer appear together with GROUP BY
+$listMethodStart = strpos($productModelSrc, 'public function list(');
+$listMethodEnd   = strpos($productModelSrc, 'public function getPriceBounds(');
+$listMethodBody  = substr($productModelSrc, (int)$listMethodStart, (int)$listMethodEnd - (int)$listMethodStart);
+$oldPatternGone  = !str_contains($listMethodBody, "LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1")
+                 || !str_contains($listMethodBody, 'GROUP BY p.id');
+report(
+    "ProductModel::list() does NOT combine LEFT JOIN product_images with GROUP BY p.id",
+    $oldPatternGone
+);
+
+// 15.2 OrderModel::adminListOrders() — customer_email now comes from a correlated subquery
+$orderModelSrc = file_get_contents(BASE_ROOT . '/app/models/OrderModel.php');
+$adminListStart = strpos($orderModelSrc, 'public function adminListOrders(');
+$adminListBody  = substr($orderModelSrc, (int)$adminListStart, 2000);
+$hasEmailSubquery = str_contains($adminListBody, 'SELECT email FROM users WHERE id = o.user_id');
+report(
+    "OrderModel::adminListOrders() uses a correlated subquery for customer_email",
+    $hasEmailSubquery
+);
+
+// Confirm u.email is not selected directly alongside GROUP BY o.id anymore
+$oldEmailJoin = str_contains($adminListBody, 'u.email AS customer_email')
+             && str_contains($adminListBody, 'LEFT JOIN users u ON o.user_id = u.id');
+report(
+    "OrderModel::adminListOrders() does NOT select u.email via JOIN while GROUP BY o.id",
+    !$oldEmailJoin
+);
+
+// 15.3 All remaining GROUP BY queries group by the PK of the driving table (functional dependency)
+//      getSubcategories(), getCategories(), adminList() subquery, getUserOrders() — these are valid.
+//      We confirm each one groups by the PK column of its main table.
+$groupByOk = true;
+$groupByChecks = [
+    // pattern => description
+    ['GROUP BY sub.id', 'getSubcategories() groups by sub.id (PK of categories)'],
+    ['GROUP BY c.id',   'getCategories() groups by c.id (PK of categories)'],
+    ['GROUP BY p.id',   'adminList() inner subquery groups by p.id (PK of products)'],
+];
+foreach ($groupByChecks as [$pattern, $desc]) {
+    $found = str_contains($productModelSrc, $pattern);
+    report($desc, $found);
+}
+$orderGroupByOk = str_contains($orderModelSrc, 'GROUP BY o.id');
+report("getUserOrders() / adminListOrders() groups by o.id (PK of orders)", $orderGroupByOk);
+
+// 15.4 database.php enforces ONLY_FULL_GROUP_BY in non-production environments
+$dbSrc = file_get_contents(BASE_ROOT . '/app/config/database.php');
+$hasStrictModeEnforcement = str_contains($dbSrc, "SET SESSION sql_mode = CONCAT(@@sql_mode, ',ONLY_FULL_GROUP_BY')");
+report(
+    "database.php enforces ONLY_FULL_GROUP_BY via SET SESSION sql_mode in non-production",
+    $hasStrictModeEnforcement
+);
+
+$hasNonProdGuard = str_contains($dbSrc, "appEnv !== 'production'")
+                || str_contains($dbSrc, 'APP_ENV') && str_contains($dbSrc, 'ONLY_FULL_GROUP_BY');
+report(
+    "database.php guards strict-mode enforcement behind a non-production check",
+    $hasNonProdGuard
+);
+
+// 15.5 Confirm ANY_VALUE() is NOT used as a shortcut (it hides violations)
+$noAnyValueInProduct = !str_contains($productModelSrc, 'ANY_VALUE(');
+$noAnyValueInOrder   = !str_contains($orderModelSrc, 'ANY_VALUE(');
+report(
+    "ProductModel.php does not use ANY_VALUE() as a shortcut for ONLY_FULL_GROUP_BY",
+    $noAnyValueInProduct
+);
+report(
+    "OrderModel.php does not use ANY_VALUE() as a shortcut for ONLY_FULL_GROUP_BY",
+    $noAnyValueInOrder
+);
+
+// 15.6 SELECT DISTINCT / ORDER BY compatibility check
+// audit-log.php: SELECT DISTINCT action ... ORDER BY action — 'action' is in SELECT, valid.
+$auditLogSrc = file_get_contents(BASE_ROOT . '/public_html/admin/audit-log.php');
+$distinctActionInSelect = preg_match('/SELECT\s+DISTINCT\s+action\b.*?ORDER BY\s+action/si', $auditLogSrc);
+report(
+    "audit-log.php SELECT DISTINCT action ... ORDER BY action — 'action' is in SELECT (valid)",
+    (bool)$distinctActionInSelect
+);
+
+// 15.7 No zero-date defaults (0000-00-00) in schema or model files
+// We scan known SQL/model files for '0000-00-00'
+$filesToScanDates = [
+    BASE_ROOT . '/app/models/ProductModel.php',
+    BASE_ROOT . '/app/models/OrderModel.php',
+    BASE_ROOT . '/app/models/CartModel.php',
+    BASE_ROOT . '/app/models/UserModel.php',
+];
+$zeroDateFound = false;
+foreach ($filesToScanDates as $f) {
+    if (file_exists($f) && str_contains(file_get_contents($f), '0000-00-00')) {
+        $zeroDateFound = true;
+        break;
+    }
+}
+report(
+    "No zero-date values (0000-00-00) in model INSERT/UPDATE queries",
+    !$zeroDateFound
+);
+
+// 15.8 Numeric columns receive cast values (not raw empty strings)
+// Check adminCreate in ProductModel.php — discount_pct, compare_price, sort_order use ?? null / ?? 0
+$adminCreateStart = strpos($productModelSrc, 'public function adminCreate(');
+$adminCreateBody  = substr($productModelSrc, (int)$adminCreateStart, 2000);
+// discount_pct and sort_order should use ?? null or (int)/(float) cast, not bare string assignment
+$numericColsSafe = str_contains($adminCreateBody, "':disc'")
+    && (str_contains($adminCreateBody, "?? null") || str_contains($adminCreateBody, "(float)") || str_contains($adminCreateBody, "(int)"));
+report(
+    "ProductModel::adminCreate() passes nullable/cast values for numeric columns (not raw empty strings)",
+    $numericColsSafe
+);
+
 echo "\n========================================================\n";
 $total = count($results);
 $pass = count(array_filter($results, fn($r) => $r['passed']));

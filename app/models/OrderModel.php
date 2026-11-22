@@ -709,10 +709,13 @@ class OrderModel
         $countStmt->execute($params);
         $total = (int)$countStmt->fetchColumn();
 
+        // Correlated subquery for customer_email avoids selecting a column from the users JOIN
+        // that is not functionally dependent on o.id, which would violate ONLY_FULL_GROUP_BY.
         $stmt = $this->db->prepare(
-            "SELECT o.*, u.email AS customer_email, COUNT(oi.id) AS item_count
+            "SELECT o.*,
+                    (SELECT email FROM users WHERE id = o.user_id LIMIT 1) AS customer_email,
+                    COUNT(oi.id) AS item_count
              FROM orders o
-             LEFT JOIN users u ON o.user_id = u.id
              LEFT JOIN order_items oi ON oi.order_id = o.id
              WHERE {$whereClause}
              GROUP BY o.id

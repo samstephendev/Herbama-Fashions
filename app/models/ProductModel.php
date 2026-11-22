@@ -132,20 +132,22 @@ class ProductModel
         $countStmt->execute($params);
         $totalCount = (int) $countStmt->fetchColumn();
 
-        // Product rows with stock sum and primary image
+        // Product rows with stock sum and primary image.
+        // Correlated subquery for primary_image avoids a GROUP BY on a non-aggregate join column,
+        // which would violate ONLY_FULL_GROUP_BY on strict MySQL 8 servers (e.g. Aiven).
         $stmt = $this->db->prepare(
             "SELECT p.id, p.name, p.slug, p.short_desc, p.base_price, p.compare_price,
                     p.discount_pct, p.is_new, p.is_featured, p.material, p.design,
                     c.name AS category_name, c.slug AS category_slug,
-                    pi.image_path AS primary_image,
+                    (SELECT image_path FROM product_images
+                     WHERE product_id = p.id AND is_primary = 1
+                     ORDER BY sort_order ASC LIMIT 1) AS primary_image,
                     COALESCE((SELECT SUM(stock_qty) FROM product_variants WHERE product_id = p.id AND is_active = 1), 0) AS stock_total,
                     (SELECT GROUP_CONCAT(DISTINCT age_label ORDER BY age_label SEPARATOR ', ') FROM product_variants WHERE product_id = p.id AND is_active = 1) AS available_sizes
              FROM products p
              LEFT JOIN categories c  ON p.category_id = c.id
              LEFT JOIN categories parent_c ON c.parent_id = parent_c.id
-             LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
              WHERE {$whereClause}
-             GROUP BY p.id
              ORDER BY {$orderBy}
              LIMIT :limit OFFSET :offset"
         );
