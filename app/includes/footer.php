@@ -96,7 +96,20 @@ $fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/her
         <div class="site-footer__grid">
             <!-- Brand Column -->
             <div class="site-footer__brand-col">
-                <h3 class="site-footer__brand-title">Herbama Fashions</h3>
+                <div class="site-footer__brand-logo" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+                    <picture>
+                        <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
+                                        <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                                type="image/webp">
+                        <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+                             srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                             alt="Herabama Fashions logo — round maroon and gold badge"
+                             width="56" height="56"
+                             loading="lazy"
+                             style="border-radius:50%;">
+                    </picture>
+                    <h3 class="site-footer__brand-title" style="margin:0;font-family:var(--font-heading,serif);">Herabama Fashions</h3>
+                </div>
                 <p class="site-footer__tagline">Premium Kidswear for Every Little Fashionista</p>
                 <p style="font-size:0.85rem; color:rgba(255,249,243,0.75); line-height:1.6; margin-bottom:1.25rem;">
                     From playful everyday essentials to regal festive ensembles, we dress your little stars in comfort, love, and unmatched style.

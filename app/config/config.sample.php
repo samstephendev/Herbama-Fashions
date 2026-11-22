@@ -26,8 +26,8 @@ return [
     'SITE_URL' => '',
 
     // ── Site Metadata ────────────────────────────────────────────────────────
-    'SITE_NAME'   => 'Herbama Fashions',
-    'ADMIN_EMAIL' => 'admin@herbamafashions.com',
+    'SITE_NAME'   => 'Heramba Fashion',
+    'ADMIN_EMAIL' => 'admin@yourdomain.com',
 
     // ── Database (MySQL PDO) ─────────────────────────────────────────────────
     // XAMPP Default: host '127.0.0.1', port 3306, user 'root', pass ''

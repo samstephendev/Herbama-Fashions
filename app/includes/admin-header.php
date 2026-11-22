@@ -38,6 +38,13 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $pageTitle ?></title>
     
+    <!-- Favicon set -->
+    <link rel="icon" type="image/png" sizes="16x16"  href="<?= e(asset('/assets/images/icons/favicon-16.png')) ?>">
+    <link rel="icon" type="image/png" sizes="32x32"  href="<?= e(asset('/assets/images/icons/favicon-32.png')) ?>">
+    <link rel="icon" type="image/png" sizes="48x48"  href="<?= e(asset('/assets/images/icons/favicon-48.png')) ?>">
+    <link rel="apple-touch-icon" sizes="180x180"      href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('/assets/images/icons/favicon-512.png')) ?>">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -505,9 +512,16 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama
 <!-- Sidebar Navigation -->
 <aside class="admin-sidebar" id="adminSidebar">
     <div class="admin-brand">
-        <div class="admin-logo-circle">HF</div>
+        <picture>
+            <source srcset="<?= e(asset('/assets/images/brand/logo-64.webp')) ?>" type="image/webp">
+            <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+                 alt="Herabama Fashions logo — round maroon and gold badge"
+                 width="44" height="44"
+                 loading="eager"
+                 style="border-radius:50%;flex-shrink:0;">
+        </picture>
         <div class="admin-brand-info">
-            <h2>Herbama Fashions</h2>
+            <h2>Herabama Fashions</h2>
             <span>Admin Control Panel</span>
         </div>
     </div>

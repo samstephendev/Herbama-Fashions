@@ -28,7 +28,8 @@ if (!$order) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PackingSlip_<?= e($order['public_order_id']) ?> — Herbama Fashions</title>
+    <title>PackingSlip_<?= e($order['public_order_id']) ?> — Heramba Fashion</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= asset('/assets/images/icons/favicon-32.png') ?>">
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -167,9 +168,15 @@ if (!$order) {
 
 <div class="slip-box">
     <div class="slip-header">
-        <div>
-            <h1 class="slip-title">Herbama Fashions</h1>
-            <div style="font-size:0.8rem;color:#666;">Warehouse Packing & Fulfillment Slip</div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+            <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
+                 alt="Herabama Fashions logo — round maroon and gold badge"
+                 width="48" height="48"
+                 style="border-radius:50%;">
+            <div>
+                <h1 class="slip-title">Herabama Fashions</h1>
+                <div style="font-size:0.8rem;color:#666;">Warehouse Packing &amp; Fulfillment Slip</div>
+            </div>
         </div>
         <div class="slip-meta">
             <strong style="font-size:1.2rem;color:#7A1F3D;"><?= e($order['public_order_id']) ?></strong><br>

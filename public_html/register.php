@@ -142,13 +142,22 @@ require_once APP_ROOT . '/includes/header.php';
 
         <!-- Logo -->
         <div class="auth-logo">
-            <a href="<?= url('/') ?>">
-                <img src="<?= asset('/assets/images/logo.png') ?>" alt="Herbama Fashions" height="56">
+            <a href="<?= url('/') ?>" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;text-decoration:none;">
+                <picture>
+                    <source srcset="<?= asset('/assets/images/brand/logo-128.webp') ?> 2x,
+                                    <?= asset('/assets/images/brand/logo-64.webp') ?> 1x"
+                            type="image/webp">
+                    <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
+                         srcset="<?= asset('/assets/images/brand/logo-128.png') ?> 2x"
+                         alt="Herabama Fashions logo — round maroon and gold badge"
+                         width="64" height="64" loading="eager">
+                </picture>
+                <span style="font-family:var(--font-heading,serif);font-size:1.15rem;color:var(--color-maroon,#6b1a1a);font-weight:600;letter-spacing:0.03em;">Herabama Fashions</span>
             </a>
         </div>
 
         <h1>Create Account</h1>
-        <p class="auth-subtitle">Join Herbama Fashions — quality kidswear awaits.</p>
+        <p class="auth-subtitle">Join Herabama Fashions — quality kidswear awaits.</p>
 
         <!-- Flash messages -->
         <?php foreach (Session::getFlash('success') as $msg): ?>

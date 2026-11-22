@@ -25,7 +25,15 @@ require_once APP_ROOT . '/includes/header.php';
     <div style="background:#FFFFFF; border-radius:18px; padding: clamp(1.75rem, 5vw, 3rem); border:1px solid var(--color-border); box-shadow:var(--shadow-sm); line-height:1.8;">
         
         <div style="text-align:center; margin-bottom:2rem;">
-            <img src="/assets/images/logo.svg" alt="Herbama Fashions" style="width:72px; height:72px; margin:0 auto 1rem;">
+            <picture>
+                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
+                                <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                        type="image/webp">
+                <img src="<?= e(asset('/assets/images/brand/logo-128.png')) ?>"
+                     alt="Heramba Fashion logo"
+                     width="72" height="72"
+                     style="width:72px; height:72px; margin:0 auto 1rem; border-radius:50%; display:block;">
+            </picture>
             <h2 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.8rem;">A Dream Born Out of Love for Little Ones</h2>
         </div>
 

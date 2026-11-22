@@ -151,8 +151,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .brand-logo__image {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     object-fit: contain;
     border-radius: 50%;
 }

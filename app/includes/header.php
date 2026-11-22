@@ -49,10 +49,16 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
     <meta property="og:description" content="<?= $pageDesc ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= e(url($currentUri)) ?>">
-    <meta property="og:image" content="<?= e(asset('/assets/images/logo.svg')) ?>">
+    <meta property="og:image" content="<?= e(asset('/assets/images/icons/og-image.jpg')) ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="<?= e(asset('/assets/images/favicon.svg')) ?>">
+    <!-- Favicon set -->
+    <link rel="icon" type="image/png" sizes="16x16"  href="<?= e(asset('/assets/images/icons/favicon-16.png')) ?>">
+    <link rel="icon" type="image/png" sizes="32x32"  href="<?= e(asset('/assets/images/icons/favicon-32.png')) ?>">
+    <link rel="icon" type="image/png" sizes="48x48"  href="<?= e(asset('/assets/images/icons/favicon-48.png')) ?>">
+    <link rel="apple-touch-icon" sizes="180x180"      href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('/assets/images/icons/favicon-512.png')) ?>">
 
     <!-- Google Fonts: Playfair Display + Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,9 +103,19 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
     <header class="container navbar" role="banner">
         <!-- Logo -->
         <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="<?= SITE_NAME ?> — Home">
-            <img src="<?= e(asset('/assets/images/logo.svg')) ?>" alt="Herbama Fashions Logo" class="brand-logo__image" width="48" height="48">
+            <picture>
+                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
+                                <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                        type="image/webp">
+                <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+                     srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                     alt="Herabama Fashions logo — round maroon and gold badge"
+                     class="brand-logo__image"
+                     width="56" height="56"
+                     loading="eager">
+            </picture>
             <div class="brand-logo__text-group">
-                <span class="brand-logo__title">Herbama Fashions</span>
+                <span class="brand-logo__title">Herabama Fashions</span>
                 <span class="brand-logo__tagline">Handcrafted Kidswear</span>
             </div>
         </a>

@@ -26,7 +26,7 @@ if (!$order) {
 }
 
 $upiId     = (string)$settingModel->get('upi_id', 'herbamapay@upi');
-$storeName = 'Herbama Fashions';
+$storeName = 'Herabama Fashions';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,7 @@ $storeName = 'Herbama Fashions';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice_<?= e($order['public_order_id']) ?> — <?= $storeName ?></title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= asset('/assets/images/icons/favicon-32.png') ?>">
     <style>
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -170,11 +171,17 @@ $storeName = 'Herbama Fashions';
 
 <div class="invoice-box">
     <div class="header-row">
-        <div>
-            <div class="brand-title"><?= $storeName ?></div>
-            <div class="brand-subtitle">Premium Handcrafted Kidswear</div>
-            <div style="font-size:0.82rem;color:#777;margin-top:0.35rem;">
-                Online Payment via UPI · Pan-India & UAE Dispatch
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+            <img src="<?= asset('/assets/images/brand/logo-128.png') ?>"
+                 alt="Herabama Fashions logo — round maroon and gold badge"
+                 width="64" height="64"
+                 style="border-radius:50%;">
+            <div>
+                <div class="brand-title"><?= $storeName ?></div>
+                <div class="brand-subtitle">Premium Handcrafted Kidswear</div>
+                <div style="font-size:0.82rem;color:#777;margin-top:0.35rem;">
+                    Online Payment via UPI · Pan-India &amp; UAE Dispatch
+                </div>
             </div>
         </div>
         <div class="invoice-meta">
