@@ -73,12 +73,13 @@ class CartModel
                 pv.sku,
                 pv.stock_qty,
                 pv.is_active  AS variant_active,
-                pi.image_path AS primary_image
+                (SELECT pi.image_path FROM product_images pi
+                 WHERE pi.product_id = p.id
+                 ORDER BY pi.is_primary DESC, pi.position ASC, pi.id ASC LIMIT 1) AS primary_image
              FROM carts c
              JOIN cart_items ci   ON ci.cart_id = c.id
              JOIN products p      ON ci.product_id = p.id
              LEFT JOIN product_variants pv ON ci.variant_id = pv.id
-             LEFT JOIN product_images pi   ON pi.product_id = p.id AND pi.is_primary = 1
              WHERE c.user_id = :uid
              ORDER BY ci.added_at DESC'
         );

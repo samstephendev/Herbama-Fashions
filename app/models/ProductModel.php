@@ -139,11 +139,11 @@ class ProductModel
             "SELECT p.id, p.name, p.slug, p.short_desc, p.base_price, p.compare_price,
                     p.discount_pct, p.is_new, p.is_featured, p.material, p.design,
                     c.name AS category_name, c.slug AS category_slug,
-                    (SELECT image_path FROM product_images
-                     WHERE product_id = p.id AND is_primary = 1
-                     ORDER BY sort_order ASC LIMIT 1) AS primary_image,
-                    COALESCE((SELECT SUM(stock_qty) FROM product_variants WHERE product_id = p.id AND is_active = 1), 0) AS stock_total,
-                    (SELECT GROUP_CONCAT(DISTINCT age_label ORDER BY age_label SEPARATOR ', ') FROM product_variants WHERE product_id = p.id AND is_active = 1) AS available_sizes
+                    (SELECT pi.image_path FROM product_images pi
+                     WHERE pi.product_id = p.id
+                     ORDER BY pi.is_primary DESC, pi.position ASC, pi.id ASC LIMIT 1) AS primary_image,
+                    COALESCE((SELECT SUM(pv.stock_qty) FROM product_variants pv WHERE pv.product_id = p.id AND pv.is_active = 1), 0) AS stock_total,
+                    (SELECT GROUP_CONCAT(DISTINCT pv.age_label ORDER BY pv.age_label SEPARATOR ', ') FROM product_variants pv WHERE pv.product_id = p.id AND pv.is_active = 1) AS available_sizes
              FROM products p
              LEFT JOIN categories c  ON p.category_id = c.id
              LEFT JOIN categories parent_c ON c.parent_id = parent_c.id
@@ -244,12 +244,13 @@ class ProductModel
             $sql = 'SELECT p.id, p.name, p.slug, p.short_desc, p.base_price, p.compare_price,
                            p.discount_pct, p.is_new, p.is_featured,
                            c.name AS category_name, c.slug AS category_slug,
-                           pi.image_path AS primary_image,
-                           COALESCE((SELECT SUM(stock_qty) FROM product_variants WHERE product_id = p.id AND is_active = 1), 0) AS stock_total,
-                           (SELECT GROUP_CONCAT(DISTINCT age_label ORDER BY age_label SEPARATOR ", ") FROM product_variants WHERE product_id = p.id AND is_active = 1) AS available_sizes
+                           (SELECT pi.image_path FROM product_images pi
+                            WHERE pi.product_id = p.id
+                            ORDER BY pi.is_primary DESC, pi.position ASC, pi.id ASC LIMIT 1) AS primary_image,
+                           COALESCE((SELECT SUM(pv.stock_qty) FROM product_variants pv WHERE pv.product_id = p.id AND pv.is_active = 1), 0) AS stock_total,
+                           (SELECT GROUP_CONCAT(DISTINCT pv.age_label ORDER BY pv.age_label SEPARATOR \', \') FROM product_variants pv WHERE pv.product_id = p.id AND pv.is_active = 1) AS available_sizes
                     FROM products p
                     LEFT JOIN categories c ON p.category_id = c.id
-                    LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
                     WHERE p.is_active = 1 AND p.id != :pid';
             $params = [':pid' => $productId];
 
@@ -416,11 +417,12 @@ class ProductModel
     {
         $stmt = $this->db->prepare(
             'SELECT p.id, p.name, p.slug, p.base_price, p.compare_price,
-                    pi.image_path AS primary_image,
+                    (SELECT pi.image_path FROM product_images pi
+                     WHERE pi.product_id = p.id
+                     ORDER BY pi.is_primary DESC, pi.position ASC, pi.id ASC LIMIT 1) AS primary_image,
                     w.created_at AS wishlisted_at
              FROM wishlist w
              JOIN products p ON w.product_id = p.id AND p.is_active = 1
-             LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
              WHERE w.user_id = :uid
              ORDER BY w.created_at DESC'
         );

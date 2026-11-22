@@ -126,6 +126,7 @@ CREATE TABLE product_images (
     image_path TEXT NOT NULL,
     alt_text TEXT,
     is_primary INTEGER NOT NULL DEFAULT 0,
+    position INTEGER NOT NULL DEFAULT 0,
     sort_order INTEGER NOT NULL DEFAULT 0,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
@@ -806,8 +807,8 @@ echo "\n--- 15. Testing ONLY_FULL_GROUP_BY Compliance ---\n";
 $productModelSrc = file_get_contents(BASE_ROOT . '/app/models/ProductModel.php');
 
 // Confirm the correlated subquery for primary_image is present
-$hasPrimaryImageSubquery = str_contains($productModelSrc, 'SELECT image_path FROM product_images')
-    && str_contains($productModelSrc, 'WHERE product_id = p.id AND is_primary = 1');
+$hasPrimaryImageSubquery = str_contains($productModelSrc, 'SELECT pi.image_path FROM product_images pi')
+    && str_contains($productModelSrc, 'WHERE pi.product_id = p.id');
 report(
     "ProductModel::list() uses a correlated subquery for primary_image (not a GROUP BY JOIN)",
     $hasPrimaryImageSubquery
@@ -829,7 +830,8 @@ report(
 $orderModelSrc = file_get_contents(BASE_ROOT . '/app/models/OrderModel.php');
 $adminListStart = strpos($orderModelSrc, 'public function adminListOrders(');
 $adminListBody  = substr($orderModelSrc, (int)$adminListStart, 2000);
-$hasEmailSubquery = str_contains($adminListBody, 'SELECT email FROM users WHERE id = o.user_id');
+$hasEmailSubquery = str_contains($adminListBody, 'SELECT u.email FROM users u WHERE u.id = o.user_id')
+                 || str_contains($adminListBody, 'SELECT email FROM users WHERE id = o.user_id');
 report(
     "OrderModel::adminListOrders() uses a correlated subquery for customer_email",
     $hasEmailSubquery

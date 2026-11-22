@@ -33,17 +33,17 @@ $todayStats = $stmtToday->fetch();
 
 // Pending payments (orders placed or payment_pending where payment_status = unpaid)
 $stmtPending = $db->query(
-    'SELECT COUNT(id) AS cnt, COALESCE(SUM(total), 0) AS val 
+    "SELECT COUNT(id) AS cnt, COALESCE(SUM(total), 0) AS val 
      FROM orders 
-     WHERE payment_status = "unpaid" AND status != "cancelled"'
+     WHERE payment_status = 'unpaid' AND status != 'cancelled'"
 );
 $pendingStats = $stmtPending->fetch();
 
 // Total revenue (paid orders)
 $stmtRevenue = $db->query(
-    'SELECT COALESCE(SUM(total), 0) AS val 
+    "SELECT COALESCE(SUM(total), 0) AS val 
      FROM orders 
-     WHERE payment_status = "paid"'
+     WHERE payment_status = 'paid'"
 );
 $totalRevenue = (float)$stmtRevenue->fetchColumn();
 

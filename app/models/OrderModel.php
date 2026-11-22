@@ -203,7 +203,7 @@ class OrderModel
 
             // ── Insert Order Record ──────────────────────────────────────────
             $orderStmt = $this->db->prepare(
-                'INSERT INTO orders
+                "INSERT INTO orders
                  (public_order_id, user_id, ship_name, ship_phone, ship_line1, ship_line2,
                   ship_city, ship_state, ship_pincode, ship_country, subtotal, shipping_charge,
                   discount_amount, total, status, payment_status, coupon_code, offer_id,
@@ -211,8 +211,8 @@ class OrderModel
                  VALUES
                  (:poid, :uid, :name, :phone, :l1, :l2,
                   :city, :state, :pin, :country, :subtotal, :shipping,
-                  :discount, :total, "placed", "unpaid", :coupon, :offer_id,
-                  :custom_notes, :is_custom, :notes, NOW(), NOW())'
+                  :discount, :total, 'placed', 'unpaid', :coupon, :offer_id,
+                  :custom_notes, :is_custom, :notes, NOW(), NOW())"
             );
             $orderStmt->execute([
                 ':poid'         => $publicOrderId,
@@ -259,8 +259,8 @@ class OrderModel
 
             // ── Insert Initial Status History ───────────────────────────────
             $this->db->prepare(
-                'INSERT INTO order_status_history (order_id, from_status, to_status, changed_by, note, created_at)
-                 VALUES (:oid, NULL, "placed", :uid, "Order submitted by customer", NOW())'
+                "INSERT INTO order_status_history (order_id, from_status, to_status, changed_by, note, created_at)
+                 VALUES (:oid, NULL, 'placed', :uid, 'Order submitted by customer', NOW())"
             )->execute([':oid' => $orderId, ':uid' => $userId]);
 
             // ── Clear cart for user if logged in ────────────────────────────
@@ -395,10 +395,10 @@ class OrderModel
 
             // Update order
             $updateStmt = $this->db->prepare(
-                'UPDATE orders
-                 SET status = :status, payment_status = "paid", paid_at = NOW(),
+                "UPDATE orders
+                 SET status = :status, payment_status = 'paid', paid_at = NOW(),
                      paid_by_admin = :admin_id, payment_ref = :pref, updated_at = NOW()
-                 WHERE id = :id'
+                 WHERE id = :id"
             );
             $updateStmt->execute([
                 ':status'   => $newStatus,
@@ -617,10 +617,13 @@ class OrderModel
     public function getOrderItems(int $orderId): array
     {
         $stmt = $this->db->prepare(
-            'SELECT oi.*, p.slug AS product_slug, pi.image_path AS primary_image
+            'SELECT oi.*,
+                    p.slug AS product_slug,
+                    (SELECT pi.image_path FROM product_images pi
+                     WHERE pi.product_id = p.id
+                     ORDER BY pi.is_primary DESC, pi.position ASC, pi.id ASC LIMIT 1) AS primary_image
              FROM order_items oi
              LEFT JOIN products p ON oi.product_id = p.id
-             LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_primary = 1
              WHERE oi.order_id = :oid
              ORDER BY oi.id ASC'
         );
@@ -713,7 +716,7 @@ class OrderModel
         // that is not functionally dependent on o.id, which would violate ONLY_FULL_GROUP_BY.
         $stmt = $this->db->prepare(
             "SELECT o.*,
-                    (SELECT email FROM users WHERE id = o.user_id LIMIT 1) AS customer_email,
+                    (SELECT u.email FROM users u WHERE u.id = o.user_id LIMIT 1) AS customer_email,
                     COUNT(oi.id) AS item_count
              FROM orders o
              LEFT JOIN order_items oi ON oi.order_id = o.id

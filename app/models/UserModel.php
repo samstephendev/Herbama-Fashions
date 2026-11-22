@@ -51,8 +51,8 @@ class UserModel
         ]);
 
         $stmt = $this->db->prepare(
-            'INSERT INTO users (full_name, email, phone, password_hash, role)
-             VALUES (:name, :email, :phone, :hash, "customer")'
+            "INSERT INTO users (full_name, email, phone, password_hash, role)
+             VALUES (:name, :email, :phone, :hash, 'customer')"
         );
         $stmt->execute([
             ':name'  => $fullName,
@@ -470,11 +470,11 @@ class UserModel
         $like   = '%' . $search . '%';
 
         $stmt = $this->db->prepare(
-            'SELECT id, full_name, email, phone, role, is_blocked, created_at
+            "SELECT id, full_name, email, phone, role, is_blocked, created_at
              FROM users
-             WHERE (:s = "" OR full_name LIKE :s1 OR email LIKE :s2)
+             WHERE (:s = '' OR full_name LIKE :s1 OR email LIKE :s2)
              ORDER BY created_at DESC
-             LIMIT :limit OFFSET :offset'
+             LIMIT :limit OFFSET :offset"
         );
         $stmt->bindValue(':s',      $search);
         $stmt->bindValue(':s1',     $like);
@@ -490,7 +490,7 @@ class UserModel
     public function setBlockStatus(int $targetUserId, bool $blocked, int $adminId): bool
     {
         $this->db->prepare(
-            'UPDATE users SET is_blocked=:blocked, updated_at=NOW() WHERE id=:id AND role != "admin"'
+            "UPDATE users SET is_blocked=:blocked, updated_at=NOW() WHERE id=:id AND role != 'admin'"
         )->execute([':blocked' => (int) $blocked, ':id' => $targetUserId]);
 
         db_audit_log(
@@ -504,7 +504,7 @@ class UserModel
     /** Admin: list all administrators. */
     public function adminListAdmins(): array
     {
-        $stmt = $this->db->query('SELECT id, full_name, email, phone, role, last_login_at, created_at FROM users WHERE role = "admin" ORDER BY id ASC');
+        $stmt = $this->db->query("SELECT id, full_name, email, phone, role, last_login_at, created_at FROM users WHERE role = 'admin' ORDER BY id ASC");
         return $stmt->fetchAll();
     }
 
@@ -528,8 +528,8 @@ class UserModel
         ]);
 
         $stmt = $this->db->prepare(
-            'INSERT INTO users (full_name, email, password_hash, role)
-             VALUES (:name, :email, :hash, "admin")'
+            "INSERT INTO users (full_name, email, password_hash, role)
+             VALUES (:name, :email, :hash, 'admin')"
         );
         $stmt->execute([
             ':name'  => $fullName,
@@ -616,8 +616,8 @@ class UserModel
         }
 
         $stmt = $this->db->prepare(
-            'INSERT INTO users (full_name, email, password_hash, role)
-             VALUES (:name, :email, :hash, "admin")'
+            "INSERT INTO users (full_name, email, password_hash, role)
+             VALUES (:name, :email, :hash, 'admin')"
         );
         $stmt->execute([
             ':name'  => $fullName,
@@ -635,10 +635,10 @@ class UserModel
     public function getCustomerStats(int $userId): array
     {
         $stmt = $this->db->prepare(
-            'SELECT COUNT(id) AS total_orders, 
-                    COALESCE(SUM(CASE WHEN payment_status = "paid" THEN total ELSE 0 END), 0) AS total_spend,
+            "SELECT COUNT(id) AS total_orders, 
+                    COALESCE(SUM(CASE WHEN payment_status = 'paid' THEN total ELSE 0 END), 0) AS total_spend,
                     MAX(created_at) AS last_order_at
-             FROM orders WHERE user_id = :uid'
+             FROM orders WHERE user_id = :uid"
         );
         $stmt->execute([':uid' => $userId]);
         $row = $stmt->fetch();
