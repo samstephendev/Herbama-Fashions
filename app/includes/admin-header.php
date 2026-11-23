@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Layout Header — Herbama Fashions
+ * Admin Layout Header — Heramba Fashion
  * ========================================
  * Role verification: role=admin checked on EVERY admin page.
  * Maroon (#7A1F3D) and gold (#C9A24B) theme, mobile-friendly responsive sidebar.
@@ -29,7 +29,7 @@ $adminEmail = (string) ($_SESSION['user_email'] ?? '');
 $currentUri  = $_SERVER['REQUEST_URI'] ?? '/admin/';
 $currentPage = basename(parse_url($currentUri, PHP_URL_PATH) ?: 'index.php');
 
-$pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama Fashions — Admin Panel';
+$pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba Fashion — Admin Panel';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +44,7 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama
     <link rel="icon" type="image/png" sizes="48x48"  href="<?= e(asset('/assets/images/icons/favicon-48.png')) ?>">
     <link rel="apple-touch-icon" sizes="180x180"      href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">
     <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('/assets/images/icons/favicon-512.png')) ?>">
+    <link rel="manifest" href="<?= e(asset('/manifest.json')) ?>">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -513,15 +514,18 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama
 <aside class="admin-sidebar" id="adminSidebar">
     <div class="admin-brand">
         <picture>
-            <source srcset="<?= e(asset('/assets/images/brand/logo-64.webp')) ?>" type="image/webp">
+            <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
+                            <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                    type="image/webp">
             <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
-                 alt="Herabama Fashions logo — round maroon and gold badge"
+                 srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                 alt="Heramba Fashion logo"
                  width="44" height="44"
                  loading="eager"
                  style="border-radius:50%;flex-shrink:0;">
         </picture>
         <div class="admin-brand-info">
-            <h2>Herabama Fashions</h2>
+            <h2>Heramba Fashion</h2>
             <span>Admin Control Panel</span>
         </div>
     </div>
@@ -599,7 +603,7 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Herbama Admin' : 'Herbama
         } catch (\Throwable $e) {}
 
         $isPlaceholderWa = (str_contains($activeWa, 'X') || str_contains($activeWa, '9876543210') || empty($activeWa));
-        $isPlaceholderUpi = (str_contains(strtolower($activeUpi), 'yourname') || str_contains(strtolower($activeUpi), 'herbama@upi') || empty($activeUpi));
+        $isPlaceholderUpi = (str_contains(strtolower($activeUpi), 'yourname') || empty($activeUpi));
         ?>
         <?php if ($isPlaceholderWa || $isPlaceholderUpi): ?>
         <div style="background:#FFF3CD;border:1.5px solid #FFEEBA;color:#856404;padding:0.9rem 1.25rem;border-radius:10px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;box-shadow:0 2px 6px rgba(0,0,0,0.03);">

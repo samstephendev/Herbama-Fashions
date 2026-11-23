@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Search Results Page
+ * Heramba Fashion — Search Results Page
  * ========================================
  * Search results grid with query highlighting, count, and no-results suggestions.
  */
@@ -12,8 +12,8 @@ $query = trim(get('q', ''));
 $page  = getInt('page') ?? 1;
 $sort  = get('sort', 'newest');
 
-$pageTitle = !empty($query) ? 'Search results for "' . e($query) . '" — Herbama Fashions' : 'Search Kidswear — Herbama Fashions';
-$pageDesc  = 'Search for handcrafted frocks, party lehengas, kurtas, dungarees, and infant wear at Herbama Fashions.';
+$pageTitle = !empty($query) ? 'Search results for "' . e($query) . '" — Heramba Fashion' : 'Search Kidswear — Heramba Fashion';
+$pageDesc  = 'Search for handcrafted frocks, party lehengas, kurtas, dungarees, and infant wear at Heramba Fashion.';
 $bodyClass = 'page-collection page-search';
 
 $productModel = new ProductModel();

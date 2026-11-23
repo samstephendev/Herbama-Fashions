@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Cart Update AJAX Endpoint
+ * Heramba Fashion — Cart Update AJAX Endpoint
  * ==============================================
  * Handles qty update and item removal for both logged-in users (DB cart)
  * and guest users (session cart). Returns JSON only — never outputs HTML.

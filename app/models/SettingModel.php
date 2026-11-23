@@ -1,6 +1,6 @@
 <?php
 /**
- * SettingModel — Herbama Fashions
+ * SettingModel — Heramba Fashion
  * =================================
  * Manages site-wide key-value settings stored in `settings` table.
  * Caches settings in memory for the request duration.

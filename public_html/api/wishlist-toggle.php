@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Wishlist Toggle AJAX Endpoint
+ * Heramba Fashion — Wishlist Toggle AJAX Endpoint
  * ==================================================
  * Toggles a product in/out of a logged-in user's wishlist.
  * Returns JSON only — never outputs HTML.

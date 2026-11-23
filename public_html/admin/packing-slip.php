@@ -1,6 +1,6 @@
 <?php
 /**
- * Printable Packing Slip — Herbama Fashions
+ * Printable Packing Slip — Heramba Fashion
  * ==========================================
  * Formatted for boutique warehouse fulfillment and garment packaging.
  */
@@ -168,14 +168,18 @@ if (!$order) {
 
 <div class="slip-box">
     <div class="slip-header">
-        <div style="display:flex;align-items:center;gap:0.6rem;">
-            <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
-                 alt="Herabama Fashions logo — round maroon and gold badge"
-                 width="48" height="48"
-                 style="border-radius:50%;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div style="position:relative;width:48px;height:48px;flex-shrink:0;">
+                <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
+                     alt="Heramba Fashion logo"
+                     width="48" height="48"
+                     style="width:48px;height:48px;border-radius:50%;display:block;"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="logo-fallback" style="display:none;width:48px;height:48px;background:#7A1F3D;color:#FFF9F3;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-family:serif;font-size:1.1rem;">HF</div>
+            </div>
             <div>
-                <h1 class="slip-title">Herabama Fashions</h1>
-                <div style="font-size:0.8rem;color:#666;">Warehouse Packing &amp; Fulfillment Slip</div>
+                <h1 class="slip-title">Heramba Fashion</h1>
+                <div style="font-size:0.8rem;color:#666;">Dress Every Smile · Packing &amp; Fulfillment Slip</div>
             </div>
         </div>
         <div class="slip-meta">

@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Master Bootstrap
+ * Heramba Fashion — Master Bootstrap
  * =====================================
  * Loaded first on every request. Initializes environment configuration,
  * security headers, autoloader, helpers, and secure session.

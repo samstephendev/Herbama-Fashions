@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Special Offers Page
+ * Heramba Fashion — Special Offers Page
  * ========================================
  * Discounted items, active coupons, and festive deals.
  */
@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Exclusive Offers &amp; Promo Codes — Herbama Fashions';
+$pageTitle = 'Exclusive Offers &amp; Promo Codes — Heramba Fashion';
 $pageDesc  = 'Save on premium handcrafted kidswear. View active coupon codes and discounted sets for girls, boys, and infants.';
 $bodyClass = 'page-collection page-offers';
 

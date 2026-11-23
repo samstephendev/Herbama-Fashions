@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Size Guide
+ * Heramba Fashion — Size Guide
  * ===============================
  * Comprehensive age-to-size charts for girls, boys, and infants.
  */
@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Kidswear Size Guide — Herbama Fashions';
+$pageTitle = 'Kidswear Size Guide — Heramba Fashion';
 $pageDesc  = 'Find the perfect fit for your child. Comprehensive size charts for girls, boys, and infants aged 0-14 years.';
 $bodyClass = 'page-static page-sizeguide';
 

@@ -2,7 +2,7 @@
 /**
  * forgot-password.php — Request a password reset link
  *
- * Herbama Fashions · Kidswear E-Commerce
+ * Heramba Fashion · Kidswear E-Commerce
  *
  * Security note: We ALWAYS show the same success message regardless of
  * whether the submitted email belongs to a real account. This prevents
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                        . '&token=' . urlencode($rawToken);
 
             // Compose the email body
-            $siteName   = 'Herbama Fashions';
+            $siteName   = 'Heramba Fashion';
             $emailBody  = "Hello,\n\n";
             $emailBody .= "We received a request to reset the password for your {$siteName} account.\n\n";
             $emailBody .= "Click the link below to set a new password (valid for 1 hour):\n";
@@ -106,10 +106,11 @@ require_once APP_ROOT . '/includes/header.php';
                             type="image/webp">
                     <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
                          srcset="<?= asset('/assets/images/brand/logo-128.png') ?> 2x"
-                         alt="Herabama Fashions logo — round maroon and gold badge"
+                         alt="Heramba Fashion logo"
                          width="64" height="64" loading="eager">
                 </picture>
-                <span style="font-family:var(--font-heading,serif);font-size:1.15rem;color:var(--color-maroon,#6b1a1a);font-weight:600;letter-spacing:0.03em;">Herabama Fashions</span>
+                <span style="font-family:var(--font-heading,serif);font-size:1.25rem;color:var(--color-maroon,#6b1a1a);font-weight:700;letter-spacing:0.02em;">Heramba Fashion</span>
+                <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--color-gold,#C9A24B);font-weight:600;margin-top:-0.3rem;">Dress Every Smile</span>
             </a>
         </div>
 

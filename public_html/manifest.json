@@ -1,0 +1,26 @@
+{
+  "name": "Heramba Fashion",
+  "short_name": "Heramba Fashion",
+  "description": "Premium Handcrafted Kidswear — Dress Every Smile",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF9F3",
+  "theme_color": "#7A1F3D",
+  "icons": [
+    {
+      "src": "/assets/images/icons/favicon-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/icons/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

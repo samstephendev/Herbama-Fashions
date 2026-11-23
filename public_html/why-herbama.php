@@ -1,22 +1,22 @@
 <?php
 /**
- * Herbama Fashions — Why Herbama
+ * Heramba Fashion — Why Heramba
  * ================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Why Herbama — Handcrafted Kids Luxury';
-$pageDesc  = 'Discover why parents choose Herbama Fashions for premium kidswear: child-safe fabrics, 5-day custom fits, ready-to-ship baby wear, and Pan-India & UAE delivery.';
-$bodyClass = 'page-static page-why-herbama';
+$pageTitle = 'Why Heramba — Handcrafted Kids Luxury';
+$pageDesc  = 'Discover why parents choose Heramba Fashion for premium kidswear: child-safe fabrics, 5-day custom fits, ready-to-ship baby wear, and Pan-India & UAE delivery.';
+$bodyClass = 'page-static page-why-heramba';
 
 require_once APP_ROOT . '/includes/header.php';
 ?>
 
 <div class="collection-hero">
     <div class="container">
-        <h1 class="collection-hero__title">Why Choose Herbama?</h1>
+        <h1 class="collection-hero__title">Why Choose Heramba?</h1>
         <p class="collection-hero__tagline">Six Reasons Why Parents Trust Us for Their Little Ones</p>
     </div>
 </div>

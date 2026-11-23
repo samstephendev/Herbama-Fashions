@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Customers Management — Herbama Fashions
+ * Admin Customers Management — Heramba Fashion
  * =============================================
  * Modules:
  *   - List registered customers

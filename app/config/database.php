@@ -140,16 +140,20 @@ class Database
         $ca   = trim($sslCa ?? (defined('DB_SSL_CA') ? DB_SSL_CA : ''));
         $options = [];
 
+        // Resolve PDO MySQL attribute constants, with integer fallbacks for environments
+        // where pdo_mysql is not loaded (e.g. unit-test runners using pdo_sqlite).
+        $attrSslCa     = defined('Pdo\Mysql::ATTR_SSL_CA')
+            ? \Pdo\Mysql::ATTR_SSL_CA
+            : (defined('PDO::MYSQL_ATTR_SSL_CA') ? PDO::MYSQL_ATTR_SSL_CA : 1008);
+        $attrSslVerify = defined('Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT')
+            ? \Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT
+            : (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT') ? PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT : 1013);
+
         if ($mode === 'require') {
             // Connect with SSL enabled but without verifying server certificate (no CA needed).
             $caResolved = self::resolveCaPath($ca);
-            if (defined('Pdo\Mysql::ATTR_SSL_CA')) {
-                $options[\Pdo\Mysql::ATTR_SSL_CA] = $caResolved ?? '';
-                $options[\Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT] = false;
-            } elseif (defined('PDO::MYSQL_ATTR_SSL_CA')) {
-                $options[PDO::MYSQL_ATTR_SSL_CA] = $caResolved ?? '';
-                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
-            }
+            $options[$attrSslCa]     = $caResolved ?? '';
+            $options[$attrSslVerify] = false;
             return $options;
         }
 
@@ -167,13 +171,8 @@ class Database
                 throw new PDOException($errorMsg);
             }
 
-            if (defined('Pdo\Mysql::ATTR_SSL_CA')) {
-                $options[\Pdo\Mysql::ATTR_SSL_CA] = $caResolved;
-                $options[\Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT] = true;
-            } elseif (defined('PDO::MYSQL_ATTR_SSL_CA')) {
-                $options[PDO::MYSQL_ATTR_SSL_CA] = $caResolved;
-                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
-            }
+            $options[$attrSslCa]     = $caResolved;
+            $options[$attrSslVerify] = true;
             return $options;
         }
 

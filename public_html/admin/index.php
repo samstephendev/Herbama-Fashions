@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Dashboard — Herbama Fashions
+ * Admin Dashboard — Heramba Fashion
  * ===================================
  * Modules:
  *   - Today's orders count & value

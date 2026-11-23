@@ -1,6 +1,6 @@
 <?php
 /**
- * Site Header Include — Herbama Fashions
+ * Site Header Include — Heramba Fashion
  * ========================================
  * Master layout header with announcement bar, sticky navigation, dropdowns,
  * search modal, and accessibility attributes. All asset and page URLs are
@@ -53,12 +53,19 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- Favicon set -->
+    <!-- Twitter Card Meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= $pageTitle ?>">
+    <meta name="twitter:description" content="<?= $pageDesc ?>">
+    <meta name="twitter:image" content="<?= e(asset('/assets/images/icons/og-image.jpg')) ?>">
+
+    <!-- Favicon set & Manifest -->
     <link rel="icon" type="image/png" sizes="16x16"  href="<?= e(asset('/assets/images/icons/favicon-16.png')) ?>">
     <link rel="icon" type="image/png" sizes="32x32"  href="<?= e(asset('/assets/images/icons/favicon-32.png')) ?>">
     <link rel="icon" type="image/png" sizes="48x48"  href="<?= e(asset('/assets/images/icons/favicon-48.png')) ?>">
     <link rel="apple-touch-icon" sizes="180x180"      href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">
     <link rel="icon" type="image/png" sizes="512x512" href="<?= e(asset('/assets/images/icons/favicon-512.png')) ?>">
+    <link rel="manifest" href="<?= e(asset('/manifest.json')) ?>">
 
     <!-- Google Fonts: Playfair Display + Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,21 +109,21 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
 <div class="navbar-sticky-wrapper">
     <header class="container navbar" role="banner">
         <!-- Logo -->
-        <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="<?= SITE_NAME ?> — Home">
+        <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="Heramba Fashion — Home">
             <picture>
                 <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
                                 <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
                         type="image/webp">
                 <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
                      srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
-                     alt="Herabama Fashions logo — round maroon and gold badge"
+                     alt="Heramba Fashion logo"
                      class="brand-logo__image"
-                     width="56" height="56"
+                     width="52" height="52"
                      loading="eager">
             </picture>
             <div class="brand-logo__text-group">
-                <span class="brand-logo__title">Herabama Fashions</span>
-                <span class="brand-logo__tagline">Handcrafted Kidswear</span>
+                <span class="brand-logo__title">Heramba Fashion</span>
+                <span class="brand-logo__tagline">Dress Every Smile</span>
             </div>
         </a>
 
@@ -264,10 +271,10 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
 </div>
 
 <!-- ── 4. Size Guide Modal (Global Accessible) ─────────────────────────── -->
-<div class="modal-backdrop" id="size-guide-modal" role="dialog" aria-modal="true" aria-label="Herbama Fashions Size Guide">
+<div class="modal-backdrop" id="size-guide-modal" role="dialog" aria-modal="true" aria-label="Heramba Fashion Size Guide">
     <div class="modal-box">
         <button type="button" class="modal-close" id="close-size-guide-modal" aria-label="Close size guide">✕</button>
-        <h2 style="font-family:var(--font-serif); color:var(--color-maroon); margin-bottom:0.5rem;">Herbama Fashions — Kidswear Size Guide</h2>
+        <h2 style="font-family:var(--font-serif); color:var(--color-maroon); margin-bottom:0.5rem;">Heramba Fashion — Kidswear Size Guide</h2>
         <p style="font-size:0.875rem; color:var(--color-dark-muted); margin-bottom:1.25rem;">
             All measurements are in inches. For custom tailoring (5 working days), contact us directly on WhatsApp!
         </p>

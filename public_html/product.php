@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Product Detail Page
+ * Heramba Fashion — Product Detail Page
  * ========================================
  * Rich gallery, size chips, color swatches, quantity stepper, WhatsApp inquiry,
  * feature strip, tabbed specs, pincode delivery checker, reviews, and related carousel.
@@ -30,8 +30,8 @@ if (!$product) {
     exit;
 }
 
-$pageTitle = e($product['name']) . ' — Herbama Fashions';
-$pageDesc  = e($product['short_desc'] ?? $product['name'] . ' - Handcrafted kidswear at Herbama Fashions.');
+$pageTitle = e($product['name']) . ' — Heramba Fashion';
+$pageDesc  = e($product['short_desc'] ?? $product['name'] . ' - Handcrafted kidswear at Heramba Fashion.');
 $bodyClass = 'page-product-detail';
 
 // Variants & Colours
@@ -271,7 +271,7 @@ require_once APP_ROOT . '/includes/header.php';
             <!-- Enquire on WhatsApp Link -->
             <?php 
             $prodUrl = SITE_URL . '/product.php?slug=' . urlencode($slug);
-            $waProductMsg = "Hello Herbama Fashions! I'm interested in *{$product['name']}* ({$prodUrl}). Could you please share size and customization details?";
+            $waProductMsg = "Hello Heramba Fashion! I'm interested in *{$product['name']}* ({$prodUrl}). Could you please share size and customization details?";
             $waProductUrl = "https://wa.me/{$cleanWaNumber}?text=" . rawurlencode($waProductMsg);
             ?>
             <a href="<?= e($waProductUrl) ?>" class="product-whatsapp-enquire" target="_blank" rel="noopener noreferrer">
@@ -293,7 +293,7 @@ require_once APP_ROOT . '/includes/header.php';
 
             <!-- Features Checklist Strip -->
             <div style="background:var(--color-blush-card); border-radius:12px; padding:1rem; border:1px solid var(--color-border-subtle);">
-                <div style="font-size:0.85rem; font-weight:600; color:var(--color-maroon); margin-bottom:0.4rem;">The Herbama Guarantee:</div>
+                <div style="font-size:0.85rem; font-weight:600; color:var(--color-maroon); margin-bottom:0.4rem;">The Heramba Guarantee:</div>
                 <ul style="font-size:0.8rem; color:var(--color-dark-muted); line-height:1.6;">
                     <li>✓ <strong>Pan-India Shipping</strong> &amp; direct dispatch to UAE/Dubai</li>
                     <li>✓ <strong>0-3 Years:</strong> Ready for immediate dispatch</li>
@@ -343,7 +343,7 @@ require_once APP_ROOT . '/includes/header.php';
 
         <!-- Tab 2: Fabric & Care -->
         <div class="product-tab-pane" id="tab-fabric" role="tabpanel">
-            <p>At Herbama Fashions, every garment is thoughtfully crafted for the sensitive skin of little ones:</p>
+            <p>At Heramba Fashion, every garment is thoughtfully crafted for the sensitive skin of little ones:</p>
             <ul style="list-style:disc; padding-left:1.5rem; margin-top:0.75rem;">
                 <li>Hand wash gently in cold water with mild baby detergent.</li>
                 <li>Do not bleach or soak for prolonged hours.</li>

@@ -1,6 +1,6 @@
 <?php
 /**
- * order-confirmation.php — Herbama Fashions
+ * order-confirmation.php — Heramba Fashion
  * ===========================================
  * Displays order confirmation and UPI payment instructions.
  *
@@ -34,7 +34,7 @@ if (preg_match('/^HF-[A-Z0-9]{4,16}$/i', $publicOrderId)) {
 
 // ── Settings & WhatsApp Links ────────────────────────────────────────────────
 $settingModel  = new SettingModel();
-$upiId         = (string) $settingModel->get('upi_id', 'herbamapay@upi');
+$upiId         = (string) $settingModel->get('upi_id', 'yourname@upi');
 $rawWaNumber   = (string) $settingModel->get('whatsapp_number', '919876543210');
 $cleanWaNumber = preg_replace('/\D/', '', $rawWaNumber);
 
@@ -116,6 +116,22 @@ require_once APP_ROOT . '/includes/header.php';
 <?php else: ?>
 
     <div class="confirm-card">
+        <div style="margin: 0 auto 1.25rem; text-align: center;">
+            <a href="<?= e(url('/')) ?>" aria-label="Heramba Fashion — Home">
+                <picture>
+                    <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
+                                    <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                            type="image/webp">
+                    <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+                         srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                         alt="Heramba Fashion logo"
+                         width="64" height="64"
+                         style="width:64px;height:64px;border-radius:50%;display:inline-block;"
+                         loading="eager">
+                </picture>
+            </a>
+        </div>
+
         <div class="success-icon-wrap">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />

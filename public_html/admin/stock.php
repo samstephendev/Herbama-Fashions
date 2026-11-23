@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Stock & Inventory Management — Herbama Fashions
+ * Admin Stock & Inventory Management — Heramba Fashion
  * =====================================================
  * Modules:
  *   - Low-stock threshold filter & alerts

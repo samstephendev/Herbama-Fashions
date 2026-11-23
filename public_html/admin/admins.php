@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Team Management — Herbama Fashions
+ * Admin Team Management — Heramba Fashion
  * =========================================
  * Modules:
  *   - List all administrator accounts
@@ -83,7 +83,7 @@ require_once APP_ROOT . '/includes/admin-header.php';
 
                 <div class="form-group">
                     <label class="form-label">Admin Email *</label>
-                    <input type="email" name="email" class="form-control" required placeholder="admin@herbamafashions.com">
+                    <input type="email" name="email" class="form-control" required placeholder="admin@yourdomain.com">
                 </div>
 
                 <div class="form-group">

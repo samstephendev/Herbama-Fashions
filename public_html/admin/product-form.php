@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Product Add/Edit Form — Herbama Fashions
+ * Admin Product Add/Edit Form — Heramba Fashion
  * ===============================================
  * Features:
  *   - Create or edit product details

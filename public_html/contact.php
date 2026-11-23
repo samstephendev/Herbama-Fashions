@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Contact Us Page
+ * Heramba Fashion — Contact Us Page
  * =====================================
  * Contact details, address, WhatsApp direct link, and message form saved to messages table.
  */
@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Contact Us — Herbama Fashions';
-$pageDesc  = 'Get in touch with Herbama Fashions. Chat on WhatsApp, email us, or send an inquiry for custom kidswear orders.';
+$pageTitle = 'Contact Us — Heramba Fashion';
+$pageDesc  = 'Get in touch with Heramba Fashion. Chat on WhatsApp, email us, or send an inquiry for custom kidswear orders.';
 $bodyClass = 'page-static page-contact';
 
 $settingModel = new SettingModel();
@@ -66,7 +66,7 @@ require_once APP_ROOT . '/includes/header.php';
             <div style="margin-bottom:1.5rem;">
                 <strong style="display:block; color:var(--color-maroon); font-size:0.95rem; margin-bottom:2px;">💬 Quickest Support: WhatsApp</strong>
                 <p style="font-size:0.875rem; color:var(--color-dark-muted); margin-bottom:0.75rem;">For custom orders, size advice, or payment updates, our team replies fastest on WhatsApp.</p>
-                <a href="https://wa.me/<?= e($cleanWa) ?>?text=Hello%20Herbama%20Fashions!%20I%20have%20an%20inquiry." 
+                <a href="https://wa.me/<?= e($cleanWa) ?>?text=Hello%20Heramba%20Fashions!%20I%20have%20an%20inquiry." 
                    class="btn-pill btn-pill-primary" 
                    style="background:#25D366; border-color:#25D366; color:#FFF; font-size:0.85rem; padding:0.6rem 1.25rem;"
                    target="_blank" 
@@ -84,7 +84,7 @@ require_once APP_ROOT . '/includes/header.php';
             <div style="border-top:1px solid var(--color-border-subtle); padding-top:1.25rem; margin-bottom:1.25rem;">
                 <strong style="display:block; color:var(--color-maroon); font-size:0.95rem; margin-bottom:2px;">📍 Studio &amp; Workshop</strong>
                 <p style="font-size:0.875rem; color:var(--color-dark); line-height:1.6; margin:0;">
-                    Herbama Fashions Atelier<br>
+                    Heramba Fashion Atelier<br>
                     Crafts &amp; Handloom Hub, Pan-India Dispatch<br>
                     UAE International Air Delivery Hub
                 </p>

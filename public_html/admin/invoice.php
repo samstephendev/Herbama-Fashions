@@ -1,6 +1,6 @@
 <?php
 /**
- * Printable Invoice — Herbama Fashions
+ * Printable Invoice — Heramba Fashion
  * =====================================
  * Clean, printable invoice layout formatted for A4 / standard paper.
  */
@@ -25,8 +25,8 @@ if (!$order) {
     die('Order not found.');
 }
 
-$upiId     = (string)$settingModel->get('upi_id', 'herbamapay@upi');
-$storeName = 'Herabama Fashions';
+$upiId     = (string)$settingModel->get('upi_id', 'yourname@upi');
+$storeName = 'Heramba Fashion';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,13 +172,17 @@ $storeName = 'Herabama Fashions';
 <div class="invoice-box">
     <div class="header-row">
         <div style="display:flex;align-items:center;gap:0.75rem;">
-            <img src="<?= asset('/assets/images/brand/logo-128.png') ?>"
-                 alt="Herabama Fashions logo — round maroon and gold badge"
-                 width="64" height="64"
-                 style="border-radius:50%;">
+            <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
+                <img src="<?= asset('/assets/images/brand/logo-128.png') ?>"
+                     alt="Heramba Fashion logo"
+                     width="64" height="64"
+                     style="width:64px;height:64px;border-radius:50%;display:block;"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                <div class="logo-fallback" style="display:none;width:64px;height:64px;background:#7A1F3D;color:#FFF9F3;border-radius:50%;align-items:center;justify-content:center;font-weight:700;font-family:serif;font-size:1.25rem;">HF</div>
+            </div>
             <div>
                 <div class="brand-title"><?= $storeName ?></div>
-                <div class="brand-subtitle">Premium Handcrafted Kidswear</div>
+                <div class="brand-subtitle">Dress Every Smile · Premium Handcrafted Kidswear</div>
                 <div style="font-size:0.82rem;color:#777;margin-top:0.35rem;">
                     Online Payment via UPI · Pan-India &amp; UAE Dispatch
                 </div>

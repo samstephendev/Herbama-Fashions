@@ -1,6 +1,6 @@
-# Herbama Fashions — Kidswear E-Commerce Platform
+# Heramba Fashion — Kidswear E-Commerce Platform
 
-A premium kidswear e-commerce website for **Herbama Fashions** featuring an artisan royal maroon (`#7A1F3D`) and gold (`#C9A24B`) aesthetic on warm cream (`#FFF9F3`). Built with plain modern **PHP 8**, **MySQL (PDO)**, **HTML5**, **CSS3**, and vanilla **JavaScript**—with zero external frameworks or npm dependencies.
+A premium kidswear e-commerce website for **Heramba Fashion** featuring an artisan royal maroon (`#7A1F3D`) and gold (`#C9A24B`) aesthetic on warm cream (`#FFF9F3`). Built with plain modern **PHP 8**, **MySQL (PDO)**, **HTML5**, **CSS3**, and vanilla **JavaScript**—with zero external frameworks or npm dependencies.
 
 The platform is designed to run seamlessly across three distinct hosting environments with **zero code modifications**, relying entirely on environment variables or configuration files:
 1. **XAMPP** (Local Development — Subfolder or Root, plain HTTP, mail logging)
@@ -26,7 +26,7 @@ The platform is designed to run seamlessly across three distinct hosting environ
 ## Directory Structure
 
 ```text
-Herbama-Fashions/
+Heramba-Fashions/
 ├── app/
 │   ├── config/
 │   │   ├── .htaccess          # Blocks direct HTTP access to configuration files
@@ -88,11 +88,11 @@ Configuration settings are loaded using a three-tier precedence mechanism:
 | :--- | :--- | :--- |
 | `APP_ENV` | Application environment (`local` or `production`) | `local` |
 | `APP_DEBUG` | Display errors (`true` in local, `false` in production) | `true` |
-| `SITE_URL` | Canonical site URL (auto-detected if empty) | `http://localhost/herbama` |
+| `SITE_URL` | Canonical site URL (auto-detected if empty) | `http://localhost/heramba-fashion` |
 | `DB_HOST` | MySQL hostname or IP address | `127.0.0.1` |
 | `DB_PORT` | MySQL connection port | `3306` (Aiven often uses `10000+`) |
-| `DB_NAME` | MySQL database name | `herbama_db` |
-| `DB_USER` | MySQL database username | `herbama_user` (never root in prod) |
+| `DB_NAME` | MySQL database name | `heramba_db` |
+| `DB_USER` | MySQL database username | `heramba_user` (never root in prod) |
 | `DB_PASS` | MySQL database password | `secret_password` |
 | `DB_SSL_MODE` | MySQL SSL mode (`require`, `verify`, `disable`) | `verify` (in prod) / `disable` (in local) |
 | `DB_SSL_CA` | Path to MySQL SSL Certificate Authority file | `app/config/ca.pem` (for Aiven) |
@@ -113,9 +113,9 @@ XAMPP allows rapid development on Windows, macOS, or Linux using Apache and Mari
 #### Step 1: Clone or Copy the Repository
 Place the project inside your XAMPP web root (`htdocs`):
 ```text
-C:\xampp\htdocs\Herbama-Fashions\
+C:\xampp\htdocs\Heramba-Fashions\
 ```
-*(If you rename the folder to `herbama`, the site will be accessible at `http://localhost/herbama/public_html` or via virtual host).*
+*(If you rename the folder to `heramba-fashion`, the site will be accessible at `http://localhost/heramba-fashion/public_html` or via virtual host).*
 
 #### Step 2: Configure Environment Settings
 Copy the template configuration file:
@@ -127,10 +127,10 @@ Open `app/config/config.php` and verify:
 return [
     'APP_ENV'   => 'local',
     'APP_DEBUG' => true,
-    'SITE_URL'  => 'http://localhost/Herbama-Fashions/public_html',
+    'SITE_URL'  => 'http://localhost/Heramba-Fashions/public_html',
     'DB_HOST'   => '127.0.0.1',
     'DB_PORT'   => 3306,
-    'DB_NAME'   => 'herbama_db',
+    'DB_NAME'   => 'heramba_db',
     'DB_USER'   => 'root',
     'DB_PASS'   => '',
     'DB_SSL_CA' => '',
@@ -141,13 +141,13 @@ return [
 #### Step 3: Create Database & Import Schema
 1. Start **Apache** and **MySQL** in the XAMPP Control Panel.
 2. Open **phpMyAdmin** (`http://localhost/phpmyadmin/`).
-3. Create a new database named `herbama_db` with collation `utf8mb4_unicode_ci`.
+3. Create a new database named `heramba_db` with collation `utf8mb4_unicode_ci`.
 4. Click **Import** and select `sql/schema.sql`. Execute the import.
    *(Note: `sql/schema.sql` creates all tables and category seeds, but contains NO default admin user or hardcoded passwords).*
 
 #### Step 4: Create Store Administrator Account (First-Time Setup)
 Create your master administrator account using either method:
-- **Browser Method:** Navigate to `http://localhost/Herbama-Fashions/public_html/setup-admin.php`. Enter your name, email, and password (minimum 12 characters).
+- **Browser Method:** Navigate to `http://localhost/Heramba-Fashions/public_html/setup-admin.php`. Enter your name, email, and password (minimum 12 characters).
 - **CLI Method:** Run `php scripts/create-admin.php` in your terminal and follow the interactive prompts.
 - **Security Cleanup:** Once the account is created, **immediately delete `public_html/setup-admin.php`** from your project.
 
@@ -155,14 +155,14 @@ Create your master administrator account using either method:
 If running inside a subfolder, open `public_html/.htaccess` and verify or set `RewriteBase`:
 ```apache
 RewriteEngine On
-RewriteBase /Herbama-Fashions/public_html/
+RewriteBase /Heramba-Fashions/public_html/
 ```
 
 #### Step 6: Verify Local Behaviors
 - **Plain HTTP Allowed:** No HTTPS redirect or HSTS headers are sent.
 - **Session Cookies:** The `secure` cookie attribute is dynamically set only if accessed over HTTPS.
 - **Mail Interception:** Password reset and notification emails are not sent via SMTP; instead, they are cleanly appended to `logs/mail.log`.
-- **Health Check:** Visit `http://localhost/Herbama-Fashions/public_html/health.php` to verify database connectivity and directory write permissions.
+- **Health Check:** Visit `http://localhost/Heramba-Fashions/public_html/health.php` to verify database connectivity and directory write permissions.
 
 ---
 
@@ -232,7 +232,7 @@ Using **Hostinger File Manager** or **Git Deployment** in hPanel:
 
 #### Step 2: Create a Least-Privilege MySQL User
 1. In Hostinger hPanel, navigate to **Databases** > **MySQL Databases**.
-2. Create a new database: e.g. `u123456789_herbama`.
+2. Create a new database: e.g. `u123456789_heramba`.
 3. Create a dedicated database user (e.g., `u123456789_app`) with a strong password.
    - **Never use the root or administrative account.**
    - Ensure the user has `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `DROP`, `INDEX`, `ALTER` permissions only.
@@ -249,10 +249,10 @@ Edit `app/config/config.php` directly on the server:
 return [
     'APP_ENV'            => 'production',
     'APP_DEBUG'          => false,
-    'SITE_URL'           => 'https://www.herbamafashions.com',
+    'SITE_URL'           => 'https://www.yourdomain.com',
     'DB_HOST'            => 'localhost',
     'DB_PORT'            => 3306,
-    'DB_NAME'            => 'u123456789_herbama',
+    'DB_NAME'            => 'u123456789_heramba',
     'DB_USER'            => 'u123456789_app',
     'DB_PASS'            => 'your_strong_database_password',
     'DB_SSL_CA'          => '', // Not required for localhost MySQL on Hostinger
@@ -264,7 +264,7 @@ return [
 ```
 
 #### Step 5: One-Time Administrator Account Setup
-1. In your browser, open: `https://www.herbamafashions.com/setup-admin.php?token=generate_a_random_32_character_setup_token`
+1. In your browser, open: `https://www.yourdomain.com/setup-admin.php?token=generate_a_random_32_character_setup_token`
 2. Enter your name, email, and master password (minimum 12 characters).
 3. Once created, **delete `public_html/setup-admin.php` immediately** via Hostinger File Manager.
 
@@ -307,7 +307,7 @@ Append `&format=json` or send header `Accept: application/json` for machine-read
 ```json
 {
   "status": "ok",
-  "app_name": "Herbama Fashions",
+  "app_name": "Heramba Fashion",
   "environment": "production",
   "debug": false,
   "timestamp": "2026-11-20T12:00:00+05:30",
@@ -315,7 +315,7 @@ Append `&format=json` or send header `Accept: application/json` for machine-read
     "connected": true,
     "host": "localhost",
     "port": 3306,
-    "database": "herbama_db",
+    "database": "heramba_db",
     "ssl_ca": "disabled",
     "error": null
   },
@@ -396,5 +396,5 @@ The application implements a defense-in-depth security model:
 - `public_html/index.php` — Banner URLs and category links updated to use `url()` and `asset()`.
 - `public_html/collection.php` — Dynamic API fetch endpoint and offer link resolution.
 - `public_html/product.php` — Breadcrumbs, 404 links, and add-to-cart AJAX updated to use dynamic `SITE_URL`.
-- `public_html/about.php`, `public_html/offers.php`, `public_html/search.php`, `public_html/why-herbama.php` — Root links updated to `url()`.
+- `public_html/about.php`, `public_html/offers.php`, `public_html/search.php`, `public_html/why-heramba.php` — Root links updated to `url()`.
 - `public_html/assets/js/main.js` — Live search, wishlist toggle, and newsletter subscription updated to dynamically prefix `window.SITE_URL`.

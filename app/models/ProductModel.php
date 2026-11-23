@@ -1,6 +1,6 @@
 <?php
 /**
- * ProductModel — Herbama Fashions
+ * ProductModel — Heramba Fashion
  * =================================
  * Product listing, detail, variant, category, wishlist, and admin CRUD.
  * Never returns raw data for financial decisions — that's OrderModel's job.

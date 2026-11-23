@@ -5,7 +5,7 @@
  * Run: php scripts/generate-logo-sizes.php
  */
 
-$srcPng  = __DIR__ . '/../public_html/assets/images/brand/herabama-logo.png';
+$srcPng  = __DIR__ . '/../public_html/assets/images/brand/heramba-logo.png';
 $srcJpeg = __DIR__ . '/../public_html/assets/images/brand/heramba-fashion-logo.jpeg';
 $src = file_exists($srcPng) ? $srcPng : $srcJpeg;
 
@@ -33,7 +33,7 @@ imagesavealpha($master, true);
 $srcW = imagesx($master);
 $srcH = imagesy($master);
 
-// Ensure herabama-logo.png exists at full resolution
+// Ensure heramba-logo.png exists at full resolution
 if (!file_exists($srcPng)) {
     imagepng($master, $srcPng, 9);
 }
@@ -57,7 +57,7 @@ foreach ($logoSizes as $sz) {
     // Save to brandDir with both naming conventions
     $paths = [
         "{$brandDir}logo-{$sz}.png",
-        "{$brandDir}herabama-logo-{$sz}.png",
+        "{$brandDir}heramba-logo-{$sz}.png",
         "{$imgDir}logo-{$sz}.png",
     ];
     foreach ($paths as $p) {
@@ -67,7 +67,7 @@ foreach ($logoSizes as $sz) {
     if (function_exists('imagewebp')) {
         $webps = [
             "{$brandDir}logo-{$sz}.webp",
-            "{$brandDir}herabama-logo-{$sz}.webp",
+            "{$brandDir}heramba-logo-{$sz}.webp",
             "{$imgDir}logo-{$sz}.webp",
         ];
         foreach ($webps as $w) {

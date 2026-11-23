@@ -1,14 +1,14 @@
 <?php
 /**
- * Herbama Fashions — About Us / Our Story
+ * Heramba Fashion — About Us / Our Story
  * =========================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Our Story — Herbama Fashions';
-$pageDesc  = 'Learn about Herbama Fashions, our passion for handcrafted kidswear, delicate fabrics, and tailoring joy for little ones.';
+$pageTitle = 'Our Story — Heramba Fashion';
+$pageDesc  = 'Learn about Heramba Fashion, our passion for handcrafted kidswear, delicate fabrics, and tailoring joy for little ones.';
 $bodyClass = 'page-static page-about';
 
 require_once APP_ROOT . '/includes/header.php';
@@ -37,12 +37,13 @@ require_once APP_ROOT . '/includes/header.php';
             <h2 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.8rem;">A Dream Born Out of Love for Little Ones</h2>
         </div>
 
-        <p>At <strong>Herbama Fashions</strong>, we believe every child’s wardrobe should feel like a warm, comforting hug while looking breathtakingly royal. What began as a boutique passion project for designing bespoke celebratory outfits has blossomed into a cherished kidswear label loved by parents across India and in the UAE.</p>
+        <p>At <strong>Heramba Fashion</strong>, we believe every child’s wardrobe should feel like a warm, comforting hug while looking breathtakingly royal. What began as a boutique passion project for designing bespoke celebratory outfits has blossomed into a cherished kidswear label loved by parents across India and in the UAE.</p>
+        <p style="font-style:italic;color:var(--color-gold-dark,#9B7828);font-size:1rem;margin-top:0.25rem;">“Dress Every Smile”</p>
 
         <p style="margin-top:1rem;">We know children live in motion — running, spinning, jumping, and playing. That's why our designs prioritize delicate baby skin above all else: breathability, soft cotton linings, zero rough inner seams, and gentle elastic waistbands that never dig in.</p>
 
         <div style="margin:2.5rem 0; padding:1.5rem; background:var(--color-blush-card); border-left:4px solid var(--color-maroon); border-radius:0 12px 12px 0;">
-            <h3 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.25rem; margin-bottom:0.5rem;">The Herbama Promise</h3>
+            <h3 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.25rem; margin-bottom:0.5rem;">The Heramba Fashion Promise</h3>
             <p style="margin:0; font-size:0.95rem; color:var(--color-dark);">
                 “Pure handcrafted fabrics, artisanal Indian heritage motifs, and custom fits ready within 5 working days — delivered directly to your doorstep with love.”
             </p>

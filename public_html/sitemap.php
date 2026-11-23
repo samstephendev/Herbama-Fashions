@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Dynamic XML Sitemap Generator
+ * Heramba Fashion — Dynamic XML Sitemap Generator
  * ===================================================
  * Generates valid sitemap.xml with live URLs for all products, categories, and static pages.
  */
@@ -23,7 +23,7 @@ $staticUrls = [
     '/new-arrivals.php',
     '/offers.php',
     '/about.php',
-    '/why-herbama.php',
+    '/why-heramba.php',
     '/quality-fabric.php',
     '/contact.php',
     '/faq.php',

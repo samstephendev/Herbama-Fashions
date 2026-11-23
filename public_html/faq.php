@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — FAQs Page
+ * Heramba Fashion — FAQs Page
  * ==============================
  * Interactive accordion with answers to common shipping, payment, custom order, and sizing questions.
  */
@@ -8,13 +8,13 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Frequently Asked Questions (FAQs) — Herbama Fashions';
+$pageTitle = 'Frequently Asked Questions (FAQs) — Heramba Fashion';
 $pageDesc  = 'Find answers about ordering, custom tailoring, online UPI payments, shipping across India and UAE, and returns.';
 $bodyClass = 'page-static page-faq';
 
 $faqs = [
     [
-        'q' => 'How does ordering and payment work at Herbama Fashions?',
+        'q' => 'How does ordering and payment work at Heramba Fashion?',
         'a' => 'Our ordering process is smooth and personal! You browse our collections, select sizes, and click Checkout. Your order is registered in our system and opens a pre-filled WhatsApp message directly to our boutique team. You confirm any special preferences, complete your payment safely via UPI ("Online Payment Only, No COD"), and our team confirms dispatch.'
     ],
     [
@@ -75,7 +75,7 @@ require_once APP_ROOT . '/includes/header.php';
     <div style="margin-top:3rem; text-align:center; padding:2rem; background:var(--color-blush-card); border-radius:16px; border:1px solid var(--color-border-subtle);">
         <h3 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.4rem; margin-bottom:0.5rem;">Have a Question Not Listed Here?</h3>
         <p style="color:var(--color-dark-muted); font-size:0.9rem; margin-bottom:1.25rem;">Chat directly with our boutique styling team on WhatsApp for immediate guidance.</p>
-        <a href="https://wa.me/919876543210?text=Hello%20Herbama%20Fashions!%20I%20have%20a%20question." class="btn-pill btn-pill-primary" target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/919876543210?text=Hello%20Heramba%20Fashions!%20I%20have%20a%20question." class="btn-pill btn-pill-primary" target="_blank" rel="noopener noreferrer">
             Ask on WhatsApp &rarr;
         </a>
     </div>

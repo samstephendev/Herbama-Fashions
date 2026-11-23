@@ -1,14 +1,14 @@
 <?php
 /**
- * Herbama Fashions — Privacy Policy
+ * Heramba Fashion — Privacy Policy
  * ===================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Privacy Policy — Herbama Fashions';
-$pageDesc  = 'Herbama Fashions respects your privacy. Learn how we securely protect customer information and order details.';
+$pageTitle = 'Privacy Policy — Heramba Fashion';
+$pageDesc  = 'Heramba Fashion respects your privacy. Learn how we securely protect customer information and order details.';
 $bodyClass = 'page-static page-privacy';
 
 require_once APP_ROOT . '/includes/header.php';
@@ -17,7 +17,7 @@ require_once APP_ROOT . '/includes/header.php';
 <div class="collection-hero">
     <div class="container">
         <h1 class="collection-hero__title">Privacy Policy</h1>
-        <p class="collection-hero__tagline">Your Privacy &amp; Trust Are Sacred to Herbama Fashions</p>
+        <p class="collection-hero__tagline">Your Privacy &amp; Trust Are Sacred to Heramba Fashion</p>
     </div>
 </div>
 
@@ -42,7 +42,7 @@ require_once APP_ROOT . '/includes/header.php';
         </ul>
 
         <h2 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.4rem; margin-bottom:0.5rem;">3. We Never Sell Your Data</h2>
-        <p>Herbama Fashions does not sell, lease, or monetize your personal details to third-party advertisers. Information is shared only with verified logistics partners (such as Delhivery, BlueDart, DTDC) strictly for parcel delivery.</p>
+        <p>Heramba Fashion does not sell, lease, or monetize your personal details to third-party advertisers. Information is shared only with verified logistics partners (such as Delhivery, BlueDart, DTDC) strictly for parcel delivery.</p>
 
         <h2 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.4rem; margin-bottom:0.5rem;">4. Data Security</h2>
         <p>All passwords are encrypted with industry-standard Argon2id / bcrypt hashing. Sessions use secure, httpOnly cookies. Our systems undergo routine vulnerability checks to maintain high security standards.</p>

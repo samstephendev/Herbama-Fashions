@@ -1,6 +1,6 @@
 <?php
 /**
- * OfferModel — Herbama Fashions
+ * OfferModel — Heramba Fashion
  * ==============================
  * Manages promotional offers, discount codes, and admin CRUD.
  */

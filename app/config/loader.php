@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Environment & Configuration Loader
+ * Heramba Fashion — Environment & Configuration Loader
  * ========================================================
  * Loads configuration seamlessly across:
  *   1. XAMPP (Local development, subfolder support, plain HTTP)
@@ -195,11 +195,11 @@ if (!defined('APP_DEBUG')) {
 }
 
 // Site Details & URL (handles subfolders on XAMPP)
-$siteName   = (string)env_setting('SITE_NAME', 'Herbama Fashions', $fileConfig);
-$adminEmail = (string)env_setting('ADMIN_EMAIL', 'admin@herbamafashions.com', $fileConfig);
+$siteName   = (string)env_setting('SITE_NAME', 'Heramba Fashion', $fileConfig);
+$adminEmail = (string)env_setting('ADMIN_EMAIL', 'admin@yourdomain.com', $fileConfig);
 $siteUrl    = (string)env_setting('SITE_URL', '', $fileConfig);
 
-// Auto-detect SITE_URL if not explicitly set (e.g., http://localhost/herbama)
+// Auto-detect SITE_URL if not explicitly set (e.g., http://localhost/heramba-fashion)
 if (empty($siteUrl)) {
     $scheme = isHttps() ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
@@ -222,7 +222,7 @@ if (!defined('SITE_URL'))    define('SITE_URL',    $siteUrl);
 // Database Settings
 if (!defined('DB_HOST'))    define('DB_HOST',    (string)env_setting('DB_HOST', '127.0.0.1', $fileConfig));
 if (!defined('DB_PORT'))    define('DB_PORT',    (int)env_setting('DB_PORT', 3306, $fileConfig));
-if (!defined('DB_NAME'))    define('DB_NAME',    (string)env_setting('DB_NAME', 'herbama_db', $fileConfig));
+if (!defined('DB_NAME'))    define('DB_NAME',    (string)env_setting('DB_NAME', 'heramba_db', $fileConfig));
 if (!defined('DB_USER'))    define('DB_USER',    (string)env_setting('DB_USER', 'root', $fileConfig));
 if (!defined('DB_PASS'))    define('DB_PASS',    (string)env_setting('DB_PASS', '', $fileConfig));
 if (!defined('DB_CHARSET')) define('DB_CHARSET', 'utf8mb4');
@@ -311,7 +311,7 @@ if (APP_ENV === 'production' && !defined('TEST_SUITE_RUNNING')) {
 if (!function_exists('url')) {
     /**
      * Build an absolute application URL from a relative path.
-     * Works seamlessly in root domain or subfolder (e.g. /herbama).
+     * Works seamlessly in root domain or subfolder (e.g. //heramba-fashion).
      */
     function url(string $path = ''): string
     {

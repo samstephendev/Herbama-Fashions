@@ -263,7 +263,7 @@ INSERT INTO products (id, category_id, name, slug, base_price, compare_price, is
 VALUES (1, 1, 'Royal Maroon Silk Frock', 'royal-maroon-silk-frock', 1499.00, 1999.00, 1);
 INSERT INTO product_variants (id, product_id, age_label, color, sku, stock_qty, is_active)
 VALUES (1, 1, '1-2Y', 'Maroon', 'HF-G-001', 10, 1);
-INSERT INTO settings (setting_key, setting_value) VALUES ('whatsapp_number', '919876543210'), ('upi_id', 'herbamapay@upi'), ('shipping_india', '99.00'), ('free_shipping_threshold_india', '999.00'), ('shipping_uae', '1499.00');
+INSERT INTO settings (setting_key, setting_value) VALUES ('whatsapp_number', '919876543210'), ('upi_id', 'yourname@upi'), ('shipping_india', '99.00'), ('free_shipping_threshold_india', '999.00'), ('shipping_uae', '1499.00');
 ");
 
 // Autoloader for models
@@ -310,7 +310,7 @@ function report(string $name, bool $passed, string $details = ''): void {
 }
 
 echo "========================================================\n";
-echo "  HERBAMA FASHIONS — AUTOMATED SECURITY VERIFICATION   \n";
+echo "  HERAMBA FASHION — AUTOMATED SECURITY VERIFICATION   \n";
 echo "========================================================\n\n";
 
 // ── 1. Role-Based Access Control ─────────────────────────────────────────────
@@ -321,7 +321,7 @@ report("Guest cannot access /admin (Session::isAdmin() === false)", Session::isA
 Session::login(['id' => 10, 'full_name' => 'John Customer', 'email' => 'john@test.com', 'role' => 'customer']);
 report("Customer cannot access /admin (Session::isAdmin() === false)", Session::isAdmin() === false);
 
-Session::login(['id' => 1, 'full_name' => 'Store Admin', 'email' => 'admin@herbama.com', 'role' => 'admin']);
+Session::login(['id' => 1, 'full_name' => 'Store Admin', 'email' => 'admin@heramba.test', 'role' => 'admin']);
 report("Admin granted access (Session::isAdmin() === true)", Session::isAdmin() === true);
 
 // ── 2. IDOR Protection on Orders ─────────────────────────────────────────────
@@ -408,7 +408,7 @@ report("Root .htaccess denies direct access to sql, logs, app, scripts, .env", s
 
 // ── 7. Login Rate Limiting (5 failed attempts -> Lockout) ────────────────────
 echo "\n--- 7. Testing Login Rate Limiting (Brute Force Lockout) ---\n";
-$rateEmail = 'lockout_test@herbama.com';
+$rateEmail = 'lockout_test@heramba.test';
 $userModel->register('Lockout User', $rateEmail, 'ValidPass123!');
 
 for ($i = 1; $i <= 5; $i++) {
@@ -423,7 +423,7 @@ report("Account locked out after 5 consecutive failures",
 
 // ── 8. Full E-Commerce Flow: Register -> Cart -> Checkout -> WhatsApp -> Admin Mark Paid ───
 echo "\n--- 8. Testing Full E-Commerce Order Lifecycle ---\n";
-$reg = $userModel->register('Flow Customer', 'flow@herbama.com', 'CustomerPass123!', '9876543210');
+$reg = $userModel->register('Flow Customer', 'flow@heramba.test', 'CustomerPass123!', '9876543210');
 $flowUid = (int)$reg['user_id'];
 report("Customer registration succeeded", $flowUid > 0);
 
@@ -477,24 +477,24 @@ $testPdo->exec("DELETE FROM users WHERE role = 'admin'");
 report("Initial state: No administrators exist (hasAdmin() === false)", $userModel->hasAdmin() === false);
 
 // Short password (<12 chars) must be rejected
-$shortPassRes = $userModel->setupInitialAdmin('Initial Admin', 'firstadmin@herbama.com', 'shortpass');
+$shortPassRes = $userModel->setupInitialAdmin('Initial Admin', 'firstadmin@heramba.test', 'shortpass');
 report("Password < 12 characters rejected by setupInitialAdmin()", 
     $shortPassRes['ok'] === false && str_contains($shortPassRes['error'] ?? '', '12 characters'),
     $shortPassRes['error'] ?? ''
 );
 
 // Valid 12+ char password must succeed
-$validSetupRes = $userModel->setupInitialAdmin('Super Admin', 'firstadmin@herbama.com', 'SuperSecurePass2026!');
+$validSetupRes = $userModel->setupInitialAdmin('Super Admin', 'firstadmin@heramba.test', 'SuperSecurePass2026!');
 report("Initial admin setup succeeds with valid 12+ char password", $validSetupRes['ok'] === true);
 report("Admin existence confirmed (hasAdmin() === true)", $userModel->hasAdmin() === true);
 
 // Verify Argon2id or fallback password hash format in database
-$savedHash = $testPdo->query("SELECT password_hash FROM users WHERE email = 'firstadmin@herbama.com'")->fetchColumn();
+$savedHash = $testPdo->query("SELECT password_hash FROM users WHERE email = 'firstadmin@heramba.test'")->fetchColumn();
 $isValidHash = str_starts_with($savedHash, '$argon2') || str_starts_with($savedHash, '$2y$');
 report("Password stored using secure hash (Argon2id/Bcrypt)", $isValidHash);
 
 // Subsequent setup attempt must be refused
-$secondAttempt = $userModel->setupInitialAdmin('Attacker Admin', 'attacker@herbama.com', 'AnotherPassword123!');
+$secondAttempt = $userModel->setupInitialAdmin('Attacker Admin', 'attacker@heramba.test', 'AnotherPassword123!');
 report("Second admin setup refused once an admin exists (locks permanently)", 
     $secondAttempt['ok'] === false && str_contains($secondAttempt['error'] ?? '', 'already exists'),
     $secondAttempt['error'] ?? ''
@@ -615,7 +615,7 @@ report("isHttps() returns false for standard plain HTTP (port 80, no proxy heade
 
 // 13.2 Simulated request behind Render HTTPS proxy (HTTP_X_FORWARDED_PROTO=https)
 $renderProxyReq = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/collection.php',
     'HTTP_X_FORWARDED_PROTO' => 'https',
     'SERVER_PORT'            => '80',
@@ -626,7 +626,7 @@ report("Render proxy request (HTTP_X_FORWARDED_PROTO=https) DOES NOT redirect in
 
 // Comma-separated proxy header (e.g., multi-tier proxy: client -> CDN -> Render)
 $multiProxyReq = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/cart.php',
     'HTTP_X_FORWARDED_PROTO' => 'https, http',
     'SERVER_PORT'            => '80',
@@ -637,7 +637,7 @@ report("Multi-proxy request (HTTP_X_FORWARDED_PROTO='https, http') DOES NOT redi
 
 // 13.3 Plain HTTP request in production STILL REDIRECTS
 $plainHttpProdReq = [
-    'HTTP_HOST'              => 'herbamafashions.com',
+    'HTTP_HOST'              => 'yourdomain.com',
     'REQUEST_URI'            => '/collection.php',
     'SERVER_PORT'            => '80',
     'HTTP_USER_AGENT'        => 'Mozilla/5.0',
@@ -648,7 +648,7 @@ report("Plain HTTP request in production STILL REDIRECTS to https", $plainHttpRe
 // 13.4 Plain HTTP request in local environment DOES NOT redirect (XAMPP behaviour preserved)
 $localHttpReq = [
     'HTTP_HOST'              => 'localhost',
-    'REQUEST_URI'            => '/Herbama-Fashions/public_html/index.php',
+    'REQUEST_URI'            => '/Heramba-Fashions/public_html/index.php',
     'SERVER_PORT'            => '80',
 ];
 $localRedirects = shouldRedirectToHttps($localHttpReq, 'local');
@@ -656,7 +656,7 @@ report("Plain HTTP request in local environment (XAMPP) DOES NOT redirect", $loc
 
 // 13.5 Health check exemptions from HTTPS redirect
 $healthCheckReq = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/health.php',
     'SERVER_PORT'            => '80',
     'HTTP_USER_AGENT'        => 'Mozilla/5.0',
@@ -664,7 +664,7 @@ $healthCheckReq = [
 report("Health check path (/health.php) is exempt from HTTPS redirect in production", shouldRedirectToHttps($healthCheckReq, 'production') === false);
 
 $cleanHealthReq = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/health',
     'SERVER_PORT'            => '80',
     'HTTP_USER_AGENT'        => 'Mozilla/5.0',
@@ -673,7 +673,7 @@ report("Clean health check path (/health) is exempt from HTTPS redirect in produ
 
 // 13.6 Render health checker user agent exemptions
 $renderUaReq1 = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/',
     'SERVER_PORT'            => '80',
     'HTTP_USER_AGENT'        => 'Render/1.0',
@@ -681,7 +681,7 @@ $renderUaReq1 = [
 report("Request with user agent 'Render/1.0' is exempt from HTTPS redirect", shouldRedirectToHttps($renderUaReq1, 'production') === false);
 
 $renderUaReq2 = [
-    'HTTP_HOST'              => 'herbama-fashions.onrender.com',
+    'HTTP_HOST'              => 'heramba-fashion.onrender.com',
     'REQUEST_URI'            => '/',
     'SERVER_PORT'            => '80',
     'HTTP_USER_AGENT'        => 'Go-http-client/1.1 (Render Health Check)',

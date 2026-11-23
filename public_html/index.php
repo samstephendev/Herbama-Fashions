@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Homepage
+ * Heramba Fashion — Homepage
  * =============================
  * Hero slider, Shop by Category, New Arrivals, Promo Offer Banner, Trust Strip.
  */
@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Herbama Fashions | Premium Handcrafted Kidswear (0-14 Years)';
+$pageTitle = 'Heramba Fashion | Premium Handcrafted Kidswear (0-14 Years)';
 $pageDesc  = 'Discover adorable, handcrafted kidswear for girls, boys, and infants. Pure breathable cotton, silk lehengas, and festive sets. Pan-India & UAE dispatch.';
 $bodyClass = 'page-home';
 

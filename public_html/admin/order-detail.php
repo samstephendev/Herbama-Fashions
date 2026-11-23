@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Order Detail — Herbama Fashions
+ * Admin Order Detail — Heramba Fashion
  * =====================================
  * Modules:
  *   - Comprehensive order overview
@@ -76,7 +76,7 @@ $amount     = number_format((float)$order['total'], 2);
 $waTemplates = [
     'payment_reminder' => [
         'label' => 'Payment Reminder',
-        'text'  => "Hi {$custName}! 🌸 Thank you for choosing Herbama Fashions. Your order *{$orderRef}* (₹{$amount}) is reserved. Please send your payment screenshot via UPI to complete confirmation. Let us know if you need any assistance!",
+        'text'  => "Hi {$custName}! 🌸 Thank you for choosing Heramba Fashion. Your order *{$orderRef}* (₹{$amount}) is reserved. Please send your payment screenshot via UPI to complete confirmation. Let us know if you need any assistance!",
     ],
     'payment_received' => [
         'label' => 'Payment Confirmed & In Processing',
@@ -84,7 +84,7 @@ $waTemplates = [
     ],
     'dispatched' => [
         'label' => 'Dispatch & Courier Notification',
-        'text'  => "Great news, {$custName}! 📦 Your Herbama Fashions order *{$orderRef}* has been dispatched. Track your delivery or contact us anytime here on WhatsApp for live updates. Happy dressing!",
+        'text'  => "Great news, {$custName}! 📦 Your Heramba Fashion order *{$orderRef}* has been dispatched. Track your delivery or contact us anytime here on WhatsApp for live updates. Happy dressing!",
     ],
     'customization_query' => [
         'label' => 'Customization Sizing Query',

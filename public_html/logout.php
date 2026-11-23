@@ -2,7 +2,7 @@
 /**
  * logout.php — Session termination handler
  *
- * Herbama Fashions · Kidswear E-Commerce
+ * Heramba Fashion · Kidswear E-Commerce
  *
  * Security model:
  *   • Logout MUST be a POST action to prevent CSRF-driven forced logout via
@@ -49,7 +49,7 @@ if (!Session::isLoggedIn()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signing out… — Herbama Fashions</title>
+    <title>Signing out… — Heramba Fashion</title>
     <style>
         body {
             margin: 0;

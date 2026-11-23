@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Audit Log Viewer — Herbama Fashions
+ * Admin Audit Log Viewer — Heramba Fashion
  * ==========================================
  * Modules:
  *   - Immutable log of all administrative actions

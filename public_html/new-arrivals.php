@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — New Arrivals Page
+ * Heramba Fashion — New Arrivals Page
  * =====================================
  * Displays fresh designs across all categories.
  */
@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'New Arrivals 2024 — Herbama Fashions';
+$pageTitle = 'New Arrivals 2024 — Heramba Fashion';
 $pageDesc  = 'Explore our latest collection of handcrafted kidswear. Fresh frocks, party lehengas, cotton dungarees, and festive kurta pyjama.';
 $bodyClass = 'page-collection page-new-arrivals';
 

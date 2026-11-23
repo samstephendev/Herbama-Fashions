@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Mail Helper
+ * Heramba Fashion — Mail Helper
  * =================================
  * In local mode (APP_ENV=local): Logs emails to /logs/mail.log instead of sending.
  * In production mode (APP_ENV=production): Uses standard PHP mail() or configured transport.

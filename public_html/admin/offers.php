@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Offers & Coupons Management — Herbama Fashions
+ * Admin Offers & Coupons Management — Heramba Fashion
  * ====================================================
  * Modules:
  *   - Create and manage discount coupons and promotional offers
@@ -89,7 +89,7 @@ require_once APP_ROOT . '/includes/admin-header.php';
 
                 <div class="form-group">
                     <label class="form-label">Coupon Code (optional)</label>
-                    <input type="text" name="code" class="form-control" placeholder="e.g. HERBAMA15" style="text-transform:uppercase;">
+                    <input type="text" name="code" class="form-control" placeholder="e.g. HERAMBA15" style="text-transform:uppercase;">
                     <div style="font-size:0.75rem;color:#777;margin-top:0.25rem;">Leave empty for auto-applied storewide offer.</div>
                 </div>
 

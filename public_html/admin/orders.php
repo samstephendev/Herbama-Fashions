@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Orders Management — Herbama Fashions
+ * Admin Orders Management — Heramba Fashion
  * ==========================================
  * Modules:
  *   - Search and filter by status and payment status
@@ -179,7 +179,7 @@ require_once APP_ROOT . '/includes/admin-header.php';
                             <!-- WhatsApp Message Button -->
                             <?php 
                                 $cleanPhone = preg_replace('/\D/', '', $ord['ship_phone']);
-                                $waTxt = "Hi " . $ord['ship_name'] . "! 👋 Herbama Fashions here regarding your order *" . $ord['public_order_id'] . "* (₹" . number_format((float)$ord['total'], 2) . ").";
+                                $waTxt = "Hi " . $ord['ship_name'] . "! 👋 Heramba Fashion here regarding your order *" . $ord['public_order_id'] . "* (₹" . number_format((float)$ord['total'], 2) . ").";
                                 $waUrl = "https://wa.me/" . $cleanPhone . "?text=" . rawurlencode($waTxt);
                             ?>
                             <a href="<?= e($waUrl) ?>" target="_blank" rel="noopener" class="btn btn-sm" style="background:#25D366;color:#fff;" title="Chat with customer on WhatsApp">

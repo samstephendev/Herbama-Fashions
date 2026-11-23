@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Store Settings — Herbama Fashions
+ * Admin Store Settings — Heramba Fashion
  * ========================================
  * Modules:
  *   - WhatsApp Number and UPI ID
@@ -79,8 +79,8 @@ require_once APP_ROOT . '/includes/admin-header.php';
                 <div class="form-group">
                     <label class="form-label">Store UPI ID (For Payment Verification) *</label>
                     <input type="text" name="upi_id" class="form-control" required
-                           value="<?= e($settingModel->get('upi_id', 'herbamapay@upi')) ?>"
-                           placeholder="e.g. herbamapay@upi">
+                           value="<?= e($settingModel->get('upi_id', 'yourname@upi')) ?>"
+                           placeholder="e.g. yourname@upi">
                     <div style="font-size:0.75rem;color:#777;margin-top:0.25rem;">
                         Displayed on checkout and confirmation pages ("Online Payment Only, No COD").
                     </div>
@@ -149,7 +149,7 @@ require_once APP_ROOT . '/includes/admin-header.php';
                     <div class="form-group">
                         <label class="form-label">Contact Email</label>
                         <input type="email" name="store_email" class="form-control"
-                               value="<?= e($settingModel->get('store_email', 'contact@herbamafashions.com')) ?>">
+                               value="<?= e($settingModel->get('store_email', 'contact@yourdomain.com')) ?>">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Contact Phone</label>
@@ -160,7 +160,7 @@ require_once APP_ROOT . '/includes/admin-header.php';
 
                 <div class="form-group">
                     <label class="form-label">Boutique Physical Address</label>
-                    <textarea name="store_address" class="form-control" style="min-height:60px;"><?= e($settingModel->get('store_address', "Herbama Fashions Boutique\n124 Fashion Heritage Avenue\nBangalore, Karnataka 560001\nIndia")) ?></textarea>
+                    <textarea name="store_address" class="form-control" style="min-height:60px;"><?= e($settingModel->get('store_address', "Heramba Fashion Boutique\n124 Fashion Heritage Avenue\nBangalore, Karnataka 560001\nIndia")) ?></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-maroon" style="width:100%;justify-content:center;padding:0.75rem;margin-top:0.5rem;">

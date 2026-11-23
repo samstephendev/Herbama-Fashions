@@ -1,6 +1,6 @@
 <?php
 /**
- * Site Footer Include — Herbama Fashions
+ * Site Footer Include — Heramba Fashion
  * ========================================
  * Master layout footer with 5-point trust strip, 4-column maroon footer,
  * newsletter subscription, social links, and floating WhatsApp button.
@@ -8,13 +8,13 @@
 declare(strict_types=1);
 
 $settingModel = new SettingModel();
-$instaUrl = (string)$settingModel->get('instagram_url', 'https://instagram.com/herbamafashions');
-$fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/herbamafashions');
+$instaUrl = (string)$settingModel->get('instagram_url', 'https://instagram.com/herambaFashion');
+$fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/herambaFashion');
 ?>
 </main><!-- /#main-content -->
 
 <!-- ── 1. Trust Strip Above Footer ──────────────────────────────────────── -->
-<section class="trust-strip" aria-label="Herbama Fashions Guarantees">
+<section class="trust-strip" aria-label="Heramba Fashion Guarantees">
     <div class="container">
         <div class="trust-strip__grid">
             <div class="trust-strip__item">
@@ -103,12 +103,15 @@ $fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/her
                                 type="image/webp">
                         <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
                              srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
-                             alt="Herabama Fashions logo — round maroon and gold badge"
-                             width="56" height="56"
+                             alt="Heramba Fashion logo"
+                             width="52" height="52"
                              loading="lazy"
                              style="border-radius:50%;">
                     </picture>
-                    <h3 class="site-footer__brand-title" style="margin:0;font-family:var(--font-heading,serif);">Herabama Fashions</h3>
+                    <div>
+                        <h3 class="site-footer__brand-title" style="margin:0;font-family:var(--font-heading,serif);">Heramba Fashion</h3>
+                        <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--color-gold-light,#e6c883);font-weight:600;display:block;">Dress Every Smile</span>
+                    </div>
                 </div>
                 <p class="site-footer__tagline">Premium Kidswear for Every Little Fashionista</p>
                 <p style="font-size:0.85rem; color:rgba(255,249,243,0.75); line-height:1.6; margin-bottom:1.25rem;">
@@ -128,12 +131,12 @@ $fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/her
                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                         </svg>
                     </a>
-                    <a href="https://youtube.com/@herbamafashions" class="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube">
+                    <a href="https://youtube.com/@herambaFashion" class="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Watch on YouTube">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z"/>
                         </svg>
                     </a>
-                    <a href="https://pinterest.com/herbamafashions" class="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on Pinterest">
+                    <a href="https://pinterest.com/herambaFashion" class="site-footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on Pinterest">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 0a12 12 0 0 0-4.37 23.18c-.07-.98-.13-2.5.03-3.58l1.09-4.63s-.28-.56-.28-1.39c0-1.3.75-2.28 1.7-2.28.8 0 1.18.6 1.18 1.33 0 .81-.51 2.01-.78 3.13-.22.94.47 1.71 1.4 1.71 1.68 0 2.97-1.77 2.97-4.32 0-2.26-1.62-3.84-3.94-3.84-2.68 0-4.26 2.01-4.26 4.09 0 .81.31 1.68.7 2.15.08.1.09.18.07.28l-.26 1.07c-.04.17-.14.21-.32.13-1.2-.56-1.95-2.31-1.95-3.72 0-3.03 2.2-5.81 6.35-5.81 3.33 0 5.93 2.38 5.93 5.56 0 3.32-2.09 5.98-5 5.98-.98 0-1.9-.51-2.21-1.11l-.6 2.3c-.22.84-.81 1.9-1.21 2.54A12 12 0 1 0 12 0z"/>
                         </svg>
@@ -168,10 +171,10 @@ $fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/her
 
             <!-- Column 3: About & Newsletter -->
             <div>
-                <h4 class="site-footer__heading">About Herbama</h4>
+                <h4 class="site-footer__heading">About Heramba</h4>
                 <ul class="site-footer__links" style="margin-bottom:1.5rem;">
                     <li><a href="<?= url('/about.php') ?>">Our Story</a></li>
-                    <li><a href="<?= url('/why-herbama.php') ?>">Why Herbama</a></li>
+                    <li><a href="<?= url('/why-heramba.php') ?>">Why Heramba</a></li>
                     <li><a href="<?= url('/quality-fabric.php') ?>">Quality &amp; Fabric</a></li>
                     <li><a href="<?= url('/privacy.php') ?>">Privacy Policy</a></li>
                     <li><a href="<?= url('/terms.php') ?>">Terms &amp; Conditions</a></li>

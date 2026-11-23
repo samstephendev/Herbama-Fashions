@@ -1,6 +1,6 @@
 <?php
 /**
- * CartModel — Herbama Fashions
+ * CartModel — Heramba Fashion
  * ==============================
  * Server-side cart for logged-in users (stored in DB).
  *

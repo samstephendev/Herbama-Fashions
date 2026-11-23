@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Collection Page
+ * Heramba Fashion — Collection Page
  * ====================================
  * Category catalog with subcategories, live AJAX filter sidebar, sort,
  * mid-page promo banner, and mobile slide-in filter drawer.
@@ -68,8 +68,8 @@ $catMeta = match ($catSlug) {
     ]
 };
 
-$pageTitle = $catMeta['name'] . ' Collection — Herbama Fashions';
-$pageDesc  = 'Shop premium ' . $catMeta['name'] . ' at Herbama Fashions. ' . $catMeta['tagline'] . '. Pan-India & UAE dispatch.';
+$pageTitle = $catMeta['name'] . ' Collection — Heramba Fashion';
+$pageDesc  = 'Shop premium ' . $catMeta['name'] . ' at Heramba Fashion. ' . $catMeta['tagline'] . '. Pan-India & UAE dispatch.';
 $bodyClass = 'page-collection';
 
 $productModel = new ProductModel();
@@ -243,7 +243,7 @@ require_once APP_ROOT . '/includes/header.php';
                         Special Offer: <?= e($promoOffer['title'] ?? 'Flat 10% OFF on Festive & Kids Collection') ?>
                     </h3>
                     <p class="promo-strip-banner__desc">
-                        Use coupon code <strong><?= e($promoOffer['code'] ?? 'HERBAMA10') ?></strong> on checkout or via WhatsApp chat.
+                        Use coupon code <strong><?= e($promoOffer['code'] ?? 'HERAMBA10') ?></strong> on checkout or via WhatsApp chat.
                     </p>
                 </div>
                 <div>

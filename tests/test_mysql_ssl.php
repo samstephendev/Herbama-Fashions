@@ -29,13 +29,13 @@ $config = array_merge([
 ], $cnfOption);
 
 $caKey  = openssl_pkey_new($config);
-$caCsr  = openssl_csr_new(['commonName' => 'Herbama Test CA', 'organizationName' => 'Herbama Test'], $caKey, $config);
+$caCsr  = openssl_csr_new(['commonName' => 'Heramba Test CA', 'organizationName' => 'Heramba Test'], $caKey, $config);
 $caCert = openssl_csr_sign($caCsr, null, $caKey, 365, $config);
 openssl_x509_export($caCert, $caCertPem);
 openssl_pkey_export($caKey, $caKeyPem, null, $config);
 
 $srvKey  = openssl_pkey_new($config);
-$srvCsr  = openssl_csr_new(['commonName' => '127.0.0.1', 'organizationName' => 'Herbama Server'], $srvKey, $config);
+$srvCsr  = openssl_csr_new(['commonName' => '127.0.0.1', 'organizationName' => 'Heramba Server'], $srvKey, $config);
 $srvCert = openssl_csr_sign($srvCsr, $caCert, $caKey, 365, $config);
 openssl_x509_export($srvCert, $srvCertPem);
 openssl_pkey_export($srvKey, $srvKeyPem, null, $config);
@@ -197,7 +197,7 @@ function testReport(string $name, bool $passed, string $details = ''): void {
 }
 
 echo "========================================================\n";
-echo "  HERBAMA FASHIONS — MYSQL SSL MODE VERIFICATION        \n";
+echo "  HERAMBA FASHION — MYSQL SSL MODE VERIFICATION        \n";
 echo "========================================================\n\n";
 
 // ── Test 1: Require Mode (SSL enabled, no CA verification) ────────────────────

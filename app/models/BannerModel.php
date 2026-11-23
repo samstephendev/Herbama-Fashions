@@ -1,6 +1,6 @@
 <?php
 /**
- * BannerModel — Herbama Fashions
+ * BannerModel — Heramba Fashion
  * ================================
  * Fetches promotional hero slides and marketing banners.
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — One-Time Initial Administrator Setup
+ * Heramba Fashion — One-Time Initial Administrator Setup
  * ========================================================
  * Security Contract:
  * 1. ONLY functions when no administrator account exists in the database.
@@ -126,6 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Initial Administrator Setup — <?= e(SITE_NAME) ?></title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= e(asset('/assets/images/icons/favicon-32.png')) ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -271,8 +273,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="setup-card">
     <div class="setup-header">
+        <div style="margin-bottom:0.75rem;">
+            <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+                 alt="Heramba Fashion logo"
+                 width="52" height="52"
+                 style="width:52px;height:52px;border-radius:50%;display:inline-block;">
+        </div>
         <span class="setup-badge">One-Time Setup</span>
-        <h1>Herbama Fashions</h1>
+        <h1>Heramba Fashion</h1>
         <p style="margin: 0.25rem 0 0; font-size: 0.85rem; opacity: 0.85;">Create Initial Store Administrator</p>
     </div>
 
@@ -303,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <p style="font-size: 0.88rem; color: #666; margin-top: 0; line-height: 1.5;">
-                Welcome to <strong>Herbama Fashions</strong>. Set up your master store administrator account below. Once completed, this page will permanently deactivate itself.
+                Welcome to <strong>Heramba Fashion</strong>. Set up your master store administrator account below. Once completed, this page will permanently deactivate itself.
             </p>
 
             <form method="POST" action="setup-admin.php<?= !empty($token) ? '?token=' . urlencode($token) : '' ?>">
@@ -319,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label class="form-label">Email Address</label>
-                    <input type="email" name="email" class="form-control" required value="<?= e($email) ?>" placeholder="admin@herbamafashions.com">
+                    <input type="email" name="email" class="form-control" required value="<?= e($email) ?>" placeholder="admin@yourdomain.com">
                     <div class="form-help">This will be your login username.</div>
                 </div>
 

@@ -2,7 +2,7 @@
 /**
  * account.php — Customer Account Dashboard
  *
- * Herbama Fashions · Kidswear E-Commerce
+ * Heramba Fashion · Kidswear E-Commerce
  * ========================================
  * Tabs: Profile | My Addresses | Order History | Wishlist
  * All POST actions are CSRF-verified and IDOR-safe.

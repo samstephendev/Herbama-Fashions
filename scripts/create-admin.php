@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — CLI Administrator Creation Script
+ * Heramba Fashion — CLI Administrator Creation Script
  * ====================================================
  * Usage:
  *   php scripts/create-admin.php
@@ -28,7 +28,7 @@ error_reporting(E_ALL);
 require_once dirname(__DIR__) . '/app/config/bootstrap.php';
 
 echo "\n======================================================\n";
-echo "    Herbama Fashions — CLI Admin Account Setup        \n";
+echo "    Heramba Fashion — CLI Admin Account Setup        \n";
 echo "======================================================\n\n";
 
 $userModel = new UserModel();

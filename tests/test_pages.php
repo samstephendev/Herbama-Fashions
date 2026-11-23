@@ -61,7 +61,7 @@ if (!empty($csrfToken)) {
         CURLOPT_POST           => true,
         CURLOPT_POSTFIELDS     => http_build_query([
             'csrf_token' => $csrfToken,
-            'email'      => 'admin@herbamafashions.com',
+            'email'      => 'admin@yourdomain.com',
             'password'   => 'AdminSecret1234!',
             'action'     => 'login',
         ]),
@@ -119,7 +119,7 @@ $pages = [
 ];
 
 echo "========================================================\n";
-echo "  HERBAMA FASHIONS — PAGE HTTP STATUS VERIFICATION     \n";
+echo "  HERAMBA FASHION — PAGE HTTP STATUS VERIFICATION     \n";
 echo "========================================================\n\n";
 
 $results = [];

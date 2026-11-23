@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Shopping Cart Page
+ * Heramba Fashion — Shopping Cart Page
  * ========================================
  * Displays cart items for both logged-in users (DB-backed cart via CartModel)
  * and guest users (session-backed cart). Quantity stepper and remove button

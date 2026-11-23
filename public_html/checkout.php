@@ -1,6 +1,6 @@
 <?php
 /**
- * checkout.php — Herbama Fashions
+ * checkout.php — Heramba Fashion
  * =================================
  * Secure checkout page. Allows the customer to:
  *   1. Select a saved delivery address (or add a new one on-the-fly).

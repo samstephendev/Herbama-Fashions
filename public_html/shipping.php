@@ -1,13 +1,13 @@
 <?php
 /**
- * Herbama Fashions — Shipping & Delivery Policy
+ * Heramba Fashion — Shipping & Delivery Policy
  * ==============================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Shipping &amp; Delivery Policy — Herbama Fashions';
+$pageTitle = 'Shipping &amp; Delivery Policy — Heramba Fashion';
 $pageDesc  = 'Pan-India express delivery and direct international dispatch to UAE/Dubai. Transparent delivery timelines and policies.';
 $bodyClass = 'page-static page-shipping';
 

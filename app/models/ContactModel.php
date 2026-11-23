@@ -1,6 +1,6 @@
 <?php
 /**
- * ContactModel — Herbama Fashions
+ * ContactModel — Heramba Fashion
  * =================================
  * Handles newsletter subscriptions and contact inquiries.
  */
@@ -33,7 +33,7 @@ class ContactModel
                  ON DUPLICATE KEY UPDATE id = id'
             );
             $stmt->execute([':email' => $cleanEmail]);
-            return ['ok' => true, 'message' => 'Thank you for subscribing to Herbama Fashions!'];
+            return ['ok' => true, 'message' => 'Thank you for subscribing to Heramba Fashion!'];
         } catch (PDOException $e) {
             error_log('[ContactModel] subscribe error: ' . $e->getMessage());
             return ['ok' => false, 'error' => 'Unable to save subscription. Please try again.'];

@@ -1,6 +1,6 @@
 <?php
 /**
- * order-tracking.php — Herbama Fashions
+ * order-tracking.php — Heramba Fashion
  * =====================================
  * Live order status tracking page with status timeline and WhatsApp inquiry.
  *

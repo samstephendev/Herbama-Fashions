@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Banners & Hero Slider Management — Herbama Fashions
+ * Admin Banners & Hero Slider Management — Heramba Fashion
  * ==========================================================
  * Modules:
  *   - Manage homepage hero slider banners & promo cards

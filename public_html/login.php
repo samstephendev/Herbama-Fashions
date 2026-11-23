@@ -2,7 +2,7 @@
 /**
  * login.php — User sign-in
  *
- * Herbama Fashions · Kidswear E-Commerce
+ * Heramba Fashion · Kidswear E-Commerce
  */
 
 require_once dirname(__DIR__) . '/app/config/bootstrap.php';
@@ -139,15 +139,16 @@ require_once APP_ROOT . '/includes/header.php';
                             type="image/webp">
                     <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
                          srcset="<?= asset('/assets/images/brand/logo-128.png') ?> 2x"
-                         alt="Herabama Fashions logo — round maroon and gold badge"
+                         alt="Heramba Fashion logo"
                          width="64" height="64" loading="eager">
                 </picture>
-                <span style="font-family:var(--font-heading,serif);font-size:1.15rem;color:var(--color-maroon,#6b1a1a);font-weight:600;letter-spacing:0.03em;">Herabama Fashions</span>
+                <span style="font-family:var(--font-heading,serif);font-size:1.25rem;color:var(--color-maroon,#6b1a1a);font-weight:700;letter-spacing:0.02em;">Heramba Fashion</span>
+                <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--color-gold,#C9A24B);font-weight:600;margin-top:-0.3rem;">Dress Every Smile</span>
             </a>
         </div>
 
         <h1>Welcome Back</h1>
-        <p class="auth-subtitle">Sign in to your Herabama Fashions account.</p>
+        <p class="auth-subtitle">Sign in to your Heramba Fashion account.</p>
 
         <!-- Flash messages -->
         <?php foreach (Session::getFlash('success') as $msg): ?>

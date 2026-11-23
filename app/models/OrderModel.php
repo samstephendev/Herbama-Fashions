@@ -1,6 +1,6 @@
 <?php
 /**
- * OrderModel — Herbama Fashions
+ * OrderModel — Heramba Fashion
  * ==============================
  * Order creation, processing, stock locking, payment status, and WhatsApp integration.
  *

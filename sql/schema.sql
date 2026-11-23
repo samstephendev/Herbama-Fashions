@@ -1,5 +1,5 @@
 -- =============================================================================
--- Herbama Fashions — Full Database Schema
+-- Heramba Fashion — Full Database Schema
 -- Engine  : InnoDB
 -- Charset : utf8mb4 / utf8mb4_unicode_ci
 -- File    : sql/schema.sql
@@ -802,7 +802,7 @@ INSERT IGNORE INTO `product_variants` (`product_id`, `age_label`, `color`, `sku`
 -- ---------------------------------------------------------------------------
 INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `label`) VALUES
 ('whatsapp_number',              '919XXXXXXXXX',                                              'string',  'WhatsApp number for order messages'),
-('upi_id',                       'herbama@upi',                                               'string',  'UPI payment ID'),
+('upi_id',                       'yourname@upi',                                               'string',  'UPI payment ID'),
 ('announcement_text',            '🎉 New Festive Collection Now Live! Free shipping above ₹999', 'string',  'Top banner announcement text'),
 ('shipping_india',               '99',                                                        'integer', 'Flat shipping charge India (INR)'),
 ('shipping_uae',                 '1499',                                                      'integer', 'Flat shipping charge UAE/Dubai (INR)'),
@@ -811,8 +811,8 @@ INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `setting_type`, `
 ('upi_qr_image',                 '',                                                          'string',  'Path to UPI QR code image'),
 ('maintenance_mode',             '0',                                                         'boolean', 'Enable maintenance mode'),
 ('tax_inclusive',                '1',                                                         'boolean', 'Prices are tax-inclusive'),
-('instagram_url',                'https://instagram.com/herbamafashions',                    'string',  'Instagram profile URL'),
-('facebook_url',                 'https://facebook.com/herbamafashions',                     'string',  'Facebook page URL'),
+('instagram_url',                'https://instagram.com/herambaFashion',                    'string',  'Instagram profile URL'),
+('facebook_url',                 'https://facebook.com/herambaFashion',                     'string',  'Facebook page URL'),
 ('announcement_bar_left',        'Pan-India Shipping | International Dispatch to UAE / Dubai', 'string', 'Announcement bar left text'),
 ('announcement_bar_right',       'No COD | 0-3 Years: Ready to Dispatch | Customization: 5 Working Days', 'string', 'Announcement bar right text');
 
@@ -837,7 +837,7 @@ INSERT IGNORE INTO `offers` (`title`, `code`, `type`, `value`, `min_order_value`
 -- ---------------------------------------------------------------------------
 INSERT IGNORE INTO `reviews` (`product_id`, `author_name`, `rating`, `review_title`, `review_text`, `is_verified_buyer`, `is_approved`) VALUES
 ((SELECT `id` FROM `products` WHERE `slug` = 'floral-frock' LIMIT 1), 'Priya Sundaram', 5, 'Super soft cotton!', 'The material is so gentle on my 2-year old daughter’s skin. Stitching is top notch!', 1, 1),
-((SELECT `id` FROM `products` WHERE `slug` = 'floral-frock' LIMIT 1), 'Ananya Mishra', 5, 'Looks exactly like picture', 'Very elegant pastel floral print and quick dispatch. Highly recommend Herbama!', 1, 1),
+((SELECT `id` FROM `products` WHERE `slug` = 'floral-frock' LIMIT 1), 'Ananya Mishra', 5, 'Looks exactly like picture', 'Very elegant pastel floral print and quick dispatch. Highly recommend Heramba!', 1, 1),
 ((SELECT `id` FROM `products` WHERE `slug` = 'embroidered-lehenga-set' LIMIT 1), 'Sneha Patel', 5, 'Perfect for Diwali!', 'The embroidery has no rough edges on the inside and my daughter twirled in it all evening.', 1, 1),
 ((SELECT `id` FROM `products` WHERE `slug` = 'denim-dungaree' LIMIT 1), 'Kavita Rao', 5, 'Sturdy & stylish', 'My son wore it all day long and was totally comfy. Pockets are adorable.', 1, 1);
 

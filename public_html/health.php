@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — System Health & Diagnostics Check
+ * Heramba Fashion — System Health & Diagnostics Check
  * ======================================================
  * Reports environment mode, database connectivity, upload directory permissions,
  * log status, and core PHP prerequisites.
@@ -403,7 +403,7 @@ http_response_code($httpCode);
         </div>
 
         <div class="footer-note">
-            <p>Herbama Fashions &bull; <?= date('Y') ?> &bull; JSON API available via <a href="?format=json<?= !empty($token) ? '&token=' . urlencode($token) : '' ?>">?format=json</a></p>
+            <p>Heramba Fashion &bull; <?= date('Y') ?> &bull; JSON API available via <a href="?format=json<?= !empty($token) ? '&token=' . urlencode($token) : '' ?>">?format=json</a></p>
         </div>
     </div>
 </body>

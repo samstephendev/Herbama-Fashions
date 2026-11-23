@@ -1,13 +1,13 @@
 <?php
 /**
- * Herbama Fashions — Quality & Fabric Care
+ * Heramba Fashion — Quality & Fabric Care
  * ==========================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Quality &amp; Fabric Care — Herbama Fashions';
+$pageTitle = 'Quality &amp; Fabric Care — Heramba Fashion';
 $pageDesc  = 'Learn about our baby-safe natural fabrics, breathable cottons, pure silks, and garment care instructions.';
 $bodyClass = 'page-static page-quality';
 
@@ -25,7 +25,7 @@ require_once APP_ROOT . '/includes/header.php';
     <div style="background:#FFFFFF; border-radius:18px; padding: clamp(1.75rem, 5vw, 3rem); border:1px solid var(--color-border); box-shadow:var(--shadow-sm); line-height:1.8;">
         
         <h2 style="font-family:var(--font-serif); color:var(--color-maroon); font-size:1.6rem; margin-bottom:0.75rem;">Natural &amp; Baby-Safe Materials</h2>
-        <p>A child's skin is up to 30% thinner than an adult’s, making it significantly more sensitive to synthetic dyes and rough polyesters. At Herbama Fashions, our philosophy is rooted in gentle natural textiles:</p>
+        <p>A child's skin is up to 30% thinner than an adult’s, making it significantly more sensitive to synthetic dyes and rough polyesters. At Heramba Fashion, our philosophy is rooted in gentle natural textiles:</p>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin:1.75rem 0;">
             <div style="background:var(--color-blush-card); padding:1.25rem; border-radius:12px;">

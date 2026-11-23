@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — Sample Configuration File
+ * Heramba Fashion — Sample Configuration File
  * ===============================================
  * Instructions:
  * 1. For local development (XAMPP):
@@ -19,9 +19,9 @@ return [
     'APP_ENV' => 'local',
 
     // ── Site URL ─────────────────────────────────────────────────────────────
-    // For local XAMPP in a subfolder: e.g. 'http://localhost/Herbama-Fashions/public_html'
-    // For Hostinger production:        e.g. 'https://herbamafashions.com'
-    // For Render demo:                e.g. 'https://herbama-fashions.onrender.com'
+    // For local XAMPP in a subfolder: e.g. 'http://localhost/Heramba-Fashions/public_html'
+    // For Hostinger production:        e.g. 'https://yourdomain.com'
+    // For Render demo:                e.g. 'https://heramba-fashion.onrender.com'
     // Leave blank ('') to enable dynamic auto-detection.
     'SITE_URL' => '',
 
@@ -35,7 +35,7 @@ return [
     // Hostinger:     host 'localhost', port 3306, user 'u123456789_user'
     'DB_HOST' => '127.0.0.1',
     'DB_PORT' => 3306,
-    'DB_NAME' => 'herbama_db',
+    'DB_NAME' => 'heramba_db',
     'DB_USER' => 'root',
     'DB_PASS' => '',
 

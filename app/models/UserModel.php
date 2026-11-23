@@ -1,6 +1,6 @@
 <?php
 /**
- * UserModel — Herbama Fashions
+ * UserModel — Heramba Fashion
  * =============================
  * Handles all user-related DB operations.
  * Security contract:

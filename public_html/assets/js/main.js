@@ -1,5 +1,5 @@
 /**
- * Herbama Fashions — Main Vanilla JavaScript
+ * Heramba Fashion — Main Vanilla JavaScript
  * ===========================================
  * Handles search modal, size guide, wishlist toggles, cart updates,
  * mobile drawer, product gallery, and delivery checkers.

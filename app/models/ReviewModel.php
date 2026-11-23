@@ -1,6 +1,6 @@
 <?php
 /**
- * ReviewModel — Herbama Fashions
+ * ReviewModel — Heramba Fashion
  * ================================
  * Customer reviews with moderation, verified buyer tag, and rating summaries.
  */

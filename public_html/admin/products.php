@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Products Management — Herbama Fashions
+ * Admin Products Management — Heramba Fashion
  * ============================================
  * Modules:
  *   - List products with category, price, discount, stock, active status

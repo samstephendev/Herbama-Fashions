@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Customer Detail — Herbama Fashions
+ * Admin Customer Detail — Heramba Fashion
  * ========================================
  * Shows customer account details, spend metrics, saved addresses,
  * and complete order history.
@@ -32,7 +32,7 @@ $ordersData  = $orderModel->getUserOrders($customerId, 1, 50);
 $orders      = $ordersData['orders'] ?? [];
 
 $cleanPhone = preg_replace('/\D/', '', $customer['phone'] ?? '');
-$waLink = $cleanPhone ? "https://wa.me/" . $cleanPhone . "?text=" . rawurlencode("Hello " . $customer['full_name'] . "! 🌸 Greetings from Herbama Fashions.") : null;
+$waLink = $cleanPhone ? "https://wa.me/" . $cleanPhone . "?text=" . rawurlencode("Hello " . $customer['full_name'] . "! 🌸 Greetings from Heramba Fashion.") : null;
 
 require_once APP_ROOT . '/includes/admin-header.php';
 ?>

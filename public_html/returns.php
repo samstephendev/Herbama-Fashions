@@ -1,13 +1,13 @@
 <?php
 /**
- * Herbama Fashions — Returns & Exchange Policy
+ * Heramba Fashion — Returns & Exchange Policy
  * ==============================================
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/../app/config/bootstrap.php';
 
-$pageTitle = 'Returns &amp; Exchange Policy — Herbama Fashions';
+$pageTitle = 'Returns &amp; Exchange Policy — Heramba Fashion';
 $pageDesc  = '7-day size exchange guarantee for kidswear. Clear, fair, and hassle-free return and exchange terms.';
 $bodyClass = 'page-static page-returns';
 

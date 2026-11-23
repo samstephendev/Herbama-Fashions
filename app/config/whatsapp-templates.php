@@ -1,6 +1,6 @@
 <?php
 /**
- * Herbama Fashions — WhatsApp Message Templates
+ * Heramba Fashion — WhatsApp Message Templates
  * ===============================================
  * Keep all customer & store WhatsApp message templates in this single editable file.
  * The store uses "Online Payment Only, No COD". Payment is confirmed manually by admin.
@@ -88,7 +88,7 @@ if (!function_exists('whatsapp_order_placed_message')) {
         $msg .= "Amount: *{$sym}{$total}*\n\n";
         $msg .= "Please share payment details and screenshot here. Our team will verify and confirm your order dispatch! 🎀\n";
         $msg .= "------------------------------------\n";
-        $msg .= "Herbama Fashions — Premium Handcrafted Kidswear";
+        $msg .= "Heramba Fashion — Premium Handcrafted Kidswear";
 
         return $msg;
     }
@@ -100,7 +100,7 @@ if (!function_exists('whatsapp_order_inquiry_message')) {
      */
     function whatsapp_order_inquiry_message(string $publicOrderId): string
     {
-        return "Hi Herbama Fashions! 👋 I would like to check the status of my order *{$publicOrderId}*. Could you please provide an update?";
+        return "Hi Heramba Fashion! 👋 I would like to check the status of my order *{$publicOrderId}*. Could you please provide an update?";
     }
 }
 
@@ -110,6 +110,6 @@ if (!function_exists('whatsapp_general_chat_message')) {
      */
     function whatsapp_general_chat_message(): string
     {
-        return "Hello Herbama Fashions! 🌸 I'm browsing your kidswear boutique and would like to ask a few questions.";
+        return "Hello Heramba Fashion! 🌸 I'm browsing your kidswear boutique and would like to ask a few questions.";
     }
 }
