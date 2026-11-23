@@ -518,11 +518,11 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba
 <aside class="admin-sidebar" id="adminSidebar">
     <div class="admin-brand">
         <picture>
-            <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
-                            <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+            <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp?v=2')) ?> 2x,
+                            <?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x"
                     type="image/webp">
-            <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
-                 srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+            <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>"
+                 srcset="<?= e(asset('/assets/images/brand/logo-128.png?v=2')) ?> 2x"
                  alt="Heramba Fashion logo"
                  width="44" height="44"
                  loading="eager"

@@ -67,21 +67,34 @@ Options -ExecCGI
     Header unset X-Powered-By
     Header unset Server
 
-    # Cache static assets
+    # Cache static assets & ensure CORS compatibility
     <FilesMatch "\.(css|js|woff2?|ttf|otf|svg|ico)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
+        Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
     <FilesMatch "\.(jpg|jpeg|png|webp|gif)$">
         Header set Cache-Control "public, max-age=2592000"
+        Header set Access-Control-Allow-Origin "*"
     </FilesMatch>
 </IfModule>
 
-# ── Prevent hotlinking of images ─────────────────────────────────────────────
-<IfModule mod_rewrite.c>
-    RewriteCond %{HTTP_REFERER} !^$
-    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
-    RewriteRule \.(jpg|jpeg|png|webp|gif|svg)$ - [F,NC,L]
+# ── MIME types for images & fonts ────────────────────────────────────────────
+<IfModule mod_mime.c>
+    AddType image/webp        .webp
+    AddType image/svg+xml     .svg .svgz
+    AddType image/x-icon      .ico
+    AddType image/png         .png
+    AddType image/jpeg        .jpg .jpeg
 </IfModule>
+
+# ── Prevent hotlinking of images ─────────────────────────────────────────────
+# Disabled by default so CDN, webviews, and social previews (WhatsApp/FB/Insta) load reliably.
+# To enable on a custom domain, replace %{HTTP_HOST} with your specific domain:
+# <IfModule mod_rewrite.c>
+#     RewriteCond %{HTTP_REFERER} !^$
+#     RewriteCond %{HTTP_REFERER} !^https?://(www\.)?%{HTTP_HOST} [NC]
+#     RewriteRule \.(jpg|jpeg|png|webp|gif|svg)$ - [F,NC,L]
+# </IfModule>
 
 # ── PHP settings ─────────────────────────────────────────────────────────────
 <IfModule mod_php.c>

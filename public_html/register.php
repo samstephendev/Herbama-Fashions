@@ -144,11 +144,11 @@ require_once APP_ROOT . '/includes/header.php';
         <div class="auth-logo">
             <a href="<?= url('/') ?>" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;text-decoration:none;">
                 <picture>
-                    <source srcset="<?= asset('/assets/images/brand/logo-128.webp') ?> 2x,
-                                    <?= asset('/assets/images/brand/logo-64.webp') ?> 1x"
+                    <source srcset="<?= asset('/assets/images/brand/logo-128.webp?v=2') ?> 2x,
+                                    <?= asset('/assets/images/brand/logo-64.webp?v=2') ?> 1x"
                             type="image/webp">
-                    <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
-                         srcset="<?= asset('/assets/images/brand/logo-128.png') ?> 2x"
+                    <img src="<?= asset('/assets/images/brand/logo-64.png?v=2') ?>"
+                         srcset="<?= asset('/assets/images/brand/logo-128.png?v=2') ?> 2x"
                          alt="Heramba Fashion logo"
                          width="64" height="64" loading="eager">
                 </picture>

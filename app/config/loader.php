@@ -316,6 +316,10 @@ if (!function_exists('url')) {
     function url(string $path = ''): string
     {
         $base = rtrim(SITE_URL, '/');
+        // Prevent mixed content when running over HTTPS
+        if (isHttps() && str_starts_with($base, 'http://')) {
+            $base = 'https://' . substr($base, 7);
+        }
         $p = '/' . ltrim($path, '/');
         return ($path === '' || $path === '/') ? ($base ?: '/') : ($base . $p);
     }

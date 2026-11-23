@@ -274,7 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="setup-card">
     <div class="setup-header">
         <div style="margin-bottom:0.75rem;">
-            <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
+            <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>"
                  alt="Heramba Fashion logo"
                  width="52" height="52"
                  style="width:52px;height:52px;border-radius:50%;display:inline-block;">

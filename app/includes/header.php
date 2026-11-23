@@ -112,11 +112,11 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
         <!-- Logo -->
         <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="Heramba Fashion — Home">
             <picture>
-                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
-                                <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp?v=2')) ?> 2x,
+                                <?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x"
                         type="image/webp">
-                <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
-                     srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>"
+                     srcset="<?= e(asset('/assets/images/brand/logo-128.png?v=2')) ?> 2x"
                      alt="Heramba Fashion logo"
                      class="brand-logo__image"
                      width="52" height="52"
@@ -249,8 +249,8 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
     <div class="mobile-nav-drawer__header">
         <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="Heramba Fashion — Home">
             <picture>
-                <source srcset="<?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x" type="image/webp">
-                <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>" alt="Heramba Fashion logo" width="40" height="40" loading="eager" style="border-radius:50%;">
+                <source srcset="<?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x" type="image/webp">
+                <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>" alt="Heramba Fashion logo" width="40" height="40" loading="eager" style="border-radius:50%;">
             </picture>
             <span style="font-family:var(--font-serif); font-size:1.1rem; font-weight:700; color:var(--color-maroon);">Heramba Fashion</span>
         </a>

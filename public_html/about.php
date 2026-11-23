@@ -26,10 +26,10 @@ require_once APP_ROOT . '/includes/header.php';
         
         <div style="text-align:center; margin-bottom:2rem;">
             <picture>
-                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
-                                <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp?v=2')) ?> 2x,
+                                <?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x"
                         type="image/webp">
-                <img src="<?= e(asset('/assets/images/brand/logo-128.png')) ?>"
+                <img src="<?= e(asset('/assets/images/brand/logo-128.png?v=2')) ?>"
                      alt="Heramba Fashion logo"
                      width="72" height="72"
                      style="width:72px; height:72px; margin:0 auto 1rem; border-radius:50%; display:block;">

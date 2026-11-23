@@ -119,11 +119,11 @@ require_once APP_ROOT . '/includes/header.php';
         <div style="margin: 0 auto 1.25rem; text-align: center;">
             <a href="<?= e(url('/')) ?>" aria-label="Heramba Fashion — Home">
                 <picture>
-                    <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
-                                    <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                    <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp?v=2')) ?> 2x,
+                                    <?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x"
                             type="image/webp">
-                    <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
-                         srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                    <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>"
+                         srcset="<?= e(asset('/assets/images/brand/logo-128.png?v=2')) ?> 2x"
                          alt="Heramba Fashion logo"
                          width="64" height="64"
                          style="width:64px;height:64px;border-radius:50%;display:inline-block;"

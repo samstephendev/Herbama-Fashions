@@ -173,7 +173,7 @@ $storeName = 'Heramba Fashion';
     <div class="header-row">
         <div style="display:flex;align-items:center;gap:0.75rem;">
             <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
-                <img src="<?= asset('/assets/images/brand/logo-128.png') ?>"
+                <img src="<?= asset('/assets/images/brand/logo-128.png?v=2') ?>"
                      alt="Heramba Fashion logo"
                      width="64" height="64"
                      style="width:64px;height:64px;border-radius:50%;display:block;"

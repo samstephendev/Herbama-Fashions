@@ -170,7 +170,7 @@ if (!$order) {
     <div class="slip-header">
         <div style="display:flex;align-items:center;gap:0.75rem;">
             <div style="position:relative;width:48px;height:48px;flex-shrink:0;">
-                <img src="<?= asset('/assets/images/brand/logo-64.png') ?>"
+                <img src="<?= asset('/assets/images/brand/logo-64.png?v=2') ?>"
                      alt="Heramba Fashion logo"
                      width="48" height="48"
                      style="width:48px;height:48px;border-radius:50%;display:block;"

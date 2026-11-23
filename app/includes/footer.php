@@ -98,11 +98,11 @@ $fbUrl    = (string)$settingModel->get('facebook_url', 'https://facebook.com/her
             <div class="site-footer__brand-col">
                 <div class="site-footer__brand-logo" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
                     <picture>
-                        <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp')) ?> 2x,
-                                        <?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x"
+                        <source srcset="<?= e(asset('/assets/images/brand/logo-128.webp?v=2')) ?> 2x,
+                                        <?= e(asset('/assets/images/brand/logo-64.webp?v=2')) ?> 1x"
                                 type="image/webp">
-                        <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>"
-                             srcset="<?= e(asset('/assets/images/brand/logo-128.png')) ?> 2x"
+                        <img src="<?= e(asset('/assets/images/brand/logo-64.png?v=2')) ?>"
+                             srcset="<?= e(asset('/assets/images/brand/logo-128.png?v=2')) ?> 2x"
                              alt="Heramba Fashion logo"
                              width="52" height="52"
                              loading="lazy"
