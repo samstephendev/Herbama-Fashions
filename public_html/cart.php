@@ -97,7 +97,7 @@ if (!$isGuest) {
                 'is_available'  => $inStock,
                 'available'     => $inStock,
                 'has_stock'     => (int) $variantRow['stock_qty'] >= $qty,
-                'primary_image' => null, // Guests: no image pre-fetched (kept minimal)
+                'primary_image' => $variantRow['primary_image'] ?? null,
             ];
         }
     }
@@ -108,9 +108,7 @@ $itemCount  = count($items);
 $cartEmpty  = ($itemCount === 0);
 
 // ── Checkout URL ──────────────────────────────────────────────────────────────
-$checkoutUrl = $isGuest
-    ? url('/login.php?next=' . urlencode('/checkout.php'))
-    : url('/checkout.php');
+$checkoutUrl = url('/checkout.php');
 
 // ── Render page ───────────────────────────────────────────────────────────────
 require_once APP_ROOT . '/includes/header.php';
@@ -368,19 +366,15 @@ require_once APP_ROOT . '/includes/header.php';
                     <a href="<?= e($checkoutUrl) ?>"
                        class="btn-pill btn-pill-primary cart-checkout-btn"
                        id="proceed-checkout-btn">
-                        <?php if ($isGuest): ?>
-                            Login to Checkout
-                        <?php else: ?>
-                            Proceed to Checkout &rarr;
-                        <?php endif; ?>
+                        Proceed to Checkout &rarr;
                     </a>
 
                     <?php if ($isGuest): ?>
                         <p class="cart-guest-note">
-                            <a href="<?= e(url('/login.php?next=' . urlencode('/cart.php'))) ?>">Log in</a>
+                            Checking out as guest. Have an account?
+                            <a href="<?= e(url('/login.php?next=' . urlencode('/checkout.php'))) ?>">Log in</a>
                             or
-                            <a href="<?= e(url('/register.php')) ?>">create an account</a>
-                            to save your cart and checkout.
+                            <a href="<?= e(url('/register.php')) ?>">create an account</a>.
                         </p>
                     <?php endif; ?>
 

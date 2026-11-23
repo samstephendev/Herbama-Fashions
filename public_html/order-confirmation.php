@@ -14,13 +14,8 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/app/config/bootstrap.php';
 
-// ── Auth Guard ───────────────────────────────────────────────────────────────
-if (!Session::isLoggedIn()) {
-    header('Location: ' . url('/login.php?next=' . urlencode($_SERVER['REQUEST_URI'] ?? '/')));
-    exit;
-}
-
-$userId = (int) Session::userId();
+// ── Auth & Identity ─────────────────────────────────────────────────────────
+$userId = Session::isLoggedIn() ? (int) Session::userId() : null;
 
 // ── Fetch & Validate Order ID ────────────────────────────────────────────────
 $publicOrderId = trim((string)($_GET['id'] ?? ''));
@@ -28,8 +23,20 @@ $order = null;
 
 if (preg_match('/^HF-[A-Z0-9]{4,16}$/i', $publicOrderId)) {
     $orderModel = new OrderModel();
-    // IDOR protection: passes $userId so query enforces user_id
-    $order = $orderModel->findByPublicId($publicOrderId, $userId);
+    if ($userId !== null) {
+        // IDOR protection: passes $userId so query enforces user_id
+        $order = $orderModel->findByPublicId($publicOrderId, $userId);
+    } else {
+        // Guest user: allowed if this order was placed in the current session
+        $lastPlaced = $_SESSION['last_placed_order_id'] ?? '';
+        if (!empty($lastPlaced) && hash_equals($lastPlaced, $publicOrderId)) {
+            $order = $orderModel->findByPublicId($publicOrderId, null);
+        } else {
+            // Not in session: require login
+            header('Location: ' . url('/login.php?next=' . urlencode($_SERVER['REQUEST_URI'] ?? '/')));
+            exit;
+        }
+    }
 }
 
 // ── Settings & WhatsApp Links ────────────────────────────────────────────────

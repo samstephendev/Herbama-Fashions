@@ -89,9 +89,6 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
 </head>
 <body class="<?= isset($bodyClass) ? e($bodyClass) : '' ?>">
 
-<!-- Skip Link for Accessibility -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
-
 <!-- ── 1. Announcement Bar ─────────────────────────────────────────────── -->
 <div class="announcement-bar" role="region" aria-label="Store Announcement">
     <div class="container announcement-bar__inner">
@@ -330,10 +327,21 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
                 📞 Contact &amp; Custom Fit
             </a>
         </li>
+        <li>
+            <a href="<?= e(url('/cart.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'cart.php') ? 'is-active' : '' ?>">
+                🛍️ Shopping Cart <?= $cartCount > 0 ? '(' . e((string)$cartCount) . ')' : '' ?>
+            </a>
+        </li>
+        <li>
+            <a href="<?= e(url('/checkout.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'checkout.php') ? 'is-active' : '' ?>">
+                💳 Checkout
+            </a>
+        </li>
     </ul>
 
     <!-- Mobile Drawer Account & Support Utilities -->
     <div class="mobile-nav-footer">
+        <a href="<?= e(url('/cart.php')) ?>" class="mobile-nav-util-link">🛍️ Cart <?= $cartCount > 0 ? '(' . e((string)$cartCount) . ')' : '' ?></a>
         <?php if (Session::isLoggedIn()): ?>
             <a href="<?= e(url('/account.php?tab=profile')) ?>" class="mobile-nav-util-link">👤 My Account</a>
             <a href="<?= e(url('/logout.php')) ?>" class="mobile-nav-util-link" style="color:var(--color-danger);">🚪 Sign Out</a>

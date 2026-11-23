@@ -26,12 +26,87 @@ require_once dirname(__DIR__) . '/app/config/bootstrap.php';
 $pageTitle = 'Checkout';
 $bodyClass = 'page-checkout';
 
-// ── Auth guard ────────────────────────────────────────────────────────────────
-if (!Session::isLoggedIn()) {
-    header('Location: ' . url('/login.php?next=' . urlencode('/checkout.php')));
-    exit;
+// ── Auth & Identity ─────────────────────────────────────────────────────────
+$userId = Session::isLoggedIn() ? (int) Session::userId() : null;
+
+/**
+ * Helper: fetch cart items & totals for either logged-in user or guest session.
+ */
+if (!function_exists('getCheckoutCart')) {
+    function getCheckoutCart(?int $userId): array
+    {
+        if ($userId !== null) {
+            $cartModel = new CartModel();
+            return $cartModel->getCart($userId);
+        }
+
+        $sessionCart = (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) ? $_SESSION['cart'] : [];
+        $items = [];
+        $subtotal = 0.00;
+
+        if (!empty($sessionCart)) {
+            $productModel = new ProductModel();
+            foreach ($sessionCart as $key => $entry) {
+                $productId = (int) ($entry['product_id'] ?? 0);
+                $variantId = (int) ($entry['variant_id'] ?? 0);
+                $qty = max(1, (int) ($entry['quantity'] ?? 1));
+
+                if ($productId <= 0 || $variantId <= 0) {
+                    continue;
+                }
+
+                $variantRow = $productModel->getVariantWithProduct($variantId);
+                if (!$variantRow || (int) $variantRow['product_id'] !== $productId) {
+                    continue;
+                }
+
+                $unitPrice = (float) $variantRow['base_price'];
+                $lineTotal = round($unitPrice * $qty, 2);
+                $inStock = (int) $variantRow['stock_qty'] > 0;
+
+                $variantParts = [];
+                if (!empty($variantRow['age_label'])) {
+                    $variantParts[] = 'Age: ' . $variantRow['age_label'];
+                }
+                if (!empty($variantRow['color'])) {
+                    $variantParts[] = 'Color: ' . $variantRow['color'];
+                }
+                $variantInfo = implode(' | ', $variantParts);
+
+                if ($inStock) {
+                    $subtotal += $lineTotal;
+                }
+
+                $items[] = [
+                    'cart_item_id'  => $key,
+                    'product_id'    => $productId,
+                    'variant_id'    => $variantId,
+                    'product_name'  => $variantRow['product_name'],
+                    'product_slug'  => $variantRow['product_slug'],
+                    'variant_info'  => $variantInfo,
+                    'age_label'     => $variantRow['age_label'] ?? '',
+                    'color'         => $variantRow['color'] ?? '',
+                    'sku'           => $variantRow['sku'] ?? '',
+                    'unit_price'    => $unitPrice,
+                    'base_price'    => $unitPrice,
+                    'quantity'      => $qty,
+                    'stock_qty'     => (int) $variantRow['stock_qty'],
+                    'line_total'    => $lineTotal,
+                    'is_available'  => $inStock,
+                    'available'     => $inStock,
+                    'has_stock'     => (int) $variantRow['stock_qty'] >= $qty,
+                    'primary_image' => $variantRow['primary_image'] ?? null,
+                ];
+            }
+        }
+
+        return [
+            'items'      => $items,
+            'subtotal'   => round($subtotal, 2),
+            'item_count' => count($items),
+        ];
+    }
 }
-$userId = (int) Session::userId();
 
 // ── Instantiate models ────────────────────────────────────────────────────────
 $cartModel    = new CartModel();
@@ -123,6 +198,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // ── Action: Add Address ───────────────────────────────────────────────────
     if ($action === 'add_address') {
+        if ($userId === null) {
+            header('Location: ' . url('/login.php?next=' . urlencode('/checkout.php')));
+            exit;
+        }
+
         $errors = [];
         $data   = $validateAddress($_POST, $errors);
 
@@ -148,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ── Action: Place Order ───────────────────────────────────────────────────
     if ($action === 'place_order') {
         // Re-fetch cart server-side — NEVER trust POST amounts
-        $cartData = $cartModel->getCart($userId);
+        $cartData = getCheckoutCart($userId);
 
         if (empty($cartData['items'])) {
             Session::flash('error', 'Your cart is empty.');
@@ -157,19 +237,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // --- Determine delivery address ---
-        $addressSource = trim($_POST['address_source'] ?? 'saved'); // 'saved' | 'new'
+        $addressSource = trim($_POST['address_source'] ?? 'new'); // 'saved' | 'new'
         $addressData   = null;
         $errors        = [];
 
-        if ($addressSource === 'new') {
-            // Validate and use the inline new address fields
-            $addressData = $validateAddress($_POST, $errors);
-            if ($addressData === false) {
-                Session::flash('error', implode(' ', $errors));
-                header('Location: ' . url('/checkout.php'));
-                exit;
-            }
-        } else {
+        if ($addressSource === 'saved' && $userId !== null && !empty($_POST['address_id'])) {
             // Use a saved address — IDOR: verify it belongs to this user
             $addressId = (int) ($_POST['address_id'] ?? 0);
             if ($addressId < 1) {
@@ -202,6 +274,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: ' . url('/checkout.php'));
                 exit;
             }
+        } else {
+            // Validate and use the inline new address fields
+            $addressData = $validateAddress($_POST, $errors);
+            if ($addressData === false) {
+                Session::flash('error', implode(' ', $errors));
+                header('Location: ' . url('/checkout.php'));
+                exit;
+            }
         }
 
         // --- Customization / special instructions notes (max 500 chars) ---
@@ -224,13 +304,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        // For guest, clear session cart and remember placed order id
+        if ($userId === null) {
+            unset($_SESSION['cart']);
+        }
+        $publicOrderId = $result['public_order_id'];
+        $_SESSION['last_placed_order_id'] = $publicOrderId;
+
         // --- Store WhatsApp URL in session for the confirmation page ---
         if (!empty($result['whatsapp_url'])) {
             $_SESSION['last_whatsapp_url'] = $result['whatsapp_url'];
         }
 
         // --- Redirect to order confirmation ---
-        $publicOrderId = $result['public_order_id'];
         header('Location: ' . url('/order-confirmation.php?id=' . urlencode($publicOrderId)));
         exit;
     }
@@ -245,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ══════════════════════════════════════════════════════════════════════════════
 
 // Fetch cart — redirect to cart page if empty
-$cartData = $cartModel->getCart($userId);
+$cartData = getCheckoutCart($userId);
 if (empty($cartData['items'])) {
     Session::flash('info', 'Your cart is empty. Add items before checking out.');
     header('Location: ' . url('/cart.php'));
@@ -253,7 +339,7 @@ if (empty($cartData['items'])) {
 }
 
 // Fetch saved addresses
-$addresses = $userModel->getAddresses($userId);
+$addresses = ($userId !== null) ? $userModel->getAddresses($userId) : [];
 
 // Determine default address id (for pre-selecting radio)
 $defaultAddressId = 0;
@@ -311,7 +397,7 @@ require_once APP_ROOT . '/includes/header.php';
                 <form method="POST" action="<?= e(url('/checkout.php')) ?>" id="place-order-form" novalidate>
                     <?= csrf_field() ?>
                     <input type="hidden" name="action" value="place_order">
-                    <input type="hidden" name="address_source" id="address-source-input" value="saved">
+                    <input type="hidden" name="address_source" id="address-source-input" value="<?= !empty($addresses) ? 'saved' : 'new' ?>">
 
                     <?php if (!empty($addresses)): ?>
                         <!-- Saved Address Cards -->
@@ -356,26 +442,30 @@ require_once APP_ROOT . '/includes/header.php';
                                 </label>
                             <?php endforeach; ?>
                         </div>
+
+                        <!-- ── Add New Address Toggle ──────────────────────────── -->
+                        <div class="new-address-toggle-wrap">
+                            <button type="button" class="btn-add-address" id="toggle-new-address-btn"
+                                    onclick="toggleNewAddressForm()" aria-expanded="false" aria-controls="new-address-section">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Add a New Address
+                            </button>
+                        </div>
                     <?php else: ?>
-                        <p class="checkout-no-address">No saved addresses. Add one below.</p>
+                        <?php if ($userId === null): ?>
+                            <div class="checkout-guest-notice" style="background:#FFF9F3; border:1px solid #E8D9E2; padding:0.85rem 1.1rem; border-radius:10px; font-size:0.88rem; margin-bottom:1.25rem;">
+                                <span>✨ Checking out as <strong>Guest</strong>. Have an account? <a href="<?= e(url('/login.php?next=' . urlencode('/checkout.php'))) ?>" style="color:var(--color-maroon); font-weight:600; text-decoration:underline;">Log in</a> to access saved addresses.</span>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
 
-                    <!-- ── Add New Address Toggle ──────────────────────────── -->
-                    <div class="new-address-toggle-wrap">
-                        <button type="button" class="btn-add-address" id="toggle-new-address-btn"
-                                onclick="toggleNewAddressForm()" aria-expanded="false" aria-controls="new-address-section">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-                            </svg>
-                            <?= empty($addresses) ? 'Add Delivery Address' : 'Add a New Address' ?>
-                        </button>
-                    </div>
-
-                    <!-- ── New Address Inline Form (hidden by default) ─────── -->
-                    <div id="new-address-section" class="new-address-form" style="display:none;"
-                         aria-hidden="true">
-                        <h3 class="new-address-form__heading">New Delivery Address</h3>
+                    <!-- ── New Address Inline Form ─────── -->
+                    <div id="new-address-section" class="new-address-form" style="<?= !empty($addresses) ? 'display:none;' : 'display:block; margin-top:0;' ?>"
+                         aria-hidden="<?= !empty($addresses) ? 'true' : 'false' ?>">
+                        <h3 class="new-address-form__heading"><?= !empty($addresses) ? 'New Delivery Address' : 'Enter Delivery Address' ?></h3>
 
                         <div class="form-row">
                             <div class="form-group">
@@ -437,13 +527,14 @@ require_once APP_ROOT . '/includes/header.php';
                             </div>
                         </div>
 
-                        <!-- Hidden submit for "Save & Use" button -->
-                        <div class="new-address-actions">
-                            <button type="button" class="btn-secondary" onclick="cancelNewAddress()">Cancel</button>
-                            <button type="button" class="btn-use-new-address" onclick="useNewAddress()">
-                                Use This Address
-                            </button>
-                        </div>
+                        <?php if (!empty($addresses)): ?>
+                            <div class="new-address-actions">
+                                <button type="button" class="btn-secondary" onclick="cancelNewAddress()">Cancel</button>
+                                <button type="button" class="btn-use-new-address" onclick="useNewAddress()">
+                                    Use This Address
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <!-- ── 2. Customization / Special Instructions ─────────── -->
@@ -825,8 +916,38 @@ document.getElementById('place-order-form').addEventListener('submit', function 
         if (!checked) {
             e.preventDefault();
             alert('Please select a delivery address before placing your order.');
+            return false;
         }
         <?php endif; ?>
+    } else {
+        const required = [
+            { id: 'na-name', label: 'Recipient Name' },
+            { id: 'na-phone', label: 'Phone Number' },
+            { id: 'na-line1', label: 'Address Line 1' },
+            { id: 'na-city', label: 'City' },
+            { id: 'na-state', label: 'State / Emirate' },
+            { id: 'na-pincode', label: 'PIN / Postal Code' }
+        ];
+        let missing = [];
+        required.forEach(item => {
+            const el = document.getElementById(item.id);
+            if (!el || el.value.trim() === '') {
+                if (el) el.style.borderColor = 'var(--color-maroon)';
+                missing.push(item.label);
+            } else {
+                if (el) el.style.borderColor = '';
+            }
+        });
+        if (missing.length > 0) {
+            e.preventDefault();
+            alert('Please fill in required delivery fields: ' + missing.join(', '));
+            const firstItem = required.find(r => missing.includes(r.label));
+            if (firstItem) {
+                const firstEl = document.getElementById(firstItem.id);
+                if (firstEl) firstEl.focus();
+            }
+            return false;
+        }
     }
     // Disable button to prevent double-submit
     const btn = document.getElementById('place-order-btn');
