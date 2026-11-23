@@ -26,17 +26,58 @@
         }, 3200);
     };
 
-    /* ── 1. Mobile Menu Toggle ─────────────────────────────────────────── */
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
-    const primaryNav   = document.getElementById('primary-nav');
+    /* ── 1. Mobile Nav Drawer & Accordions ─────────────────────────────── */
+    const mobileToggle  = document.getElementById('mobile-menu-toggle');
+    const mobileDrawer  = document.getElementById('mobile-nav-drawer');
+    const mobileOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileClose   = document.getElementById('mobile-nav-close');
 
-    if (mobileToggle && primaryNav) {
-        mobileToggle.addEventListener('click', () => {
-            const isOpen = primaryNav.classList.toggle('is-open');
-            mobileToggle.setAttribute('aria-expanded', String(isOpen));
-            document.body.style.overflow = isOpen ? 'hidden' : '';
+    function openMobileDrawer() {
+        if (!mobileDrawer) return;
+        mobileDrawer.classList.add('is-open');
+        if (mobileOverlay) mobileOverlay.classList.add('is-open');
+        mobileDrawer.setAttribute('aria-hidden', 'false');
+        if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileDrawer() {
+        if (!mobileDrawer) return;
+        mobileDrawer.classList.remove('is-open');
+        if (mobileOverlay) mobileOverlay.classList.remove('is-open');
+        mobileDrawer.setAttribute('aria-hidden', 'true');
+        if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileDrawer && mobileDrawer.classList.contains('is-open')) {
+                closeMobileDrawer();
+            } else {
+                openMobileDrawer();
+            }
         });
     }
+
+    if (mobileClose) {
+        mobileClose.addEventListener('click', closeMobileDrawer);
+    }
+
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMobileDrawer);
+    }
+
+    // Expandable accordion submenus in mobile drawer
+    document.querySelectorAll('.mobile-nav-section__toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.closest('.mobile-nav-section');
+            if (!section) return;
+            const isOpen = section.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', String(isOpen));
+        });
+    });
 
     /* ── 2. Search Modal ────────────────────────────────────────────────── */
     const searchModal   = document.getElementById('search-modal');
@@ -138,6 +179,7 @@
     // Global Escape Key to close modals
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
+            if (mobileDrawer && mobileDrawer.classList.contains('is-open')) closeMobileDrawer();
             if (searchModal) searchModal.classList.remove('is-open');
             if (sizeGuideModal) sizeGuideModal.classList.remove('is-open');
             const filterDrawer = document.getElementById('filter-sidebar');
@@ -260,7 +302,7 @@
         });
     });
 
-    // Tab Switching
+    // Tab Switching (Desktop)
     document.querySelectorAll('.product-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-tab-target');
@@ -270,6 +312,18 @@
             btn.classList.add('is-active');
             const targetPane = document.getElementById(targetId);
             if (targetPane) targetPane.classList.add('is-active');
+        });
+    });
+
+    // Mobile Product Tab Accordion Toggle
+    document.querySelectorAll('.product-accordion-header').forEach(hdr => {
+        hdr.addEventListener('click', () => {
+            const targetId = hdr.getAttribute('data-accordion-target');
+            const targetPane = document.getElementById(targetId);
+            const isOpen = hdr.classList.toggle('is-active');
+            if (targetPane) {
+                targetPane.classList.toggle('is-active', isOpen);
+            }
         });
     });
 
@@ -315,5 +369,30 @@
             if (colorLabel) colorLabel.textContent = colorName;
         });
     });
+
+    /* ── 8. Mobile Footer Accordions ─────────────────────────────────────── */
+    document.querySelectorAll('.site-footer__heading').forEach(heading => {
+        heading.addEventListener('click', () => {
+            if (window.innerWidth >= 768) return; // Only accordion on phones
+            const links = heading.nextElementSibling;
+            if (links && links.classList.contains('site-footer__links')) {
+                const isOpen = links.classList.toggle('is-open');
+                heading.classList.toggle('is-open', isOpen);
+            }
+        });
+    });
+
+    /* ── 9. Sticky Bottom Bar CTA Scroll Observer (Product Page) ─────────── */
+    const mainCtas = document.querySelector('.product-ctas');
+    const stickyBottomBar = document.querySelector('.mobile-sticky-bar');
+    if (mainCtas && stickyBottomBar && 'IntersectionObserver' in window) {
+        const ctaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If main CTA is visible, hide sticky bar; if scrolled past, show it
+                stickyBottomBar.classList.toggle('is-hidden', entry.isIntersecting);
+            });
+        }, { threshold: 0.1 });
+        ctaObserver.observe(mainCtas);
+    }
 
 })();

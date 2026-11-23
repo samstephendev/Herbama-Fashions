@@ -48,7 +48,7 @@ if (!Session::isLoggedIn()) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Signing out… — Heramba Fashion</title>
     <style>
         body {

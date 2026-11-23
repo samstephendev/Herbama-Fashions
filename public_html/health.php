@@ -31,7 +31,7 @@ if ($isProduction && !$isAuthenticated && !$isRenderCheck) {
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     } else {
         header('Content-Type: text/html; charset=utf-8');
-        echo '<!DOCTYPE html><html><head><title>403 Forbidden</title>';
+        echo '<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>403 Forbidden</title>';
         echo '<style>body{font-family:sans-serif; background:#FFF9F3; color:#7A1F3D; display:flex; align-items:center; justify-content:center; height:100vh; margin:0;} .box{background:#fff; padding:2rem 3rem; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08); text-align:center; max-width:480px;} h2{margin-top:0;} p{color:#555; font-size:14px;}</style></head><body>';
         echo '<div class="box"><h2>403 — Health Check Locked</h2><p>This endpoint is protected in production mode. Pass a valid access token via <code>?token=YOUR_TOKEN</code> to view system health diagnostics.</p></div>';
         echo '</body></html>';
@@ -131,7 +131,7 @@ http_response_code($httpCode);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>System Health — <?= e(SITE_NAME) ?></title>
     <style>
         :root {

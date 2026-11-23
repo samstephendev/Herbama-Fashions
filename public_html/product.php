@@ -304,7 +304,7 @@ require_once APP_ROOT . '/includes/header.php';
         </div>
     </div>
 
-    <!-- ── 3. Tabbed Information Section ─────────────────────────────────── -->
+    <!-- ── 3. Tabbed Information Section (Tabs on Desktop / Accordion on Mobile) ── -->
     <div class="product-tabs-wrapper">
         <div class="product-tabs-nav" role="tablist">
             <button type="button" class="product-tab-btn is-active" data-tab-target="tab-details" role="tab">Product Details</button>
@@ -313,6 +313,11 @@ require_once APP_ROOT . '/includes/header.php';
             <button type="button" class="product-tab-btn" data-tab-target="tab-shipping" role="tab">Shipping &amp; Returns</button>
         </div>
 
+        <!-- Mobile Accordion Header 1 -->
+        <button type="button" class="product-accordion-header is-active" data-accordion-target="tab-details">
+            <span>Product Details</span>
+            <span class="product-accordion-icon">▾</span>
+        </button>
         <!-- Tab 1: Details -->
         <div class="product-tab-pane is-active" id="tab-details" role="tabpanel">
             <p><?= nl2br(e($product['description'] ?? $product['short_desc'] ?? 'A handcrafted kidswear piece tailored for comfort and style.')) ?></p>
@@ -341,6 +346,11 @@ require_once APP_ROOT . '/includes/header.php';
             </div>
         </div>
 
+        <!-- Mobile Accordion Header 2 -->
+        <button type="button" class="product-accordion-header" data-accordion-target="tab-fabric">
+            <span>Fabric &amp; Care</span>
+            <span class="product-accordion-icon">▾</span>
+        </button>
         <!-- Tab 2: Fabric & Care -->
         <div class="product-tab-pane" id="tab-fabric" role="tabpanel">
             <p>At Heramba Fashion, every garment is thoughtfully crafted for the sensitive skin of little ones:</p>
@@ -352,6 +362,11 @@ require_once APP_ROOT . '/includes/header.php';
             </ul>
         </div>
 
+        <!-- Mobile Accordion Header 3 -->
+        <button type="button" class="product-accordion-header" data-accordion-target="tab-sizeguide">
+            <span>Size Guide</span>
+            <span class="product-accordion-icon">▾</span>
+        </button>
         <!-- Tab 3: Size Guide Table -->
         <div class="product-tab-pane" id="tab-sizeguide" role="tabpanel">
             <table class="size-table">
@@ -375,6 +390,11 @@ require_once APP_ROOT . '/includes/header.php';
             </table>
         </div>
 
+        <!-- Mobile Accordion Header 4 -->
+        <button type="button" class="product-accordion-header" data-accordion-target="tab-shipping">
+            <span>Shipping &amp; Returns</span>
+            <span class="product-accordion-icon">▾</span>
+        </button>
         <!-- Tab 4: Shipping & Returns -->
         <div class="product-tab-pane" id="tab-shipping" role="tabpanel">
             <p><strong>Shipping:</strong> Pan-India shipping in 3-5 working days. International delivery to UAE / Dubai dispatched via air express (5-7 working days). 0-3 Years sizes are ready to dispatch.</p>

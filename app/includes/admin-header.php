@@ -35,7 +35,7 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title><?= $pageTitle ?></title>
     
     <!-- Favicon set -->
@@ -53,6 +53,7 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba
     
     <!-- CSS Design Tokens & Base -->
     <link rel="stylesheet" href="<?= e(asset('/assets/css/tokens.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('/assets/css/responsive.css')) ?>">
     
     <script>
         window.SITE_URL = '<?= e(rtrim(SITE_URL, '/')) ?>';
@@ -491,7 +492,7 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba
         }
 
         /* ── Responsive ── */
-        @media (max-width: 900px) {
+        @media (max-width: 1023px) {
             .admin-sidebar {
                 transform: translateX(-100%);
             }
@@ -502,13 +503,16 @@ $pageTitle = isset($pageTitle) ? e($pageTitle) . ' — Heramba Admin' : 'Heramba
                 margin-left: 0;
             }
             .mobile-menu-btn {
-                display: block;
+                display: flex;
             }
         }
     </style>
     <?php if (isset($extraHead)) echo $extraHead; ?>
 </head>
 <body>
+
+<!-- Mobile Sidebar Backdrop Overlay -->
+<div class="admin-sidebar-overlay" id="adminSidebarOverlay" onclick="toggleSidebar()"></div>
 
 <!-- Sidebar Navigation -->
 <aside class="admin-sidebar" id="adminSidebar">

@@ -29,7 +29,7 @@ if ($userModel->hasAdmin()) {
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <title>Setup Disabled — <?= e(SITE_NAME) ?></title>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #FAF6F0; color: #2B2B2B; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; }
@@ -65,7 +65,7 @@ if ($isProduction) {
         <html lang="en">
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
             <title>403 Forbidden — Setup Locked</title>
             <style>
                 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #FAF6F0; color: #2B2B2B; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; }
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Initial Administrator Setup — <?= e(SITE_NAME) ?></title>
     <link rel="icon" type="image/png" sizes="32x32" href="<?= e(asset('/assets/images/icons/favicon-32.png')) ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= e(asset('/assets/images/icons/apple-touch-icon.png')) ?>">

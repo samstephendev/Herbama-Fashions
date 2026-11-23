@@ -39,7 +39,7 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?= $pageTitle ?></title>
     <meta name="description" content="<?= $pageDesc ?>">
@@ -75,6 +75,7 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
     <!-- CSS Design Tokens & Stylesheet -->
     <link rel="stylesheet" href="<?= e(asset('/assets/css/tokens.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('/assets/css/main.css')) ?>">
+    <link rel="stylesheet" href="<?= e(asset('/assets/css/responsive.css')) ?>">
 
     <!-- Global JS Environment Context (supports subfolder XAMPP) -->
     <script>
@@ -233,7 +234,7 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
             </a>
 
             <!-- Mobile Hamburger Toggle -->
-            <button type="button" class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button type="button" class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -241,6 +242,107 @@ $pageDesc = isset($pageDesc) ? e($pageDesc) : 'Adorable handcrafted kidswear for
         </div>
     </header>
 </div>
+
+<!-- ── Mobile Nav Slide-in Drawer & Backdrop ──────────────────────────── -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true"></div>
+<nav class="mobile-nav-drawer" id="mobile-nav-drawer" aria-label="Mobile Navigation" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="mobile-nav-drawer__header">
+        <a href="<?= e(url('/index.php')) ?>" class="brand-logo" aria-label="Heramba Fashion — Home">
+            <picture>
+                <source srcset="<?= e(asset('/assets/images/brand/logo-64.webp')) ?> 1x" type="image/webp">
+                <img src="<?= e(asset('/assets/images/brand/logo-64.png')) ?>" alt="Heramba Fashion logo" width="40" height="40" loading="eager" style="border-radius:50%;">
+            </picture>
+            <span style="font-family:var(--font-serif); font-size:1.1rem; font-weight:700; color:var(--color-maroon);">Heramba Fashion</span>
+        </a>
+        <button type="button" class="mobile-nav-close" id="mobile-nav-close" aria-label="Close navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+
+    <ul class="mobile-nav-list">
+        <li>
+            <a href="<?= e(url('/index.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'index.php' || $currentPage === '') ? 'is-active' : '' ?>">
+                🏠 Home
+            </a>
+        </li>
+
+        <!-- Girls Wear Expandable Accordion -->
+        <li class="mobile-nav-section" id="mob-sec-girls">
+            <button type="button" class="mobile-nav-section__toggle" aria-expanded="false" aria-controls="mob-body-girls">
+                <span>👗 Girls Wear</span>
+                <svg class="mobile-nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+            <ul class="mobile-nav-section__body" id="mob-body-girls">
+                <li><a href="<?= e(url('/collection.php?cat=girls')) ?>" class="mobile-nav-sublink">All Girls Wear</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=girls&sub=girls-frocks')) ?>" class="mobile-nav-sublink">Frocks &amp; Dresses</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=girls&sub=girls-tops-bottoms')) ?>" class="mobile-nav-sublink">Tops &amp; Bottoms</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=girls&sub=girls-palazzo-sets')) ?>" class="mobile-nav-sublink">Palazzo Sets</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=girls&sub=girls-pattu-pavadai')) ?>" class="mobile-nav-sublink">Pattu Pavadai</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=girls&sub=girls-casual-wear')) ?>" class="mobile-nav-sublink">Casual Wear</a></li>
+            </ul>
+        </li>
+
+        <!-- Boys Wear Expandable Accordion -->
+        <li class="mobile-nav-section" id="mob-sec-boys">
+            <button type="button" class="mobile-nav-section__toggle" aria-expanded="false" aria-controls="mob-body-boys">
+                <span>👕 Boys Wear</span>
+                <svg class="mobile-nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+            <ul class="mobile-nav-section__body" id="mob-body-boys">
+                <li><a href="<?= e(url('/collection.php?cat=boys')) ?>" class="mobile-nav-sublink">All Boys Wear</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-tshirts')) ?>" class="mobile-nav-sublink">T-Shirts &amp; Polos</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-shirts')) ?>" class="mobile-nav-sublink">Casual &amp; Party Shirts</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-shorts')) ?>" class="mobile-nav-sublink">Cargo &amp; Cotton Shorts</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-jeans')) ?>" class="mobile-nav-sublink">Jeans &amp; Dungarees</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-casual-sets')) ?>" class="mobile-nav-sublink">Casual Sets</a></li>
+                <li><a href="<?= e(url('/collection.php?cat=boys&sub=boys-ethnic-wear')) ?>" class="mobile-nav-sublink">Ethnic Kurta Pyjama</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="<?= e(url('/collection.php?cat=infant')) ?>" class="mobile-nav-link <?= ($currentCat === 'infant') ? 'is-active' : '' ?>">
+                👶 Infant Wear (0-24M)
+            </a>
+        </li>
+        <li>
+            <a href="<?= e(url('/collection.php?cat=festive')) ?>" class="mobile-nav-link <?= ($currentCat === 'festive') ? 'is-active' : '' ?>">
+                👑 Festive Collection
+            </a>
+        </li>
+        <li>
+            <a href="<?= e(url('/new-arrivals.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'new-arrivals.php') ? 'is-active' : '' ?>">
+                ✨ New Arrivals
+            </a>
+        </li>
+        <li>
+            <a href="<?= e(url('/offers.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'offers.php') ? 'is-active' : '' ?>" style="color:var(--color-maroon); font-weight:700;">
+                🏷️ Special Offers &amp; Discounts
+            </a>
+        </li>
+        <li>
+            <a href="<?= e(url('/contact.php')) ?>" class="mobile-nav-link <?= ($currentPage === 'contact.php') ? 'is-active' : '' ?>">
+                📞 Contact &amp; Custom Fit
+            </a>
+        </li>
+    </ul>
+
+    <!-- Mobile Drawer Account & Support Utilities -->
+    <div class="mobile-nav-footer">
+        <?php if (Session::isLoggedIn()): ?>
+            <a href="<?= e(url('/account.php?tab=profile')) ?>" class="mobile-nav-util-link">👤 My Account</a>
+            <a href="<?= e(url('/logout.php')) ?>" class="mobile-nav-util-link" style="color:var(--color-danger);">🚪 Sign Out</a>
+        <?php else: ?>
+            <a href="<?= e(url('/login.php')) ?>" class="mobile-nav-util-link">🔑 Log In</a>
+            <a href="<?= e(url('/register.php')) ?>" class="mobile-nav-util-link">✨ Register</a>
+        <?php endif; ?>
+    </div>
+</nav>
 
 <!-- ── 3. Live Search Modal Overlay ────────────────────────────────────── -->
 <div class="search-modal-backdrop" id="search-modal" role="dialog" aria-modal="true" aria-label="Search Kidswear">

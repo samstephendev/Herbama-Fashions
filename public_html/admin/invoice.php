@@ -32,7 +32,7 @@ $storeName = 'Heramba Fashion';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Invoice_<?= e($order['public_order_id']) ?> — <?= $storeName ?></title>
     <link rel="icon" type="image/png" sizes="32x32" href="<?= asset('/assets/images/icons/favicon-32.png') ?>">
     <style>

@@ -114,6 +114,9 @@ require_once APP_ROOT . '/includes/header.php';
     <!-- ── 3. Collection Layout (Sidebar + Grid) ────────────────────────── -->
     <div class="collection-layout">
         
+        <!-- Filter Drawer Overlay (Mobile) -->
+        <div class="filter-drawer-overlay" id="filter-drawer-overlay" aria-hidden="true"></div>
+
         <!-- Left Filter Sidebar -->
         <aside class="filter-sidebar" id="filter-sidebar" aria-label="Product Filters">
             <div class="filter-sidebar__header">
@@ -339,17 +342,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Mobile Drawer Handlers
-    if (openDrawerBtn && filterSidebar) {
-        openDrawerBtn.addEventListener('click', () => {
-            filterSidebar.classList.add('is-open');
-            if (mobileApplyBtn) mobileApplyBtn.style.display = 'block';
-        });
+    const filterOverlay = document.getElementById('filter-drawer-overlay');
+    function openFilterDrawer() {
+        if (filterSidebar) filterSidebar.classList.add('is-open');
+        if (filterOverlay) filterOverlay.classList.add('is-open');
+        if (mobileApplyBtn) mobileApplyBtn.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeFilterDrawer() {
+        if (filterSidebar) filterSidebar.classList.remove('is-open');
+        if (filterOverlay) filterOverlay.classList.remove('is-open');
+        document.body.style.overflow = '';
     }
 
-    if (mobileApplyBtn && filterSidebar) {
-        mobileApplyBtn.addEventListener('click', () => {
-            filterSidebar.classList.remove('is-open');
-        });
+    if (openDrawerBtn) {
+        openDrawerBtn.addEventListener('click', openFilterDrawer);
+    }
+    if (mobileApplyBtn) {
+        mobileApplyBtn.addEventListener('click', closeFilterDrawer);
+    }
+    if (filterOverlay) {
+        filterOverlay.addEventListener('click', closeFilterDrawer);
     }
 
     function fetchFilteredProducts() {

@@ -21,17 +21,23 @@
 // Mobile Sidebar Toggle
 function toggleSidebar() {
     const sb = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('adminSidebarOverlay');
     if (sb) {
-        sb.classList.toggle('open');
+        const isOpen = sb.classList.toggle('open');
+        if (overlay) overlay.classList.toggle('active', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 }
 
 // Close sidebar when clicking outside on mobile
 document.addEventListener('click', (e) => {
     const sb = document.getElementById('adminSidebar');
+    const overlay = document.getElementById('adminSidebarOverlay');
     const btn = document.querySelector('.mobile-menu-btn');
     if (sb && sb.classList.contains('open') && !sb.contains(e.target) && (!btn || !btn.contains(e.target))) {
         sb.classList.remove('open');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = '';
     }
 });
 
